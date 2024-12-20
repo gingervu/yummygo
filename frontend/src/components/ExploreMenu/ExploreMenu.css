@@ -1,4 +1,5 @@
 .explore-menu{
+    margin-top: 100px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -30,6 +31,7 @@
 }
 
 .explore-menu-list-item img{
+
     width: 7.5vw;
     min-width: 80px;
     cursor: pointer;

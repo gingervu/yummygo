@@ -4,6 +4,9 @@
     background: url('/header_img.png') no-repeat;
     background-size: contain;
     position: relative;
+    border-radius: 100px; /* Thêm thuộc tính này để bo góc */
+    overflow: hidden; /* Đảm bảo rằng ảnh nền không vượt ra ngoài phần tử */
+    /* margin-top: 100px; */
 }
 
 .header-contents{
