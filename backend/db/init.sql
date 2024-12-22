@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS DriversRating (
 CREATE TABLE IF NOT EXISTS RestaurantRating (
     restaurant_id INT PRIMARY KEY,
     rating DECIMAL(2, 1) NOT NULL CHECK (rating >= 0 AND rating <= 5),
-    CONSTRAINT fk_restaurantrating_restaurant FOREIGN KEY (restaurant_id) REFERENCES Restaurant(restaurant_id) ON DELETE CASCADE
+    CONSTRAINT fk_restaurantrating_restaurant FOREIGN KEY (restaurant_id) REFERENCES restaurants(restaurant_id) ON DELETE CASCADE
 );
 
 -- STEP 3: ADD INDEXES FOR OPTIMIZATION
