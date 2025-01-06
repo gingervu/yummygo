@@ -5,9 +5,8 @@ const Header = () => {
   return (
     <div className='header'>
       <div className='header-contents'>
-        <h2>Đặt món bạn thích tại đây</h2>
-        <p>Chọn từ menu</p>
-        <button>Xem menu</button>
+        <h2>YUMMYGO</h2>
+        <button>Bạn Đang Thèm Gì Nào?</button>
       </div>
     </div>
   )

@@ -1,0 +1,183 @@
+/* Import font Open Sans */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+/* Toàn bộ popup */
+.login-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Màu nền mờ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    font-family: 'Open Sans', sans-serif; /* Áp dụng font Open Sans */
+}
+
+/* Container của popup */
+.login-popup-container {
+    background-color: white;
+    width: 400px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+}
+
+/* Tiêu đề */
+.login-popup-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.login-popup-title h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+}
+
+.login-popup-title img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* Các input */
+.login-popup-inputs input,
+.login-popup-inputs select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif; /* Font chữ Open Sans */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.login-popup-inputs input:focus,
+.login-popup-inputs select:focus {
+    border-color: #a77905;
+}
+
+/* Nút hành động */
+button {
+    background-color: #a77905;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Open Sans', sans-serif; /* Font chữ Open Sans */
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #894306;
+}
+
+/* Điều khoản */
+.login-popup-condition {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.login-popup-condition input {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.login-popup-condition p {
+    margin: 0;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif; /* Font chữ Open Sans */
+    color: #555;
+}
+
+/* Đường link chuyển đổi trạng thái */
+.login-popup p {
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif; /* Font chữ Open Sans */
+}
+
+.login-popup p span {
+    color: #a77905;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.login-popup p span:hover {
+    color: #894306;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .login-popup-container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .login-popup-title h2 {
+        font-size: 20px;
+    }
+
+    .login-popup-inputs input,
+    .login-popup-inputs select {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .login-popup p {
+        font-size: 12px;
+    }
+}
+/* Style cho các ô input có lỗi */
+input.error {
+    border: 2px solid #e74c3c;
+}
+
+select.error {
+    border: 2px solid #e74c3c;
+}
+
+/* Style cho thông báo lỗi */
+.error {
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* Style cho button */
+button {
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
