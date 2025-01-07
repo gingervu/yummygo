@@ -1,0 +1,61 @@
+/* Tổng quát */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #F8F8F8;
+  }
+  
+  /* Main */
+main {
+    font-family: "Poppins", sans-serif;
+    text-align: left;
+    font-weight: 600;
+    padding: 20px ;
+    
+}
+  
+  
+ main p {
+    font-size: 22px;
+    margin-left: 120px;
+    margin-right: 120px;
+ }
+  
+ .action-btn-container {
+    display: flex;
+    justify-content: center; /* Căn giữa */
+    margin-top: 50px;
+    gap: 90px; /* Thêm khoảng cách giữa các nút */
+    flex-direction: row; /* Đảm bảo các button nằm ngang */
+  }
+
+ .action-btn {
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 8px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .homepage-btn{
+    background-color: #7C6351
+  }
+
+  .homepage-btn:hover {
+    background-color: #737372;
+  }
+
+  .orderwaiting-btn {
+    background-color: #E97522;
+    
+  }
+  
+ .orderwaiting-btn:hover {
+    background-color: #f97b20;
+  }
+  
+
+  
+  
