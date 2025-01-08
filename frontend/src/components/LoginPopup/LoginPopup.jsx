@@ -47,7 +47,7 @@ const LoginPopup = ({ setShowLogin }) => {
                         {currState === "Đăng nhập" ? "Bạn chưa có tài khoản?" : "Bạn đã có tài khoản?"}{" "}
                         <span
                             onClick={handleSignUp}  // Khi nhấn vào đây, sẽ chuyển sang trang đăng ký
-                            style={{ cursor: "pointer", color: "blue" }}
+                            style={{ cursor: "pointer", color: "#894306" }}
                         >
                             Tạo tài khoản tại đây
                         </span>

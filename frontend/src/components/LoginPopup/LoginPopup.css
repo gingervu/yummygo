@@ -168,7 +168,7 @@ select.error {
 
 /* Style cho button */
 button {
-    background-color: #007bff;
+    background-color: #c59a00;
     color: white;
     font-size: 1rem;
     padding: 10px;
@@ -179,5 +179,5 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #b3a400;
 }
