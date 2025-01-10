@@ -1,14 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from typing import List
 from models import models, schemas
-from db.database import get_db
-
-router = APIRouter()
+from fastapi import HTTPException
 
 # Tạo nhà hàng mới
-@router.post("/", response_model=schemas.Restaurant)
-def create_restaurant(restaurant: schemas.RestaurantCreate, db: Session = Depends(get_db)):
+def create_restaurant(restaurant: schemas.RestaurantCreate, db: Session):
     db_restaurant = db.query(models.Restaurant).filter(models.Restaurant.name == restaurant.name).first()
     if db_restaurant:
         raise HTTPException(status_code=400, detail="Nhà hàng đã tồn tại")
@@ -26,21 +21,18 @@ def create_restaurant(restaurant: schemas.RestaurantCreate, db: Session = Depend
     return new_restaurant
 
 # Lấy thông tin nhà hàng theo ID
-@router.get("/{restaurant_id}", response_model=schemas.Restaurant)
-def get_restaurant(restaurant_id: int, db: Session = Depends(get_db)):
+def get_restaurant(restaurant_id: int, db: Session):
     restaurant = db.query(models.Restaurant).filter(models.Restaurant.restaurant_id == restaurant_id).first()
     if not restaurant:
         raise HTTPException(status_code=404, detail="Nhà hàng không tồn tại")
     return restaurant
 
 # Lấy danh sách nhà hàng
-@router.get("/", response_model=List[schemas.Restaurant])
-def list_restaurants(db: Session = Depends(get_db)):
+def list_restaurants(db: Session):
     return db.query(models.Restaurant).filter(models.Restaurant.is_deleted == False).all()
 
 # Cập nhật nhà hàng
-@router.put("/{restaurant_id}", response_model=schemas.Restaurant)
-def update_restaurant(restaurant_id: int, restaurant: schemas.RestaurantUpdate, db: Session = Depends(get_db)):
+def update_restaurant(restaurant_id: int, restaurant: schemas.RestaurantUpdate, db: Session):
     db_restaurant = db.query(models.Restaurant).filter(models.Restaurant.restaurant_id == restaurant_id).first()
     if not db_restaurant:
         raise HTTPException(status_code=404, detail="Nhà hàng không tồn tại")
@@ -51,8 +43,7 @@ def update_restaurant(restaurant_id: int, restaurant: schemas.RestaurantUpdate, 
     return db_restaurant
 
 # Xóa nhà hàng
-@router.delete("/{restaurant_id}")
-def delete_restaurant(restaurant_id: int, db: Session = Depends(get_db)):
+def delete_restaurant(restaurant_id: int, db: Session):
     restaurant = db.query(models.Restaurant).filter(models.Restaurant.restaurant_id == restaurant_id).first()
     if not restaurant:
         raise HTTPException(status_code=404, detail="Nhà hàng không tồn tại")

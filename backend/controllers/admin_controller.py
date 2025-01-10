@@ -1,27 +1,23 @@
-from flask import Blueprint, render_template, request, redirect, url_for
-from models import Admin, Order
-from app import db
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+from models import schemas
+from db.database import get_db
+from services.admin_service import create_admin, get_admin
 
-admin_bp = Blueprint('admin', __name__)
+router = APIRouter(prefix="/admins", tags=["Admins"])
 
-@admin_bp.route('/admin/dashboard')
-def dashboard():
-    # Logic để hiển thị dashboard của admin
-    orders = Order.query.all()
-    return render_template('admin/dashboard.html', orders=orders)
+# Route POST: Tạo mới Admin
+@router.post("/", response_model=schemas.Admin)
+async def create_admin_route(admin: schemas.AdminCreate, db: Session = Depends(get_db)):
+    """
+    API để tạo một admin mới.
+    """
+    return create_admin(admin, db)
 
-@admin_bp.route('/admin/manage_orders')
-def manage_orders():
-    # Logic để quản lý các đơn hàng
-    orders = Order.query.all()
-    return render_template('admin/manage_orders.html', orders=orders)
-
-@admin_bp.route('/admin/add_admin', methods=['GET', 'POST'])
-def add_admin():
-    if request.method == 'POST':
-        # Logic thêm admin mới
-        new_admin = Admin(name=request.form['name'], email=request.form['email'])
-        db.session.add(new_admin)
-        db.session.commit()
-        return redirect(url_for('admin.dashboard'))
-    return render_template('admin/add_admin.html')
+# Route GET: Lấy thông tin Admin theo admin_id
+@router.get("/{admin_id}", response_model=schemas.Admin)
+async def get_admin_route(admin_id: int, db: Session = Depends(get_db)):
+    """
+    API để lấy thông tin admin dựa trên admin_id.
+    """
+    return get_admin(admin_id, db)

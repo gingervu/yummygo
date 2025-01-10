@@ -1,21 +1,33 @@
-from flask import Blueprint, render_template, request, redirect, url_for
-from models import Order
-from app import db
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+from typing import List
+from services import order_service
+from models.schemas import Order, OrderCreate, OrderUpdate
+from db.database import get_db
 
-order_bp = Blueprint('order', __name__)
+router = APIRouter(prefix="/oders", tags=["Oders"])
 
-@order_bp.route('/orders')
-def orders():
-    # Hiển thị tất cả các đơn hàng
-    orders = Order.query.all()
-    return render_template('orders/orders.html', orders=orders)
+# Tạo đơn hàng mới
+@router.post("/", response_model=Order)
+async def create_order(order: OrderCreate, db: Session = Depends(get_db)):
+    return order_service.create_order(order, db)
 
-@order_bp.route('/order/create', methods=['GET', 'POST'])
-def create_order():
-    if request.method == 'POST':
-        # Logic tạo đơn hàng mới
-        new_order = Order(customer_id=1, menu_item_id=request.form['menu_item_id'])
-        db.session.add(new_order)
-        db.session.commit()
-        return redirect(url_for('order.orders'))
-    return render_template('orders/create_order.html')
+# Lấy danh sách đơn hàng
+@router.get("/", response_model=List[Order])
+async def get_orders(db: Session = Depends(get_db)):
+    return order_service.get_orders(db)
+
+# Lấy đơn hàng theo ID
+@router.get("/{order_id}", response_model=Order)
+async def get_order(order_id: int, db: Session = Depends(get_db)):
+    return order_service.get_order(order_id, db)
+
+# Cập nhật trạng thái đơn hàng
+@router.put("/{order_id}", response_model=Order)
+async def update_order(order_id: int, order_update: OrderUpdate, db: Session = Depends(get_db)):
+    return order_service.update_order(order_id, order_update, db)
+
+# Xóa đơn hàng
+@router.delete("/{order_id}")
+async def delete_order(order_id: int, db: Session = Depends(get_db)):
+    return order_service.delete_order(order_id, db)

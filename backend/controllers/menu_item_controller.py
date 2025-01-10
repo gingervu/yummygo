@@ -1,21 +1,34 @@
-from flask import Blueprint, render_template, request, redirect, url_for
-from models import MenuItem
-from app import db
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+from typing import List
+from db.database import get_db
+from models import schemas
+from services.menu_item_service import (
+    create_menu_item,
+    list_menu_items,
+    get_menu_item,
+    update_menu_item,
+    delete_menu_item,
+)
 
-menu_item_bp = Blueprint('menu_item', __name__)
+router = APIRouter(prefix="/menu_items", tags=["Menu Items"])
 
-@menu_item_bp.route('/menu')
-def menu():
-    # Hiển thị danh sách món ăn
-    menu_items = MenuItem.query.all()
-    return render_template('menu/menu.html', menu_items=menu_items)
+@router.post("/", response_model=schemas.MenuItem)
+async def create_menu(menu_item: schemas.MenuItemCreate, db: Session = Depends(get_db)):
+    return create_menu_item(menu_item, db)
 
-@menu_item_bp.route('/menu/add', methods=['GET', 'POST'])
-def add_menu_item():
-    if request.method == 'POST':
-        # Thêm món ăn mới
-        new_item = MenuItem(name=request.form['name'], price=request.form['price'])
-        db.session.add(new_item)
-        db.session.commit()
-        return redirect(url_for('menu_item.menu'))
-    return render_template('menu/add_item.html')
+@router.get("/", response_model=List[schemas.MenuItem])
+async def get_all_menu_items(db: Session = Depends(get_db)):
+    return list_menu_items(db)
+
+@router.get("/{item_id}", response_model=schemas.MenuItem)
+async def get_single_menu_item(item_id: int, db: Session = Depends(get_db)):
+    return get_menu_item(item_id, db)
+
+@router.put("/{item_id}", response_model=schemas.MenuItem)
+async def update_menu(item_id: int, menu_item: schemas.MenuItemUpdate, db: Session = Depends(get_db)):
+    return update_menu_item(item_id, menu_item, db)
+
+@router.delete("/{item_id}")
+async def remove_menu_item(item_id: int, db: Session = Depends(get_db)):
+    return delete_menu_item(item_id, db)

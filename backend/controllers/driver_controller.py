@@ -1,19 +1,42 @@
-from flask import Blueprint, render_template, request, redirect, url_for
-from models import Driver, Order
-from app import db
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+from typing import List
+from db.database import get_db
+from models import schemas
+from services.driver_service import (
+    create_driver_service,
+    list_drivers_service,
+    get_driver_service,
+    update_driver_service,
+    delete_driver_service,
+)
 
-driver_bp = Blueprint('driver', __name__)
+router = APIRouter(prefix="/drivers", tags=["Drivers"])
 
-@driver_bp.route('/driver/orders')
-def orders():
-    # Lấy các đơn hàng đang chờ tài xế giao
-    orders = Order.query.filter_by(status='pending').all()
-    return render_template('driver/orders.html', orders=orders)
+# ------------------------------
+# Quản lý Tài Xế (Controller)
+# ------------------------------
 
-@driver_bp.route('/driver/accept_order/<int:order_id>')
-def accept_order(order_id):
-    # Tài xế nhận đơn hàng
-    order = Order.query.get(order_id)
-    order.status = 'accepted'
-    db.session.commit()
-    return redirect(url_for('driver.orders'))
+@router.post("/", response_model=schemas.Driver)
+async def create_driver(driver: schemas.DriverCreate, db: Session = Depends(get_db)):
+    return create_driver_service(driver, db)
+
+
+@router.get("/", response_model=List[schemas.Driver])
+async def list_drivers(db: Session = Depends(get_db)):
+    return list_drivers_service(db)
+
+
+@router.get("/{driver_id}", response_model=schemas.Driver)
+async def get_driver(driver_id: int, db: Session = Depends(get_db)):
+    return get_driver_service(driver_id, db)
+
+
+@router.put("/{driver_id}", response_model=schemas.Driver)
+async def update_driver(driver_id: int, driver: schemas.DriverCreate, db: Session = Depends(get_db)):
+    return update_driver_service(driver_id, driver, db)
+
+
+@router.delete("/{driver_id}", response_model=schemas.Driver)
+async def delete_driver(driver_id: int, db: Session = Depends(get_db)):
+    return delete_driver_service(driver_id, db)

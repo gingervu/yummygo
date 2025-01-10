@@ -12,11 +12,11 @@ backend/
 │   └── settings.py # Cấu hình cài đặt cho ứng dụng như đường dẫn kết nối cơ sở dữ liệu, secret key, và các thông số cấu hình khác.
 ├── controllers/ # Xử lý logic chính cho các module
 ├── db/
-│   └── database.py
+│   └── database.py 
 ├── middlewares/ # Các lớp middleware (xử lý request/response)
 ├── models/ # Định nghĩa các bảng trong database
-│   ├── schemas.py
-│   └── models.py
+│   ├── schemas.py # tương tác với cơ sở dữ liệu, thường thông qua ORM (Object Relational Mapping) SQLAlchemy 
+│   └── models.py # Xác định cấu trúc dữ liệu cho các yêu cầu (requests) và phản hồi (responses) trong API sử dụng thư viện Pydantic.
 ├── routes/  # Định nghĩa các API endpoint
 │   ├── admin_routes.py
 │   ├── customer_routes.py

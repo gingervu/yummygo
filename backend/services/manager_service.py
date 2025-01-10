@@ -1,13 +1,10 @@
-from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from models import models, schemas
-from db.database import get_db
+from fastapi import HTTPException
 
-router = APIRouter()
 
-# Route POST để tạo mới Manager
-@router.post("/", response_model=schemas.Manager)
-def create_manager(manager: schemas.ManagerCreate, db: Session = Depends(get_db)):
+def create_manager_service(manager: schemas.ManagerCreate, db: Session):
+    """Tạo mới một Manager."""
     # Kiểm tra nếu username đã tồn tại
     db_manager = db.query(models.Manager).filter(models.Manager.username == manager.username).first()
     if db_manager:
@@ -15,28 +12,27 @@ def create_manager(manager: schemas.ManagerCreate, db: Session = Depends(get_db)
     
     # Tạo manager mới
     new_manager = models.Manager(
-        username=manager.username, 
-        password=manager.password,  # Bạn có thể mã hóa mật khẩu ở đây nếu cần
+        username=manager.username,
+        password=manager.password,  # Mã hóa mật khẩu nếu cần
         name=manager.name,
         restaurant_id=manager.restaurant_id
     )
-    
     db.add(new_manager)
     db.commit()
     db.refresh(new_manager)
     return new_manager
 
-# Route GET để lấy thông tin Manager
-@router.get("/{manager_id}", response_model=schemas.Manager)
-def get_manager(manager_id: int, db: Session = Depends(get_db)):
+
+def get_manager_service(manager_id: int, db: Session):
+    """Lấy thông tin Manager dựa trên ID."""
     db_manager = db.query(models.Manager).filter(models.Manager.manager_id == manager_id).first()
     if not db_manager:
         raise HTTPException(status_code=404, detail="Manager không tồn tại")
     return db_manager
 
-# Route PUT để cập nhật thông tin Manager
-@router.put("/{manager_id}", response_model=schemas.Manager)
-def update_manager(manager_id: int, manager: schemas.ManagerCreate, db: Session = Depends(get_db)):
+
+def update_manager_service(manager_id: int, manager: schemas.ManagerCreate, db: Session):
+    """Cập nhật thông tin của Manager."""
     db_manager = db.query(models.Manager).filter(models.Manager.manager_id == manager_id).first()
     if not db_manager:
         raise HTTPException(status_code=404, detail="Manager không tồn tại")
@@ -51,9 +47,9 @@ def update_manager(manager_id: int, manager: schemas.ManagerCreate, db: Session 
     db.refresh(db_manager)
     return db_manager
 
-# Route DELETE để xóa Manager
-@router.delete("/{manager_id}")
-def delete_manager(manager_id: int, db: Session = Depends(get_db)):
+
+def delete_manager_service(manager_id: int, db: Session):
+    """Xóa Manager dựa trên ID."""
     db_manager = db.query(models.Manager).filter(models.Manager.manager_id == manager_id).first()
     if not db_manager:
         raise HTTPException(status_code=404, detail="Manager không tồn tại")

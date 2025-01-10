@@ -1,17 +1,8 @@
-from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from typing import List
 from models import models, schemas
-from db.database import get_db
+from fastapi import HTTPException
 
-router = APIRouter()
-
-# ------------------------------
-# Quản lý Order Items
-# ------------------------------
-
-@router.post("/", response_model=schemas.OrderItem)
-def create_order_item(order_item: schemas.OrderItemCreate, db: Session = Depends(get_db)):
+def create_order_item(order_item: schemas.OrderItemCreate, db: Session) -> models.OrderItem:
     db_order_item = db.query(models.OrderItem).filter(
         models.OrderItem.item_id == order_item.item_id,
         models.OrderItem.order_id == order_item.order_id
@@ -31,15 +22,13 @@ def create_order_item(order_item: schemas.OrderItemCreate, db: Session = Depends
     db.refresh(new_order_item)
     return new_order_item
 
-@router.get("/{order_id}", response_model=List[schemas.OrderItem])
-def get_order_items(order_id: int, db: Session = Depends(get_db)):
+def get_order_items(order_id: int, db: Session) -> list[models.OrderItem]:
     order_items = db.query(models.OrderItem).filter(models.OrderItem.order_id == order_id).all()
     if not order_items:
         raise HTTPException(status_code=404, detail="Không tìm thấy mục đơn hàng")
     return order_items
 
-@router.put("/{order_id}/{item_id}", response_model=schemas.OrderItem)
-def update_order_item(order_id: int, item_id: int, order_item: schemas.OrderItemCreate, db: Session = Depends(get_db)):
+def update_order_item(order_id: int, item_id: int, order_item: schemas.OrderItemCreate, db: Session) -> models.OrderItem:
     db_order_item = db.query(models.OrderItem).filter(
         models.OrderItem.order_id == order_id,
         models.OrderItem.item_id == item_id
@@ -54,8 +43,7 @@ def update_order_item(order_id: int, item_id: int, order_item: schemas.OrderItem
     db.refresh(db_order_item)
     return db_order_item
 
-@router.delete("/{order_id}/{item_id}")
-def delete_order_item(order_id: int, item_id: int, db: Session = Depends(get_db)):
+def delete_order_item(order_id: int, item_id: int, db: Session) -> None:
     db_order_item = db.query(models.OrderItem).filter(
         models.OrderItem.order_id == order_id,
         models.OrderItem.item_id == item_id
@@ -66,4 +54,3 @@ def delete_order_item(order_id: int, item_id: int, db: Session = Depends(get_db)
 
     db.delete(db_order_item)
     db.commit()
-    return {"detail": "Mục đơn hàng đã bị xóa"}

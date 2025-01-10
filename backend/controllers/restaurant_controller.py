@@ -1,22 +1,33 @@
-from flask import Blueprint, render_template, request, redirect, url_for
-from models import Restaurant
-from app import db
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+from typing import List
+from db.database import get_db
+from services import restaurant_service
+from models import schemas
 
-restaurant_bp = Blueprint('restaurant', __name__)
+router = APIRouter(prefix="/restaurants", tags=["Restaurants"])
 
-@restaurant_bp.route('/restaurant/info')
-def restaurant_info():
-    # Hiển thị thông tin nhà hàng
-    restaurant = Restaurant.query.first()
-    return render_template('restaurant/info.html', restaurant=restaurant)
+# Tạo nhà hàng mới
+@router.post("/", response_model=schemas.Restaurant)
+async def create_restaurant(restaurant: schemas.RestaurantCreate, db: Session = Depends(get_db)):
+    return restaurant_service.create_restaurant(restaurant, db)
 
-@restaurant_bp.route('/restaurant/update_info', methods=['GET', 'POST'])
-def update_info():
-    if request.method == 'POST':
-        # Cập nhật thông tin nhà hàng
-        restaurant = Restaurant.query.first()
-        restaurant.name = request.form['name']
-        restaurant.location = request.form['location']
-        db.session.commit()
-        return redirect(url_for('restaurant.restaurant_info'))
-    return render_template('restaurant/update_info.html')
+# Lấy thông tin nhà hàng theo ID
+@router.get("/{restaurant_id}", response_model=schemas.Restaurant)
+async def get_restaurant(restaurant_id: int, db: Session = Depends(get_db)):
+    return restaurant_service.get_restaurant(restaurant_id, db)
+
+# Lấy danh sách nhà hàng
+@router.get("/", response_model=List[schemas.Restaurant])
+async def list_restaurants(db: Session = Depends(get_db)):
+    return restaurant_service.list_restaurants(db)
+
+# Cập nhật nhà hàng
+@router.put("/{restaurant_id}", response_model=schemas.Restaurant)
+async def update_restaurant(restaurant_id: int, restaurant: schemas.RestaurantUpdate, db: Session = Depends(get_db)):
+    return restaurant_service.update_restaurant(restaurant_id, restaurant, db)
+
+# Xóa nhà hàng
+@router.delete("/{restaurant_id}")
+async def delete_restaurant(restaurant_id: int, db: Session = Depends(get_db)):
+    return restaurant_service.delete_restaurant(restaurant_id, db)
