@@ -1,30 +1,31 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from models import models, schemas
 from db.database import get_db
-from models.models import Admin
 
 router = APIRouter()
 
-@router.post("/")
-def create_admin(name: str, db: Session = Depends(get_db)):
-    admin = Admin(name=name)
-    db.add(admin)
+# Route POST: Tạo mới Admin
+@router.post("/", response_model=schemas.Admin)
+def create_admin(admin: schemas.AdminCreate, db: Session = Depends(get_db)):
+    # Kiểm tra xem admin đã tồn tại hay chưa
+    db_admin = db.query(models.Admin).filter(models.Admin.name == admin.name).first()
+    if db_admin:
+        raise HTTPException(status_code=400, detail="Admin đã tồn tại")
+    
+    # Tạo đối tượng Admin mới
+    new_admin = models.Admin(name=admin.name)
+    db.add(new_admin)
     db.commit()
-    db.refresh(admin)
-    return admin
+    db.refresh(new_admin)
+    
+    return new_admin
 
-@router.get("/{admin_id}")
+# Route GET: Lấy thông tin Admin theo admin_id
+@router.get("/{admin_id}", response_model=schemas.Admin)
 def get_admin(admin_id: int, db: Session = Depends(get_db)):
-    admin = db.query(Admin).filter(Admin.admin_id == admin_id).first()
-    if not admin:
-        raise HTTPException(status_code=404, detail="Admin not found")
-    return admin
+    db_admin = db.query(models.Admin).filter(models.Admin.admin_id == admin_id).first()
+    if not db_admin:
+        raise HTTPException(status_code=404, detail="Admin không tồn tại")
+    return db_admin
 
-@router.delete("/{admin_id}")
-def delete_admin(admin_id: int, db: Session = Depends(get_db)):
-    admin = db.query(Admin).filter(Admin.admin_id == admin_id).first()
-    if not admin:
-        raise HTTPException(status_code=404, detail="Admin not found")
-    db.delete(admin)
-    db.commit()
-    return {"message": "Admin deleted successfully"}

@@ -1,11 +1,21 @@
-from models.models import Order
+from flask import Blueprint, render_template, request, redirect, url_for
+from models import Order
+from app import db
 
-def create_order(db, customer_id, restaurant_id, address, coord, delivery_fee, food_fee, order_status, created_at, delivered_at, note):
-    order = Order(customer_id=customer_id, restaurant_id=restaurant_id, address=address, coord=coord, delivery_fee=delivery_fee, food_fee=food_fee, order_status=order_status, created_at=created_at, delivered_at=delivered_at, note=note)
-    db.add(order)
-    db.commit()
-    db.refresh(order)
-    return order
+order_bp = Blueprint('order', __name__)
 
-def get_order_by_id(db, order_id):
-    return db.query(Order).filter(Order.order_id == order_id).first()
+@order_bp.route('/orders')
+def orders():
+    # Hiển thị tất cả các đơn hàng
+    orders = Order.query.all()
+    return render_template('orders/orders.html', orders=orders)
+
+@order_bp.route('/order/create', methods=['GET', 'POST'])
+def create_order():
+    if request.method == 'POST':
+        # Logic tạo đơn hàng mới
+        new_order = Order(customer_id=1, menu_item_id=request.form['menu_item_id'])
+        db.session.add(new_order)
+        db.session.commit()
+        return redirect(url_for('order.orders'))
+    return render_template('orders/create_order.html')

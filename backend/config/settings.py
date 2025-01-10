@@ -1,8 +1,12 @@
-import os
 from dotenv import load_dotenv
+from pydantic_settings import BaseSettings
 
+# Tải các biến môi trường từ file .env
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:12345@localhost:5432/yummygo")
-SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key")
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+class Settings(BaseSettings):
+    database_url: str
+    secret_key: str
+    debug: bool = True
+
+settings = Settings()  # Không cần env_file trong Config nữa

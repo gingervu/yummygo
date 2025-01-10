@@ -6,43 +6,35 @@ YummyGo là một ứng dụng giao đồ ăn cho phép khách hàng đặt món
 
 ```
 backend/
-├── config/ # Chứa các cấu hình cơ bản cho dự án.
-│   ├── .env #File này chứa các biến môi trường như kết nối cơ sở dữ liệu, secret key
-│   ├── logging_config.py #Cấu hình logging cho dự án
-│   └── settings.py # Cấu hình cài đặt của ứng dụng
+├── config/ # Cấu hình cơ bản cho dự án
+│   ├── .env # Chứa các biến môi trường như kết nối cơ sở dữ liệu, secret key
+│   ├── logging_config.py #Cấu hình cho logging, giúp bạn theo dõi lỗi, sự kiện trong quá trình chạy của ứng dụng.
+│   └── settings.py # Cấu hình cài đặt cho ứng dụng như đường dẫn kết nối cơ sở dữ liệu, secret key, và các thông số cấu hình khác.
 ├── controllers/ # Xử lý logic chính cho các module
-│   ├── admin_controller.py
-│   ├── customer_controller.py
-│   ├── driver_controller.py
-│   ├── menu_item_controller.py
-│   ├── order_controller.py
-│   └── restaurant_controller.py
 ├── db/
-│   └── database_dump.sql
+│   └── database.py
 ├── middlewares/ # Các lớp middleware (xử lý request/response)
-│   └── auth_middleware.py
 ├── models/ # Định nghĩa các bảng trong database
+│   ├── schemas.py
 │   └── models.py
-├── routes/                # Định nghĩa các API endpoint
+├── routes/  # Định nghĩa các API endpoint
 │   ├── admin_routes.py
 │   ├── customer_routes.py
 │   ├── driver_routes.py
+│   ├── managers_routes.py
 │   ├── menu_item_routes.py
+│   ├── merchant_routes.py
+│   ├── order_items_routes.py
 │   ├── order_routes.py
-│   └── restaurant_routes.py
-├── services/              # Dịch vụ logic tái sử dụng
-│   ├── auth_service.py
-│   ├── email_service.py
-│   ├── geo_service.py
-│   └── payment_service.py
-├── utils/                 # Các hàm tiện ích
-│   ├── database.py
-│   ├── helpers.py
-│   ├── validators.py
-│   └── constants.py
-├── main.py                # Điểm khởi chạy ứng dụng FastAPI
-├── requirements.txt       # Danh sách các thư viện cần thiết
-└── README.md              # Tài liệu hướng dẫn dự án
+│   ├── restaurant_routes.py
+│   ├── restaurant_times_routes.py
+│   └── user_routes.py
+├── services/ # Dịch vụ logic tái sử dụng
+├── utils/ # Các hàm tiện ích
+
+├── main.py # Điểm khởi chạy ứng dụng FastAPI
+├── requirements.txt # Danh sách các thư viện cần thiết
+└── README.md # Tài liệu hướng dẫn dự án
 ```
 
 ## Yêu cầu

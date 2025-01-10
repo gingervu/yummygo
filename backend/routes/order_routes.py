@@ -1,30 +1,54 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from typing import List
+from models import models, schemas
 from db.database import get_db
-from models.models import Order
+from datetime import datetime
 
 router = APIRouter()
 
-@router.post("/")
-def create_order(customer_id: int, restaurant_id: int, address: str, coord: str, db: Session = Depends(get_db)):
-    order = Order(customer_id=customer_id, restaurant_id=restaurant_id, address=address, coord=f"POINT({coord})")
-    db.add(order)
+# Tạo đơn hàng mới
+@router.post("/", response_model=schemas.Order)
+def create_order(order: schemas.OrderCreate, db: Session = Depends(get_db)):
+    db_order = models.Order(**order.dict())
+    db.add(db_order)
     db.commit()
-    db.refresh(order)
-    return order
+    db.refresh(db_order)
+    return db_order
 
-@router.get("/{order_id}")
+# Lấy danh sách đơn hàng
+@router.get("/", response_model=List[schemas.Order])
+def get_orders(db: Session = Depends(get_db)):
+    return db.query(models.Order).all()
+
+# Lấy đơn hàng theo ID
+@router.get("/{order_id}", response_model=schemas.Order)
 def get_order(order_id: int, db: Session = Depends(get_db)):
-    order = db.query(Order).filter(Order.order_id == order_id).first()
-    if not order:
+    db_order = db.query(models.Order).filter(models.Order.order_id == order_id).first()
+    if db_order is None:
         raise HTTPException(status_code=404, detail="Order not found")
-    return order
+    return db_order
 
-@router.put("/{order_id}/status")
-def update_order_status(order_id: int, status: str, db: Session = Depends(get_db)):
-    order = db.query(Order).filter(Order.order_id == order_id).first()
-    if not order:
+# Cập nhật trạng thái đơn hàng
+@router.put("/{order_id}", response_model=schemas.Order)
+def update_order(order_id: int, order_update: schemas.OrderUpdate, db: Session = Depends(get_db)):
+    db_order = db.query(models.Order).filter(models.Order.order_id == order_id).first()
+    if db_order is None:
         raise HTTPException(status_code=404, detail="Order not found")
-    order.order_status = status
+    
+    # Cập nhật trạng thái
+    db_order.order_status = order_update.order_status
     db.commit()
-    return order
+    db.refresh(db_order)
+    return db_order
+
+# Xóa đơn hàng
+@router.delete("/{order_id}")
+def delete_order(order_id: int, db: Session = Depends(get_db)):
+    db_order = db.query(models.Order).filter(models.Order.order_id == order_id).first()
+    if db_order is None:
+        raise HTTPException(status_code=404, detail="Order not found")
+    
+    db.delete(db_order)
+    db.commit()
+    return {"detail": "Order has been deleted"}

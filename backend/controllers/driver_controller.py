@@ -1,11 +1,19 @@
-from models.models import Driver
+from flask import Blueprint, render_template, request, redirect, url_for
+from models import Driver, Order
+from app import db
 
-def create_driver(db, name):
-    driver = Driver(name=name)
-    db.add(driver)
-    db.commit()
-    db.refresh(driver)
-    return driver
+driver_bp = Blueprint('driver', __name__)
 
-def get_driver_by_id(db, driver_id):
-    return db.query(Driver).filter(Driver.driver_id == driver_id).first()
+@driver_bp.route('/driver/orders')
+def orders():
+    # Lấy các đơn hàng đang chờ tài xế giao
+    orders = Order.query.filter_by(status='pending').all()
+    return render_template('driver/orders.html', orders=orders)
+
+@driver_bp.route('/driver/accept_order/<int:order_id>')
+def accept_order(order_id):
+    # Tài xế nhận đơn hàng
+    order = Order.query.get(order_id)
+    order.status = 'accepted'
+    db.session.commit()
+    return redirect(url_for('driver.orders'))
