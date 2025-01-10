@@ -1,58 +1,65 @@
-/* Tổng quát */
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #F8F8F8;
-  }
-  
-  /* Main */
-main {
-    font-family: "Poppins", sans-serif;
-    text-align: left;
-    font-weight: 600;
-    padding: 40px ;
-    
+/* Main */
+.driver-home main {
+  font-family: "Poppins", sans-serif;
+  text-align: left;
+  font-weight: 600;
+  margin-top: 60px;
 }
-  
- main h1 {
-    font-size: 32px;
-    color: #7C6F56;
-    margin-left: 120px;
-    
- }
-  
- main p {
-    font-size: 22px;
-    margin-left: 120px;
-    
- }
-  
- .action-btn-container {
-    display: flex;
-    justify-content: center; /* Căn giữa */
-    margin-top: 60px;
-  }
 
- .action-btn {
-    background-color: #0a0c08;
-    color: white;
-    font-size: 2px;
-    font-weight: 600;
-    padding: 15px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+.driver-home main h1 {
+  font-size: 30px;
+  color: #7C6F56;
+  margin: 0 200px 30px 200px ;
+}
 
-  .action-btn svg {
-    height: 1.1em; /* Điều chỉnh chiều cao của SVG nhỏ hơn chiều cao chữ */
-    width: auto;
-    margin-left: 19px; /* Thêm khoảng cách giữa logo và text */
+.driver-home main p {
+  font-size: 22px;
+  margin: 0 200px 0 200px ;
+}
+
+.driver-home .action-btn-container {
+  display: flex;
+  justify-content: center; /* Căn giữa */
+  margin-top: 60px;
+}
+
+.driver-home .action-btn {
+  background-color: #74ea2f;
+  color: white;
+  font-size: 22px;
+  font-weight: 600;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.driver-home .action-btn svg {
+  height: 1.1em; /* Điều chỉnh chiều cao của SVG nhỏ hơn chiều cao chữ */
+  width: auto;
+  margin-left: 16px; /* Thêm khoảng cách giữa logo và text */
+}
+
+.driver-home .action-btn:hover {
+  background-color: #89c37a;
+}
+
+.spinner {
+  margin: 20px auto;
+  width: 50px;
+  height: 50px;
+  border: 6px solid #f3f3f3; /* Màu viền */
+  border-top: 6px solid #74ea2f; /* Màu chính */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Hiệu ứng quay vòng */
+@keyframes spin {
+  0% {
+      transform: rotate(0deg);
   }
-  
- .action-btn:hover {
-    background-color: #89c37a;
+  100% {
+      transform: rotate(360deg);
   }
-  
-  
-  
+}
