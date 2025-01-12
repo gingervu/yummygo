@@ -41,7 +41,7 @@
 }
 
 .driver-home .action-btn:hover {
-  background-color: #89c37a;
+  background-color: #5cdc75;
 }
 
 .spinner {
@@ -49,7 +49,7 @@
   width: 50px;
   height: 50px;
   border: 6px solid #f3f3f3; /* Màu viền */
-  border-top: 6px solid #74ea2f; /* Màu chính */
+  border-top: 6px solid #5cdc75; /* Màu chính */
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }

@@ -55,7 +55,7 @@
   .view-order-btn {
     margin-top: 15px;
     padding: 10px 20px;
-    background-color: #74ea2f;
+    background-color: #25e44c;
     color: white;
     font-size: 20px;
     font-weight: 600;
@@ -81,7 +81,7 @@
   }
   
   .view-order-btn:hover {
-    background-color: #bdbdbd;
+    background-color: #11f03d;
   }
   
   .try-again-btn:hover {

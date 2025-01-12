@@ -125,6 +125,7 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin-bottom: 50px;
 }
 
 .deliver-to-customer .sucess-btn {
