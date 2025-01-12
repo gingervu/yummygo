@@ -37,7 +37,7 @@ def update_driver_service(driver_id: int, driver: DriverCreate, db: Session):
 
 # Cập nhật trạng thái tài xế
 def update_driver_status(driver_id: int, driver: DriverUpdate, db: Session):
-    db_restaurant = db.query(Restaurant).filter(Restaurant.restaurant_id == driver_id and Restaurant.is_deleted == False)
+    db_restaurant = db.query(Restaurant).filter(Restaurant.restaurant_id == driver_id, Restaurant.is_deleted == False)
     if not db_restaurant:
         raise HTTPException(status_code=404, detail="Nhà hàng không tồn tại")
     if db_restaurant.status == RestaurantStatusEnum.active:

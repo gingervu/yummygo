@@ -33,6 +33,8 @@ class UserLogin(BaseModel):
     user_name: str
     password: str
     role: RoleEnum
+    class Config:
+        from_attributes = True  # Chuyển đổi từ SQLAlchemy models sang Pydantic models
 
 # ------------------------------
 # Mô hình Restaurant (Nhà hàng)
@@ -109,8 +111,7 @@ class MenuItemBase(BaseModel):
         from_attributes = True  # Chuyển đổi từ SQLAlchemy models sang Pydantic models
 
 class MenuItemCreate(MenuItemBase):
-    restaurant_id: int  # ID nhà hàng chứa món ăn
-
+    pass
 class MenuItemUpdate(MenuItemBase):
     pass  # Cập nhật món ăn
 

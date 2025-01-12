@@ -5,8 +5,8 @@ from models.enums import *
 from fastapi import HTTPException, status
 
 def authenticate_login(user: UserLogin, db: Session):
-    user_info = db.query(User).filter(User.user_name == user.user_name and 
-                                        User.password == user.password and
+    user_info = db.query(User).filter(User.user_name == user.user_name, 
+                                        User.password == user.password,
                                         User.is_deleted == False).first()
     if not user_info:
         raise HTTPException(

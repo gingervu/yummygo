@@ -7,8 +7,8 @@ from models import models
 
 # Lấy thông tin nhà hàng theo ID 
 def get_restaurant(restaurant_id: int, db: Session):
-    restaurant = db.query(Restaurant).filter(Restaurant.restaurant_id == restaurant_id and 
-                                             Restaurant.is_deleted == False and
+    restaurant = db.query(Restaurant).filter(Restaurant.restaurant_id == restaurant_id,
+                                             Restaurant.is_deleted == False,
                                              Restaurant.status == RestaurantStatusEnum.active).first()
     if not restaurant:
         raise HTTPException(status_code=404, detail="Nhà hàng không tồn tại")
@@ -16,12 +16,12 @@ def get_restaurant(restaurant_id: int, db: Session):
 
 # Lấy danh sách nhà hàng để khách hàng duyệt
 def list_restaurants(db: Session):
-    return db.query(Restaurant).filter(Restaurant.is_deleted == False and
+    return db.query(Restaurant).filter(Restaurant.is_deleted == False,
                                        Restaurant.status == RestaurantStatusEnum.active).all()
 
 # Cập nhật nhà hàng
 def update_restaurant(restaurant_id: int, restaurant: RestaurantUpdate, db: Session):
-    db_restaurant = db.query(Restaurant).filter(Restaurant.restaurant_id == restaurant_id and Restaurant.is_deleted == False).first()
+    db_restaurant = db.query(Restaurant).filter(Restaurant.restaurant_id == restaurant_id, Restaurant.is_deleted == False).first()
     if not db_restaurant:
         raise HTTPException(status_code=404, detail="Nhà hàng không tồn tại")
     for key, value in restaurant.model_dump().items():
@@ -32,7 +32,7 @@ def update_restaurant(restaurant_id: int, restaurant: RestaurantUpdate, db: Sess
 
 # Cập nhật trạng thái nhà hàng
 def update_restaurant_status(restaurant_id: int, db: Session):
-    db_restaurant = db.query(Restaurant).filter(Restaurant.restaurant_id == restaurant_id and
+    db_restaurant = db.query(Restaurant).filter(Restaurant.restaurant_id == restaurant_id,
                                                 Restaurant.is_deleted == False)
     restaurant = db_restaurant.first()
     if not restaurant:
