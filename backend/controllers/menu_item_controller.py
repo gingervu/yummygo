@@ -11,10 +11,10 @@ from services.menu_item_service import (
     delete_menu_item,
 )
 
-router = APIRouter(prefix="/menu_items", tags=["Menu Items"])
+router = APIRouter(prefix="/items", tags=["Menu Items"])
 
 @router.post("/", response_model=schemas.MenuItem)
-async def create_menu(menu_item: schemas.MenuItemCreate, db: Session = Depends(get_db)):
+async def add_item(menu_item: schemas.MenuItemCreate, db: Session = Depends(get_db)):
     return create_menu_item(menu_item, db)
 
 @router.get("/", response_model=List[schemas.MenuItem])

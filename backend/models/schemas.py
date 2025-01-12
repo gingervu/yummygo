@@ -29,27 +29,10 @@ class UserUpdate(UserBase):
     phone: Optional[str] = None  # Số điện thoại có thể thay đổi
     email: Optional[EmailStr] = None  # Email có thể thay đổi
 
-
-# ------------------------------
-# Mô hình Merchant (Nhà cung cấp)
-# ------------------------------
-
-class MerchantBase(BaseModel):
-    name: str  # Tên nhà cung cấp
-
-class MerchantCreate(MerchantBase):
-    pass  # Khi tạo mới, không cần thêm thuộc tính gì ngoài tên
-
-class Merchant(MerchantBase):
-    merchant_id: int  # ID nhà cung cấp
-    is_deleted: bool = False  # Trạng thái xóa nhà cung cấp, mặc định là False
-
-    class Config:
-        from_attributes = True  # Chuyển đổi từ SQLAlchemy models sang Pydantic models
-
-class MerchantUpdate(MerchantBase):
-    name: Optional[str] = None  # Tên nhà cung cấp có thể thay đổi
-
+class UserLogin(BaseModel):
+    user_name: str
+    password: str
+    role: str
 
 # ------------------------------
 # Mô hình Restaurant (Nhà hàng)
@@ -100,7 +83,6 @@ class RestaurantUpdate(RestaurantBase):
 
 class Restaurant(RestaurantBase):
     restaurant_id: int  # ID nhà hàng
-    merchant_id: int  # ID nhà cung cấp
 
     class Config:
         from_attributes = True  # Chuyển đổi từ SQLAlchemy models sang Pydantic models
@@ -241,16 +223,13 @@ class OrderBase(BaseModel):
     driver_id: Optional[int] = None  # ID tài xế, có thể rỗng
     address: Optional[str] = None  # Địa chỉ giao hàng, có thể rỗng
     coord: Optional[str] = None  # Tọa độ giao hàng
-    delivery_fee: Optional[float] = None  # Phí giao hàng
+    distance: Optional[float] = None  # Phí giao hàng
     food_fee: Optional[float] = None  # Phí món ăn
     order_status: OrderStatusEnum = OrderStatusEnum.cart  # Trạng thái đơn hàng
     note: Optional[str] = None  # Ghi chú
 
 class OrderCreate(OrderBase):
     pass  # Tạo đơn hàng mới
-
-class OrderUpdate(OrderBase):
-    order_status: OrderStatusEnum  # Cập nhật trạng thái đơn hàng
 
 class Order(OrderBase):
     order_id: int  # ID đơn hàng
@@ -260,6 +239,8 @@ class Order(OrderBase):
     class Config:
         from_attributes = True  # Chuyển đổi từ SQLAlchemy models sang Pydantic models
 
+class OrderUpdate(BaseModel):
+    order_status: OrderStatusEnum  # Cập nhật trạng thái đơn hàng
 
 # ------------------------------
 # Mô hình Order Item (Món trong đơn hàng)
@@ -267,7 +248,6 @@ class Order(OrderBase):
 
 class OrderItemBase(BaseModel):
     item_id: int  # ID món ăn
-    order_id: int  # ID đơn hàng
     price: float  # Giá món ăn
     quantity: int = 1  # Số lượng món ăn, mặc định là 1
 
@@ -278,7 +258,7 @@ class OrderItemCreate(OrderItemBase):
     pass  # Tạo món ăn trong đơn hàng
 
 class OrderItem(OrderItemBase):
-    pass  # Món ăn trong đơn hàng
+    order_id: int  # ID đơn hàng
 
 
 # ------------------------------

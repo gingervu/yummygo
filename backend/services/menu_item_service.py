@@ -1,48 +1,56 @@
 from sqlalchemy.orm import Session
 from typing import List
-from models import models, schemas
+from models.models import *
+from models.schemas import *
 from fastapi import HTTPException
 
 
-def create_menu_item(menu_item: schemas.MenuItemCreate, db: Session) -> models.MenuItem:
+def create_menu_item(menu_item: MenuItemCreate, db: Session) -> MenuItem:
     """
     Tạo một menu item mới.
     """
     # Kiểm tra nếu nhà hàng có trong cơ sở dữ liệu
-    restaurant = db.query(models.Restaurant).filter(models.Restaurant.restaurant_id == menu_item.restaurant_id).first()
+    restaurant = db.query(Restaurant).filter(Restaurant.restaurant_id == menu_item.restaurant_id).first()
     if not restaurant:
         raise HTTPException(status_code=404, detail="Nhà hàng không tồn tại")
 
     # Tạo mới menu item
-    new_menu_item = models.MenuItem(**menu_item.dict())
+    new_menu_item = MenuItem(**menu_item.dict())
     db.add(new_menu_item)
     db.commit()
     db.refresh(new_menu_item)
     return new_menu_item
 
-
-def list_menu_items(db: Session) -> List[models.MenuItem]:
+# lấy ra danh sách món theo nhà hàng
+def list_menu_items(restaurant_id: int, db: Session) -> List[MenuItem]:
     """
-    Lấy danh sách tất cả menu items chưa bị xóa.
+    Lấy danh sách tất cả món chưa bị xóa của nhà hàng .
     """
-    return db.query(models.MenuItem).filter(models.MenuItem.is_deleted == False).all()
+    return db.query(MenuItem).filter(MenuItem.restaurant_id == restaurant_id and MenuItem.is_deleted == False).all()
+
+# lấy ra danh sách món available theo nhà hàng
+def available_items(restaurant_id: int, db: Session) -> List[MenuItem]:
+    """
+    Lấy danh sách tất cả món chưa bị xóa của nhà hàng .
+    """
+    return db.query(MenuItem).filter(MenuItem.restaurant_id == restaurant_id and MenuItem.status ==  MenuItem.is_deleted == False).all()
 
 
-def get_menu_item(item_id: int, db: Session) -> models.MenuItem:
+def get_menu_item(item_id: int, db: Session) -> MenuItem:
     """
     Lấy thông tin chi tiết của một menu item theo ID.
     """
-    menu_item = db.query(models.MenuItem).filter(models.MenuItem.item_id == item_id).first()
+    menu_item = db.query(MenuItem).filter(MenuItem.item_id == item_id).first()
     if not menu_item:
         raise HTTPException(status_code=404, detail="Món ăn không tồn tại")
     return menu_item
 
 
-def update_menu_item(item_id: int, menu_item: schemas.MenuItemUpdate, db: Session) -> models.MenuItem:
+def update_menu_item(item_id: int, menu_item: MenuItemUpdate, db: Session) -> MenuItem:
     """
     Cập nhật thông tin của một menu item.
     """
-    db_menu_item = db.query(models.MenuItem).filter(models.MenuItem.item_id == item_id).first()
+    db_menu_item = db.query(MenuItem).filter(MenuItem.item_id == item_id).first()
     if not db_menu_item:
         raise HTTPException(status_code=404, detail="Món ăn không tồn tại")
     
@@ -59,7 +67,7 @@ def delete_menu_item(item_id: int, db: Session):
     """
     Xóa mềm (soft delete) một menu item.
     """
-    db_menu_item = db.query(models.MenuItem).filter(models.MenuItem.item_id == item_id).first()
+    db_menu_item = db.query(MenuItem).filter(MenuItem.item_id == item_id).first()
     if not db_menu_item:
         raise HTTPException(status_code=404, detail="Món ăn không tồn tại")
     

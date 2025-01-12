@@ -75,33 +75,19 @@ class User(Base):
     email = Column(String, unique=True)                             # Email (duy nhất)
     is_deleted = Column(Boolean, default=False)                     # Đánh dấu người dùng đã bị xóa
 
-# Bảng Merchant - Lưu thông tin đối tác
-class Merchant(Base):
-    __tablename__ = 'merchants'
-    merchant_id = Column(Integer, primary_key=True)
-    name = Column(Text, nullable=False)
-    is_deleted = Column(Boolean, default=False)
-
 # Bảng Restaurant - Lưu thông tin nhà hàng
 class Restaurant(Base):
     __tablename__ = 'restaurants'
-    restaurant_id = Column(Integer, primary_key=True, autoincrement=True)
-    merchant_id = Column(Integer, ForeignKey('merchants.merchant_id'), nullable=False)  # Liên kết với Merchant
+    restaurant_id = Column(Integer, primary_key=True)
     name = Column(Text, nullable=False)
     category = Column(Enum(CategoryEnum))  # Danh mục nhà hàng
-    phone = Column(String, unique=True)
     address = Column(Text, nullable=False)
     coord = Column(Geometry('POINT'), nullable=False)  # Tọa độ địa lý của nhà hàng
     status = Column(Enum(RestaurantStatusEnum), default=RestaurantStatusEnum.inactive)  # Trạng thái
     is_deleted = Column(Boolean, default=False)
 
-    # Thiết lập quan hệ
-    merchant = relationship("Merchant", back_populates="restaurants")
     menu_items = relationship("MenuItem", back_populates="restaurant")
     times = relationship("RestaurantTime", back_populates="restaurant")
-
-# Quan hệ giữa Merchant và Restaurant
-Merchant.restaurants = relationship("Restaurant", back_populates="merchant")
 
 # Bảng lưu giờ hoạt động của nhà hàng
 class RestaurantTime(Base):

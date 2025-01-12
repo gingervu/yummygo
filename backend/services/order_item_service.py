@@ -1,17 +1,17 @@
 from sqlalchemy.orm import Session
-from models import models, schemas
+from models.models import *
+from models.schemas import *
 from fastapi import HTTPException
 
-def create_order_item(order_item: schemas.OrderItemCreate, db: Session) -> models.OrderItem:
-    db_order_item = db.query(models.OrderItem).filter(
-        models.OrderItem.item_id == order_item.item_id,
-        models.OrderItem.order_id == order_item.order_id
+def create_order_item(order_item: OrderItemCreate, db: Session) -> OrderItem:
+    db_order_item = db.query(OrderItem).filter(
+        OrderItem.item_id == order_item.item_id,
     ).first()
 
     if db_order_item:
         raise HTTPException(status_code=400, detail="Mục đơn hàng đã tồn tại")
 
-    new_order_item = models.OrderItem(
+    new_order_item = OrderItem(
         item_id=order_item.item_id,
         order_id=order_item.order_id,
         price=order_item.price,
@@ -22,16 +22,17 @@ def create_order_item(order_item: schemas.OrderItemCreate, db: Session) -> model
     db.refresh(new_order_item)
     return new_order_item
 
-def get_order_items(order_id: int, db: Session) -> list[models.OrderItem]:
-    order_items = db.query(models.OrderItem).filter(models.OrderItem.order_id == order_id).all()
+
+def get_order_items(order_id: int, db: Session) -> list[OrderItem]:
+    order_items = db.query(OrderItem).filter(OrderItem.order_id == order_id).all()
     if not order_items:
         raise HTTPException(status_code=404, detail="Không tìm thấy mục đơn hàng")
     return order_items
 
-def update_order_item(order_id: int, item_id: int, order_item: schemas.OrderItemCreate, db: Session) -> models.OrderItem:
-    db_order_item = db.query(models.OrderItem).filter(
-        models.OrderItem.order_id == order_id,
-        models.OrderItem.item_id == item_id
+def update_order_item(order_id: int, item_id: int, order_item: OrderItemCreate, db: Session) -> OrderItem:
+    db_order_item = db.query(OrderItem).filter(
+        OrderItem.order_id == order_id,
+        OrderItem.item_id == item_id
     ).first()
 
     if not db_order_item:
@@ -44,9 +45,9 @@ def update_order_item(order_id: int, item_id: int, order_item: schemas.OrderItem
     return db_order_item
 
 def delete_order_item(order_id: int, item_id: int, db: Session) -> None:
-    db_order_item = db.query(models.OrderItem).filter(
-        models.OrderItem.order_id == order_id,
-        models.OrderItem.item_id == item_id
+    db_order_item = db.query(OrderItem).filter(
+        OrderItem.order_id == order_id,
+        OrderItem.item_id == item_id
     ).first()
 
     if not db_order_item:
