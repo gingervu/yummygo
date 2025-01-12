@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from models.models import *
 from models.schemas import *
+from models.enums import *
 from fastapi import HTTPException, status
 
 def authenticate_login(user: UserLogin, db: Session):
@@ -15,7 +16,7 @@ def authenticate_login(user: UserLogin, db: Session):
         )
     
     user_id = user_info.user_id
-    if user.role == "customer":
+    if user.role == RoleEnum.customer:
         customer = db.query(Customer).filter(Customer.customer_id == user_id).first()
         if not customer:
             raise HTTPException(
@@ -24,7 +25,7 @@ def authenticate_login(user: UserLogin, db: Session):
                 headers={"WWW-Authenticate": "Bearer"},                
             )
         
-    elif user.role == "driver":
+    elif user.role == RoleEnum.driver:
         driver = db.query(Driver).filter(Driver._id == user_id).first()
         if not driver:
             raise HTTPException(
@@ -32,7 +33,7 @@ def authenticate_login(user: UserLogin, db: Session):
                 detail="Bạn chưa có tài khoản tài xế",
                 headers={"WWW-Authenticate": "Bearer"},                
             )
-    elif user.role == "restaurant":
+    elif user.role == RoleEnum.restaurant:
         restaurant_id = db.query(Restaurant).filter(Restaurant.restaurant_id == user_id).first()
         if not restaurant_id:
             raise HTTPException(

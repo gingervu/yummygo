@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from services import order_service
 from models.models import *
-from models.schemas import Order, OrderCreate, OrderUpdate
+from models.schemas import OrderSchema, OrderCreate, OrderUpdate
 from db.database import get_db
 from middlewares.auth_middleware import get_current_user
 import random
@@ -11,7 +11,7 @@ import random
 router = APIRouter(prefix="/oders", tags=["Oders"])
 
 # Tạo đơn hàng mới
-@router.post("/", response_model=Order)
+@router.post("/", response_model=OrderSchema)
 async def create_order(order: OrderCreate, db: Session = Depends(get_db)):
     return order_service.create_order(order, db)
 
@@ -19,14 +19,14 @@ async def create_order(order: OrderCreate, db: Session = Depends(get_db)):
 # ---> trả về danh sách gồm order_id và restaurant_id, có thể dùng order_id để 
 # xem thông tin chi tiết của order, dùng api /restaurant/get/{restaurant_id}
 # để lấy thông tin nhà hàng
-@router.get("/", response_model=List[Order])
+@router.get("/", response_model=List[OrderSchema])
 async def get_order(user_id: int = Depends(get_current_user), db: Session = Depends(get_db)):
     return order_service.get_orders_in_cart(user_id, db)
 
 # Lấy đơn hàng theo ID
 # -> trả về danh sách order_items
 # ta vẫn có order_id để tiếp tục thực hiện 
-@router.get("/{order_id}", response_model=Order)
+@router.get("/{order_id}", response_model=OrderSchema)
 async def get_order(order_id: int, db: Session = Depends(get_db)):
     return order_service.get_order(order_id, db)
 
@@ -36,7 +36,7 @@ async def get_order(order_id: int, db: Session = Depends(get_db)):
 # "Đã lấy đơn" => "delivering"
 # "Đã đến điểm giao" => "delivered"
 # "Giao hàng thành công" => "completed"
-@router.put("/{order_id}", response_model=Order)
+@router.put("/{order_id}", response_model=OrderSchema)
 async def update_order(order_id: int, order_update: OrderUpdate, db: Session = Depends(get_db)):
     return order_service.update_order(order_id, order_update, db)
 
@@ -72,7 +72,7 @@ async def websocket_driver(websocket: WebSocket, driver_id: int):
 @router.get("/find-driver/{order_id}")
 async def find_driver(order_id: int, db: Session):
     # Lấy order từ database và tìm restaurant_id
-    order = db.query(Order).filter(Order.id == order_id).first()
+    order = db.query(OrderSchema).filter(OrderSchema.id == order_id).first()
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
     

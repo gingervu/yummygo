@@ -3,7 +3,6 @@ from models.models import *
 from models.schemas import *
 from fastapi import HTTPException
 
-
 def create_manager_service(manager: ManagerCreate, db: Session):
     """Tạo mới một Manager."""
     # Kiểm tra nếu username đã tồn tại

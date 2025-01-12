@@ -24,6 +24,10 @@ async def update_restaurant_(restaurant: RestaurantUpdate, restaurant_id: int = 
 async def delete_restaurant_(restaurant_id: int = Depends(get_current_user), db: Session = Depends(get_db)):
     return delete_restaurant(restaurant_id, db)
 
+@router.put("/change-status")
+async def change_status(restaurant_id: int = Depends(get_current_user), db: Session = Depends(get_db)):
+    return update_restaurant_status(restaurant_id, db)
+
 # Lấy danh sách các nhà hàng đang active --> customer duyệt
 @router.get("/active")
 async def list_restaurants_(db: Session = Depends(get_db)):

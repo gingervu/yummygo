@@ -1,13 +1,13 @@
 from sqlalchemy.orm import Session
 from models.models import *
 from models.schemas import *
+from models.enums import *
 from fastapi import HTTPException
 from typing import List
 
 # ------------------------------
 # Quản lý Logic Nghiệp Vụ Tài Xế
 # ------------------------------
-
 
 def list_drivers_service(db: Session) -> List[Driver]:
     """Lấy danh sách tất cả tài xế chưa bị xóa"""
@@ -33,6 +33,22 @@ def update_driver_service(driver_id: int, driver: DriverCreate, db: Session):
     db.commit()
     db.refresh(db_driver)
     return db_driver
+
+
+# Cập nhật trạng thái tài xế
+def update_driver_status(driver_id: int, driver: DriverUpdate, db: Session):
+    db_restaurant = db.query(Restaurant).filter(Restaurant.restaurant_id == driver_id and Restaurant.is_deleted == False)
+    if not db_restaurant:
+        raise HTTPException(status_code=404, detail="Nhà hàng không tồn tại")
+    if db_restaurant.status == RestaurantStatusEnum.active:
+        db_restaurant.update({Restaurant.status: RestaurantStatusEnum.inactive})
+
+    if db_restaurant.status == RestaurantStatusEnum.inactive:
+        db_restaurant.update({Restaurant.status: RestaurantStatusEnum.active})
+
+    db.commit()
+    db.refresh(db_restaurant)
+    return db_restaurant
 
 
 def delete_driver_service(driver_id: int, db: Session):
