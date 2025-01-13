@@ -11,11 +11,12 @@ import SignUpPopup from './components/SignUpPopup/SignUpPopup';
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null); // Trạng thái người dùng hiện tại
 
   // Mock existing users (giả lập dữ liệu người dùng đã có)
   const [existingUsers, setExistingUsers] = useState([
-    { username: 'user1', phoneNumber: '0123456789', email: 'user1@example.com' },
-    { username: 'user2', phoneNumber: '0987654321', email: 'user2@example.com' },
+    { username: 'user1', phoneNumber: '0123456789', email: 'user1@example.com', password: 'pass1' },
+    { username: 'user2', phoneNumber: '0987654321', email: 'user2@example.com', password: 'pass2' },
   ]);
 
   // Hàm xử lý khi đăng ký thành công
@@ -25,10 +26,27 @@ const App = () => {
     setShowLogin(true);
   };
 
+  // Hàm xử lý khi đăng nhập thành công
+  const handleLoginSuccess = (user) => {
+    setCurrentUser(user); // Gán người dùng hiện tại
+    setShowLogin(false);
+  };
+
+  // Hàm xử lý đăng xuất
+  const handleLogout = () => {
+    setCurrentUser(null);
+  };
+
   return (
     <>
       {/* Hiển thị popup đăng nhập hoặc đăng ký */}
-      {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
+      {showLogin && (
+        <LoginPopup
+          setShowLogin={setShowLogin}
+          existingUsers={existingUsers}
+          onLoginSuccess={handleLoginSuccess}
+        />
+      )}
       {showSignUp && (
         <SignUpPopup
           setShowSignUp={setShowSignUp}
@@ -40,7 +58,9 @@ const App = () => {
       <div className="app">
         <Navbar
           setShowLogin={setShowLogin}
-          setShowSignUp={setShowSignUp} 
+          setShowSignUp={setShowSignUp}
+          currentUser={currentUser}
+          handleLogout={handleLogout}
         />
         <Routes>
           <Route path="/" element={<Home />} />

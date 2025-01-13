@@ -70,6 +70,47 @@
     cursor: pointer;
 }
 
+/* Phần dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-button {
+    padding: 8px 16px;
+    background-color: #894306;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .dropdown-button:hover {
+    background-color: #a3570a;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 8px;
+    z-index: 10;
+  }
+  
+  .dropdown-menu li {
+    list-style: none;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  
+  .dropdown-menu li:hover {
+    background-color: #f4f4f4;
+  }
+  
 
 
 

@@ -8,25 +8,38 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Màu nền mờ */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9));
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    font-family: 'Open Sans', sans-serif; /* Áp dụng font Open Sans */
+    font-family: 'Open Sans', sans-serif;
 }
 
 /* Container của popup */
 .login-popup-container {
-    background-color: white;
+    background: white;
     width: 400px;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
     gap: 20px;
     position: relative;
+    animation: fadeIn 0.4s ease;
+}
+
+/* Hiệu ứng fade-in */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Tiêu đề */
@@ -34,6 +47,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 .login-popup-title h2 {
@@ -44,45 +58,52 @@
 }
 
 .login-popup-title img {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.login-popup-title img:hover {
+    transform: rotate(90deg);
 }
 
 /* Các input */
 .login-popup-inputs input,
 .login-popup-inputs select {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     font-size: 16px;
-    font-family: 'Open Sans', sans-serif; /* Font chữ Open Sans */
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
     outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
     box-sizing: border-box;
+    margin-bottom: 10px;
 }
 
 .login-popup-inputs input:focus,
 .login-popup-inputs select:focus {
     border-color: #a77905;
+    box-shadow: 0px 0px 5px rgba(167, 121, 5, 0.5);
 }
 
 /* Nút hành động */
 button {
-    background-color: #a77905;
+    background: linear-gradient(to right, #ff9800, #ffc107);
     color: white;
     font-size: 16px;
     font-weight: 600;
-    font-family: 'Open Sans', sans-serif; /* Font chữ Open Sans */
     border: none;
-    border-radius: 5px;
-    padding: 10px;
+    border-radius: 8px;
+    padding: 12px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
-    background-color: #894306;
+    background: linear-gradient(to right, #ff8c00, #ffa000);
+    transform: scale(1.05);
 }
 
 /* Điều khoản */
@@ -101,7 +122,6 @@ button:hover {
 .login-popup-condition p {
     margin: 0;
     font-size: 14px;
-    font-family: 'Open Sans', sans-serif; /* Font chữ Open Sans */
     color: #555;
 }
 
@@ -110,7 +130,6 @@ button:hover {
     font-size: 14px;
     color: #555;
     text-align: center;
-    font-family: 'Open Sans', sans-serif; /* Font chữ Open Sans */
 }
 
 .login-popup p span {
@@ -121,14 +140,14 @@ button:hover {
 }
 
 .login-popup p span:hover {
-    color: #894306;
+    color: #ff8c00;
 }
 
 /* Responsive */
 @media (max-width: 480px) {
     .login-popup-container {
         width: 90%;
-        padding: 15px;
+        padding: 20px;
     }
 
     .login-popup-title h2 {
@@ -138,18 +157,19 @@ button:hover {
     .login-popup-inputs input,
     .login-popup-inputs select {
         font-size: 14px;
-        padding: 8px;
+        padding: 10px;
     }
 
     button {
         font-size: 14px;
-        padding: 8px;
+        padding: 10px;
     }
 
     .login-popup p {
         font-size: 12px;
     }
 }
+
 /* Style cho các ô input có lỗi */
 input.error {
     border: 2px solid #e74c3c;
@@ -164,20 +184,4 @@ select.error {
     color: #e74c3c;
     font-size: 0.9rem;
     margin-top: 5px;
-}
-
-/* Style cho button */
-button {
-    background-color: #c59a00;
-    color: white;
-    font-size: 1rem;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #b3a400;
 }
