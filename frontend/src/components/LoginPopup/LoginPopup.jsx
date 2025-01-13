@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import "./LoginPopup.css";
 import { assets } from "../../assets/assets";
 
-const LoginPopup = ({ setShowLogin, existingUsers, onLoginSuccess }) => {
+const LoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginSuccess, setRole }) => {
   const [email, setEmail] = useState(""); // Trường email
   const [password, setPassword] = useState(""); // Trường mật khẩu
+  const [role, setRoleLocal] = useState(""); // Trường vai trò
   const [error, setError] = useState(""); // Thông báo lỗi
 
   // Hàm xử lý đăng nhập
@@ -15,7 +16,7 @@ const LoginPopup = ({ setShowLogin, existingUsers, onLoginSuccess }) => {
     );
 
     if (user) {
-      onLoginSuccess(user); // Đăng nhập thành công
+      onLoginSuccess(user, role); // Đăng nhập thành công, kèm theo vai trò
     } else {
       setError("Email hoặc mật khẩu không đúng."); // Đăng nhập thất bại
     }
@@ -50,6 +51,18 @@ const LoginPopup = ({ setShowLogin, existingUsers, onLoginSuccess }) => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+
+          {/* Chọn vai trò */}
+          <select
+            value={role}
+            onChange={(e) => setRoleLocal(e.target.value)}
+            required
+          >
+            <option value="">Chọn vai trò</option>
+            <option value="Khách hàng">Khách hàng</option>
+            <option value="Tài xế">Tài xế</option>
+            <option value="Doanh nghiệp">Doanh nghiệp</option>
+          </select>
         </div>
 
         {/* Hiển thị lỗi nếu có */}
@@ -57,6 +70,19 @@ const LoginPopup = ({ setShowLogin, existingUsers, onLoginSuccess }) => {
 
         {/* Nút hành động */}
         <button type="submit">Đăng nhập</button>
+
+        {/* Chuyển sang đăng ký */}
+        <p className="switch-to-signup">
+          Chưa có tài khoản?{" "}
+          <span
+            onClick={() => {
+              setShowLogin(false); // Đóng popup đăng nhập
+              setShowSignUp(true); // Mở popup đăng ký
+            }}
+          >
+            Đăng ký ngay
+          </span>
+        </p>
       </form>
     </div>
   );

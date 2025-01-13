@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap'); /* Thay đổi phông chữ ở đây */
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=person");
+
 
 .navbar {
     /* padding: 20px 0px; */
@@ -12,121 +14,84 @@
     top: 0;
     left: 0;
     z-index: 1000;
+    padding: 10px;
 }
 
-.navbar-left {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    color: #000000;
-    /* font-family: "Monoton", serif; */
-}
-
-.navbar-left .yummygo {
-    font-size: 30px;
-    font-family: 'Monoton', cursive; /* Sử dụng phông chữ Monoton */
-}
-
-.navbar-center {
-    display: flex;
-    justify-content: center; /* Hoặc sử dụng space-between */
-    align-items: center;
-    gap: 20px; /* Khoảng cách giữa các thành phần */
-    font-family: 'Roboto', sans-serif; /* Sử dụng phông chữ mới */
-}
-
-.navbar-center button{
-    border: nonw;
-    color: #747474;
-    font-weight: 500;
-    padding: 1vw 2.3vw;
-    background-color: white;
-    font-size: max(1vw, 13px);
-    border-radius: 50px;
-}
-
-.navbar-center p {
-    color: #000000;
-    cursor: pointer;
-    font-family: 'Roboto', sans-serif; /* Sử dụng phông chữ Roboto */
-}
-
-.navbar p {
-    margin-top: 10px;
-    color: #892e00;
-    cursor: pointer;
-}
-
-
-.navbar-right{
-    display: flex;
-    gap: 20px;
-    padding-right: 50px;
-}
-
-.navbar-right button {
-    list-style: none;
-    /* font-family: 'Monoton', cursive; */
-    cursor: pointer;
-}
-
-/* Phần dropdown */
-.dropdown {
-    position: relative;
-    display: inline-block;
+.navbar-left p {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
   }
   
-  .dropdown-button {
-    padding: 8px 16px;
-    background-color: #894306;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
+  .navbar-center {
+    flex-grow: 1;
+    text-align: center;
   }
   
-  .dropdown-button:hover {
-    background-color: #a3570a;
+  .search-bar input {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    width: 250px;
   }
   
-  .dropdown-menu {
+  .search-results {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 5px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
     position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 8px;
-    z-index: 10;
+    width: 250px;
+    z-index: 1;
   }
   
-  .dropdown-menu li {
-    list-style: none;
-    padding: 8px 16px;
+  .search-results li {
+    padding: 5px;
     cursor: pointer;
   }
   
-  .dropdown-menu li:hover {
-    background-color: #f4f4f4;
+  .search-results li:hover {
+    background-color: #f1f1f1;
   }
   
-
-
-
-/* @media (max-width: 1200px) {
-    .navbar-left {
-        display: flex;
-        width: 100px;
-    }
-    .navbar-center {
-        gap: 20px;
-        font-size: 17px;
-    }
-
-    .navbar-right {
-        gap: 30px;
-        font-size: 18px;
-    }
-} */
-
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .navbar-icon {
+    font-size: 30px;
+    cursor: pointer;
+  }
+  
+  .user-menu {
+    position: relative;
+  }
+  
+  .user-dropdown {
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-dropdown button {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 5px;
+    width: 100%;
+  }
+  
+  .user-dropdown button:hover {
+    background-color: #f1f1f1;
+  }
