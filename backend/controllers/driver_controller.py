@@ -11,7 +11,7 @@ from services.driver_service import (
     delete_driver_service,
 )
 
-from middlewares.auth_middleware import get_current_user
+from middlewares.auth_middleware import get_current_user, require_role
 
 router = APIRouter(prefix="/drivers", tags=["Drivers"])
 
@@ -19,9 +19,9 @@ router = APIRouter(prefix="/drivers", tags=["Drivers"])
 # Quản lý Tài Xế (Controller)
 # ------------------------------
 
-@router.get("/", response_model=DriverSchema)
-async def get_driver(driver_id: int = Depends(get_current_user), db: Session = Depends(get_db)):
-    return get_driver_service(driver_id, db)
+@router.get("/me", response_model=DriverSchema)
+async def get_driver(current_driver: dict = Depends(require_role("driver")), db: Session = Depends(get_db)):
+    return get_driver_service(current_driver['user_id'], db)
 
 
 @router.put("/update", response_model=DriverSchema)
