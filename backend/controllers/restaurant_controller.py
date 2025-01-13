@@ -35,6 +35,6 @@ async def list_restaurants_(db: Session = Depends(get_db)):
     return list_restaurants(db)
 
 # Lấy thông tin nhà hàng theo ID ---> hiện trên giao diện customer
-@router.get("/{restaurant_id}")
+@router.get("/{restaurant_id}", response_model=RestaurantSchema)
 async def get_restaurant_by_id(restaurant_id: int, db: Session = Depends(get_db)):
     return get_restaurant(restaurant_id, db)

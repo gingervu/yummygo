@@ -2,7 +2,6 @@ from sqlalchemy.orm import Session
 from typing import List
 from models.models import *
 from models.schemas import *
-from models.enums import *
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError

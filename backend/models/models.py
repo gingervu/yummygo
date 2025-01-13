@@ -1,11 +1,73 @@
 from sqlalchemy import (
     Column, Integer, String, ForeignKey, Boolean, Text, DECIMAL, Enum, Time, DateTime
 )
-from geoalchemy2 import Geometry # pip install GeoAlchemy2
+from geoalchemy2 import Geometry 
 from db.database import Base
 from sqlalchemy.orm import relationship
-from enums import *
+# from object_enums import *
 
+from enum import Enum as PyEnum
+
+# -------------------------
+# Định nghĩa các ENUM
+# -------------------------
+
+class RoleEnum(str, PyEnum):
+    customer = "customer"
+    driver = "driver"
+    restaurant = "restaurant"
+    
+# Trạng thái của tài xế
+class DriverStatusEnum(str, PyEnum):
+    active = "active"
+    inactive = "inactive"
+
+# Trạng thái của nhà hàng
+class RestaurantStatusEnum(str, PyEnum):
+    active = "active"
+    inactive = "inactive"
+
+# Trạng thái của món ăn
+class ItemStatusEnum(str, PyEnum):
+    available = "available"
+    unavailable = "unavailable"
+
+# Các ngày trong tuần
+class DayEnum(str, PyEnum):
+    Monday = "Monday"
+    Tuesday = "Tuesday"
+    Wednesday = "Wednesday"
+    Thursday = "Thursday"
+    Friday = "Friday"
+    Saturday = "Saturday"
+    Sunday = "Sunday"
+
+# Trạng thái của đơn hàng
+class OrderStatusEnum(str, PyEnum):
+    cart = "cart"
+    pending = "pending"
+    preparing = "preparing"
+    delivering = "delivering"
+    delivered = "delivered"
+    completed = "completed"
+    cancelled = "cancelled"
+
+# Các danh mục nhà hàng
+class CategoryEnum(str, PyEnum):
+    bun_pho_chao = "Bún - Phở - Cháo"
+    banh_mi_xoi = "Bánh Mì - Xôi"
+    ga_ran_burger = 'Gà rán - Burger'
+    com = "Cơm"
+    hai_san = "Hải sản"
+    do_chay = "Đồ chay"
+    ca_phe = "Cà phê"
+    tra_sua = "Trà sữa"
+    trang_mieng = "Tráng miệng"
+    an_vat = "Ăn vặt"
+    pizza_my_y = "Pizza - Mì Ý"
+    banh_viet_nam = "Bánh Việt Nam"
+    lau_nuong = "Lẩu - Nướng"
+    
 # -------------------------
 # Định nghĩa các bảng
 # -------------------------
@@ -25,9 +87,16 @@ class Restaurant(Base):
     __tablename__ = 'restaurants'
     restaurant_id = Column(Integer, primary_key=True)
     name = Column(Text, nullable=False)
-    category = Column(Enum(CategoryEnum))  # Danh mục nhà hàng
+    # category = Column(Enum(CategoryEnum), nullable=False)  
+    category = Column(
+        Enum(CategoryEnum, 
+             native_enum=False,  # Không lưu theo tên enum
+             values_callable=lambda x: [e.value for e in x]),  # Lấy giá trị thay vì tên
+        nullable=False
+    )
     address = Column(Text, nullable=False)
-    coord = Column(Geometry('POINT'), nullable=False)  # Tọa độ địa lý của nhà hàng
+    x = Column(DECIMAL(10,7), nullable=False)
+    y = Column(DECIMAL(10,7), nullable=False)    
     status = Column(Enum(RestaurantStatusEnum), default=RestaurantStatusEnum.inactive)  # Trạng thái
     is_deleted = Column(Boolean, default=False)
 
@@ -86,14 +155,15 @@ class Order(Base):
     customer_id = Column(Integer, ForeignKey('customers.customer_id'), nullable=False)
     restaurant_id = Column(Integer, ForeignKey('restaurants.restaurant_id'), nullable=False)
     driver_id = Column(Integer, ForeignKey('drivers.driver_id'))
-    address = Column(Text)
-    coord = Column(Geometry('POINT'))
+    address = Column(Text)  
     delivery_fee = Column(DECIMAL(10, 2))
     food_fee = Column(DECIMAL(10, 2))
     order_status = Column(Enum(OrderStatusEnum), default=OrderStatusEnum.cart)
     created_at = Column(DateTime)
     delivered_at = Column(DateTime)
     note = Column(Text)
+    x = Column(DECIMAL(10,7))
+    y = Column(DECIMAL(10,7))  
 
     # Quan hệ với Customer, Restaurant, và Driver
     customer = relationship("Customer", back_populates="orders")

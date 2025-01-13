@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from models.models import *
 from models.schemas import *
-from models.enums import *
 from fastapi import HTTPException, status
 
 def authenticate_login(user: UserLogin, db: Session):
