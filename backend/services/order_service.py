@@ -40,7 +40,7 @@ def add_item(item_id: int, restaurant_id: int, customer_id: int, db: Session):
     price = item.price
     
     # kiểm tra đã có order giữa khách và nhà hàng tồn tại trong giỏ hàng chưa
-    order_id = get_current_order(restaurant_id, customer_id)
+    order_id = get_current_order(restaurant_id, customer_id, db)
     
     # nếu chưa thì tạo order mới, không thì xử lý việc thêm item vào order đã có
     if order_id == None:

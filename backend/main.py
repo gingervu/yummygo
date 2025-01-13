@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from routes.api_router import api_router
+import sys
+sys.path.append("d:/yummygo/backend")
 
 app = FastAPI(title="FastAPI Application")
 

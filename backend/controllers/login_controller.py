@@ -5,7 +5,7 @@ from db.database import get_db
 from models.schemas import *
 from fastapi.responses import JSONResponse
 from services.login_service import authenticate_login
-from middlewares.auth_middleware import create_access_token
+from utils.jwt import create_access_token
 
 router = APIRouter()
 

@@ -3,8 +3,76 @@ from typing import Optional
 from enum import Enum
 from decimal import Decimal
 from datetime import datetime, time
-from enums import *
+# from object_enums import *
 
+from enum import Enum
+# -------------------------
+# Định nghĩa các ENUM
+# -------------------------
+
+class RoleEnum(str, Enum):
+    customer = "customer"
+    driver = "driver"
+    restaurant = "restaurant"
+    
+# Trạng thái của tài xế
+class DriverStatusEnum(str, Enum):
+    active = "active"
+    inactive = "inactive"
+
+# Trạng thái của nhà hàng
+class RestaurantStatusEnum(str, Enum):
+    active = "active"
+    inactive = "inactive"
+
+# Trạng thái của món ăn
+class ItemStatusEnum(str, Enum):
+    available = "available"
+    unavailable = "unavailable"
+
+# Các ngày trong tuần
+class DayEnum(str, Enum):
+    Monday = "Monday"
+    Tuesday = "Tuesday"
+    Wednesday = "Wednesday"
+    Thursday = "Thursday"
+    Friday = "Friday"
+    Saturday = "Saturday"
+    Sunday = "Sunday"
+
+# Trạng thái của đơn hàng
+class OrderStatusEnum(str, Enum):
+    cart = "cart"
+    pending = "pending"
+    preparing = "preparing"
+    delivering = "delivering"
+    delivered = "delivered"
+    completed = "completed"
+    cancelled = "cancelled"
+
+# Các danh mục nhà hàng
+class CategoryEnum(str, Enum):
+    bun_pho_chao = "Bún - Phở - Cháo"
+    banh_mi_xoi = "Bánh Mì - Xôi"
+    ga_ran_burger = "Gà rán - Burger"
+    com = "Cơm"
+    hai_san = "Hải sản"
+    do_chay = "Đồ chay"
+    ca_phe = "Cà phê"
+    tra_sua = "Trà sữa"
+    trang_mieng = "Tráng miệng"
+    an_vat = "Ăn vặt"
+    pizza_my_y = "Pizza - Mì Ý"
+    banh_viet_nam = "Bánh Việt Nam"
+    lau_nuong = "Lẩu - Nướng"
+    @classmethod
+    def _missing_(cls, value):
+        """Nếu không tìm thấy giá trị trong Enum, trả về giá trị None hoặc xử lý theo cách của bạn."""
+        for item in cls:
+            if item.value == value:
+                return item
+        return None
+    
 # ------------------------------
 # Mô hình User (Người dùng)
 # ------------------------------
@@ -49,7 +117,8 @@ class RestaurantBase(BaseModel):
     category: CategoryEnum  # Loại nhà hàng
     phone: Optional[str] = None  # Số điện thoại, có thể rỗng
     address: str  # Địa chỉ nhà hàng
-    coord: str  # Tọa độ nhà hàng, có thể thay bằng kiểu POINT trong PostgreSQL
+    x: Decimal
+    y: Decimal
     status: Optional[RestaurantStatusEnum] = RestaurantStatusEnum.inactive  # Trạng thái nhà hàng
 
     class Config:
@@ -64,10 +133,12 @@ class RestaurantUpdate(BaseModel):
     category: Optional[CategoryEnum] = None
     phone: Optional[str] = None
     address: Optional[str] = None
-    coord: Optional[str] = None
-
+    x: Optional[Decimal] = None
+    y: Optional[Decimal] = None
+    
 class RestaurantSchema(RestaurantBase):
     restaurant_id: int  # ID nhà hàng
+
 
     class Config:
         from_attributes = True  # Chuyển đổi từ SQLAlchemy models sang Pydantic models
@@ -112,13 +183,13 @@ class MenuItemBase(BaseModel):
 
 class MenuItemCreate(MenuItemBase):
     pass
-class MenuItemUpdate(MenuItemBase):
+class MenuItemUpdate(BaseModel):
     name: Optional[str] # Tên món ăn
-    img_url: Optional[str] = None  # URL ảnh món ăn, có thể rỗng
-    description: Optional[str] = None  # Mô tả món ăn, có thể rỗng
+    img_url: Optional[str]   # URL ảnh món ăn, có thể rỗng
+    description: Optional[str]  # Mô tả món ăn, có thể rỗng
     price: Optional[Decimal]  # Giá món ăn
 
-class MenuItemShema(MenuItemBase):
+class MenuItemShchema(MenuItemBase):
     item_id: int  # ID món ăn
 
 
@@ -187,7 +258,8 @@ class OrderBase(BaseModel):
     restaurant_id: int  # ID nhà hàng
     driver_id: Optional[int] = None  # ID tài xế, có thể rỗng
     address: Optional[str] = None  # Địa chỉ giao hàng, có thể rỗng
-    coord: Optional[str] = None  # Tọa độ giao hàng
+    x: Optional[float] = None  # Tọa độ giao hàng
+    y: Optional[float] = None
     distance: Optional[float] = None  # Phí giao hàng
     food_fee: Optional[float] = None  # Phí món ăn
     order_status: OrderStatusEnum = OrderStatusEnum.cart  # Trạng thái đơn hàng

@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from models.models import *
 from models.schemas import *
-from models.enums import *
 from fastapi import HTTPException, status
 
 def authenticate_login(user: UserLogin, db: Session):
@@ -28,7 +27,7 @@ def authenticate_login(user: UserLogin, db: Session):
         role = "customer"
         
     elif user.role == RoleEnum.driver:
-        driver = db.query(Driver).filter(Driver._id == user_id).first()
+        driver = db.query(Driver).filter(Driver.driver_id == user_id).first()
         if not driver:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
