@@ -15,7 +15,7 @@ router = APIRouter(prefix="/oder_items", tags=["Oder Items"])
 async def create_order_item(order_item: schemas.OrderItemCreate, db: Session = Depends(get_db)):
     return order_item_service.create_order_item(order_item, db)
 
-
+@router.put("/")
 @router.get("/{order_id}", response_model=List[schemas.OrderItem])
 async def get_order_items(order_id: int, db: Session = Depends(get_db)):
     return order_item_service.get_order_items(order_id, db)

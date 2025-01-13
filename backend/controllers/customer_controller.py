@@ -4,7 +4,7 @@ from typing import List
 from models.schemas import *
 from models.models import *
 from db.database import get_db
-from middlewares.auth_middleware import get_current_user
+from middlewares.auth_middleware import get_current_user, require_role
 from services.customer_service import (
     get_customer_by_id,
     list_all_customers,
@@ -19,20 +19,26 @@ router = APIRouter(prefix="/customers", tags=["Customers"])
 # api này sẽ dùng để hiện thông tin của customer cùng
 # với /user/me
 @router.get("/me", response_model=Customer)
-async def get_customer(customer_id: int = Depends(get_current_user), db: Session = Depends(get_db)):
-    return get_customer_by_id(customer_id, db)
+async def get_customer(current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
+    return get_customer_by_id(current_customer['user_id'], db)
 
 # Sửa thông tin customer
 # sử dụng kết hợp với /user/update
 @router.put("/update", response_model=Customer)
-async def update_existing_customer(customer: CustomerCreate, customer_id: int = Depends(get_current_user), db: Session = Depends(get_db)):
-    return update_customer(customer_id, customer, db)
+async def update_existing_customer(customer: CustomerCreate, current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
+    return update_customer(current_customer, customer, db)
 
 # Xóa customer ---> is_deleted = True
 @router.delete("/delete")
-async def delete_existing_customer(customer_id: int = Depends(get_current_user), db: Session = Depends(get_db)):
-    return delete_customer(customer_id, db)
+async def delete_existing_customer(current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
+    return delete_customer(current_customer, db)
 
 @router.get("/", response_model=List[Customer])
 async def list_customers(db: Session = Depends(get_db)):
     return list_all_customers(db)
+
+
+# # Lấy ra order theo customer_id và restaurant_id
+# @router.get("/{restaurant_id}")
+# async def current_order(restaurant_id: int, customer_id: int = Depends(get_current_user), db: Session = Depends(get_db)):
+    

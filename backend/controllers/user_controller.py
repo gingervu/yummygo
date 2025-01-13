@@ -12,9 +12,9 @@ router = APIRouter(prefix="/users", tags=["Users"])
 
 # lấy thông tin user bao gồm: user_name, phone, email
 @router.get("/me")
-async def get_user(user_id: int = Depends(get_current_user), db: Session = Depends(get_db)):
+async def get_user(current_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     try:
-        db_user = user_service.get_user(user_id, db)
+        db_user = user_service.get_user(current_user['user_id'], db)
         return db_user
     except Exception as e:
         raise HTTPException(status_code=404, detail=str(e))
@@ -34,18 +34,18 @@ async def create_user(user: UserCreate, db: Session = Depends(get_db)):
 
 # sửa thông tin tài khoản
 @router.put("/update")
-async def update_user(user: UserUpdate, user_id: int = Depends(get_current_user), db: Session = Depends(get_db)):
+async def update_user(user: UserUpdate, current_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     try:
-        db_user = user_service.update_user(user_id, user, db)
+        db_user = user_service.update_user(current_user['user_id'], user, db)
         return db_user
     except Exception as e:
         raise HTTPException(status_code=404, detail=str(e))
 
 # xóa user
 @router.delete("/delete")
-async def delete_user(user_id: int = Depends(get_current_user), db: Session = Depends(get_db)):
+async def delete_user(current_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     try:
-        message = user_service.delete_user(user_id, db)
+        message = user_service.delete_user(current_user['user_id'], db)
         return {"detail": message}
     except Exception as e:
         raise HTTPException(status_code=404, detail=str(e))

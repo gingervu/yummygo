@@ -5,28 +5,29 @@ from db.database import get_db
 from services.restaurant_service import *
 from models.schemas import *
 from models.models import *
-from middlewares.auth_middleware import get_current_user
+from middlewares.auth_middleware import get_current_user, require_role
 
 router = APIRouter(prefix="/restaurants", tags=["Restaurants"])
     
 #Lấy thông tin nhà hàng --> cho tài khoản nhà hàng xem
 @router.get("/me")
-async def get_restaurant_info(restaurant_id: int = Depends(get_current_user), db: Session = Depends(get_db)):
-    return get_restaurant(restaurant_id, db)
+async def get_restaurant_info(current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
+    return get_restaurant(current_restaurant['user_id'], db)
 
 # Cập nhật thông tin nhà hàng
 @router.put("/update")
-async def update_restaurant_(restaurant: RestaurantUpdate, restaurant_id: int = Depends(get_current_user), db: Session = Depends(get_db)):
-    return update_restaurant(restaurant_id, restaurant, db)
+async def update_restaurant_(restaurant: RestaurantUpdate, current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
+    return update_restaurant(current_restaurant['user_id'], restaurant, db)
 
 # Xóa nhà hàng
 @router.delete("/delete")
-async def delete_restaurant_(restaurant_id: int = Depends(get_current_user), db: Session = Depends(get_db)):
-    return delete_restaurant(restaurant_id, db)
+async def delete_restaurant_(current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
+    return delete_restaurant(current_restaurant['user_id'], db)
 
+#Chuyển trạng thái hoạt động của nhà hàng
 @router.put("/change-status")
-async def change_status(restaurant_id: int = Depends(get_current_user), db: Session = Depends(get_db)):
-    return update_restaurant_status(restaurant_id, db)
+async def change_status(current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
+    return update_restaurant_status(current_restaurant['user_id'], db)
 
 # Lấy danh sách các nhà hàng đang active --> customer duyệt
 @router.get("/active")

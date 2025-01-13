@@ -20,9 +20,9 @@ async def register(user: UserCreate, customer: CustomerCreate, db: Session = Dep
 
 # Đăng ký thêm vai trò khách hàng
 @router.post("/add-customer")
-async def add_role(customer: CustomerCreate, user_id: int = Depends(get_current_user), db: Session = Depends(get_db)):
+async def add_role(customer: CustomerCreate, current_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     try:
-        become_customer(customer, user_id, db)
+        become_customer(customer, current_user['user_id'], db)
         return {"message": "Thêm vai trò khách hàng thành công."}
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Lỗi khi thêm vai trò khách hàng: {str(e)}")
@@ -38,9 +38,9 @@ async def register(user: UserCreate, driver: DriverCreate, db: Session = Depends
 
 # Đăng ký thêm vai trò tài xế
 @router.post("/add-driver")
-async def add_role(driver: DriverCreate, user_id: int = Depends(get_current_user), db: Session = Depends(get_db)):
+async def add_role(driver: DriverCreate, current_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     try:
-        become_driver(driver, user_id, db)
+        become_driver(driver, current_user['user_id'], db)
         return {"message": "Thêm vai trò tài xế thành công."}
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Lỗi khi thêm vai trò tài xế: {str(e)}")
@@ -56,9 +56,9 @@ async def register(user: UserCreate, restaurant: RestaurantCreate, db: Session =
 
 # Đăng ký thêm vai trò nhà hàng
 @router.post("/add-restaurant")
-async def add_role(restaurant: RestaurantCreate, user_id: int = Depends(get_current_user), db: Session = Depends(get_db)):
+async def add_role(restaurant: RestaurantCreate, current_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     try:
-        become_restaurant(restaurant, user_id, db)
+        become_restaurant(restaurant, current_user['user_id'], db)
         return {"message": "Thêm vai trò nhà hàng thành công."}
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Lỗi khi thêm vai trò nhà hàng: {str(e)}")

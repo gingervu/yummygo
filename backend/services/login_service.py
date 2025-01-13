@@ -16,6 +16,7 @@ def authenticate_login(user: UserLogin, db: Session):
         )
     
     user_id = user_info.user_id
+    role = None
     if user.role == RoleEnum.customer:
         customer = db.query(Customer).filter(Customer.customer_id == user_id).first()
         if not customer:
@@ -24,6 +25,7 @@ def authenticate_login(user: UserLogin, db: Session):
                 detail="Bạn chưa có tài khoản khách hàng",
                 headers={"WWW-Authenticate": "Bearer"},                
             )
+        role = "customer"
         
     elif user.role == RoleEnum.driver:
         driver = db.query(Driver).filter(Driver._id == user_id).first()
@@ -33,6 +35,7 @@ def authenticate_login(user: UserLogin, db: Session):
                 detail="Bạn chưa có tài khoản tài xế",
                 headers={"WWW-Authenticate": "Bearer"},                
             )
+        role = "driver"
     elif user.role == RoleEnum.restaurant:
         restaurant_id = db.query(Restaurant).filter(Restaurant.restaurant_id == user_id).first()
         if not restaurant_id:
@@ -41,4 +44,5 @@ def authenticate_login(user: UserLogin, db: Session):
                 detail="Bạn chưa có tài khoản nhà hàng",
                 headers={"WWW-Authenticate": "Bearer"},                
             )
-    return user_id
+        role = "restaurant"
+    return user_id, role

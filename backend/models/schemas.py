@@ -113,7 +113,10 @@ class MenuItemBase(BaseModel):
 class MenuItemCreate(MenuItemBase):
     pass
 class MenuItemUpdate(MenuItemBase):
-    pass  # Cập nhật món ăn
+    name: Optional[str] # Tên món ăn
+    img_url: Optional[str] = None  # URL ảnh món ăn, có thể rỗng
+    description: Optional[str] = None  # Mô tả món ăn, có thể rỗng
+    price: Optional[Decimal]  # Giá món ăn
 
 class MenuItemShema(MenuItemBase):
     item_id: int  # ID món ăn
@@ -203,7 +206,7 @@ class OrderSchema(OrderBase):
 
 class OrderUpdate(BaseModel):
     order_status: OrderStatusEnum  # Cập nhật trạng thái đơn hàng
-
+    
 # ------------------------------
 # Mô hình Order Item (Món trong đơn hàng)
 # ------------------------------

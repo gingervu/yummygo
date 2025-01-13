@@ -65,16 +65,26 @@ def update_menu_item(item_id: int, menu_item: MenuItemUpdate, db: Session) -> Me
     if not db_menu_item:
         raise HTTPException(status_code=404, detail="Món ăn không tồn tại")
     
+    update_info = menu_item.model_dump()
     # Cập nhật thông tin
-    for key, value in menu_item.model_dump().items():
+    for key, value in update_info.items():
         setattr(db_menu_item, key, value)
 
+    # Cập nhật giá món ăn trong giỏ
+    if "price" in update_info:
+        price_update(item_id, update_info['price'], db)
     db.commit()
     db.refresh(db_menu_item)
     return db_menu_item
 
-
-
+def price_update(item_id: int, price: float, db:Session):
+    order_in_cart = db.query(Order).filter(Order.order_status == OrderStatusEnum.cart).all()
+    if not order_in_cart:
+        return
+    db.query(OrderItem).filter(OrderItem.item_id == item_id,
+                               OrderItem.order_id.in_(order.order_id for order in order_in_cart)).update({MenuItem.price: price})
+    
+    
 def delete_menu_item(item_id: int, restaurant_id: int, db: Session):
     """
     Xóa mềm (soft delete) một menu item.
