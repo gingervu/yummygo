@@ -55,7 +55,7 @@ def get_menu_item(item_id: int, db: Session) -> MenuItem:
     return menu_item
 
 
-def update_menu_item(item_id: int, menu_item: MenuItemUpdate, db: Session) -> MenuItem:
+def update_menu_item_info(item_id: int, menu_item: MenuItemUpdate, db: Session) -> MenuItem:
     """
     Cập nhật thông tin của một menu item.
     """

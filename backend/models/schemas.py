@@ -183,13 +183,13 @@ class MenuItemBase(BaseModel):
 
 class MenuItemCreate(MenuItemBase):
     pass
-class MenuItemUpdate(MenuItemBase):
+class MenuItemUpdate(BaseModel):
     name: Optional[str] # Tên món ăn
-    img_url: Optional[str] = None  # URL ảnh món ăn, có thể rỗng
-    description: Optional[str] = None  # Mô tả món ăn, có thể rỗng
+    img_url: Optional[str]   # URL ảnh món ăn, có thể rỗng
+    description: Optional[str]  # Mô tả món ăn, có thể rỗng
     price: Optional[Decimal]  # Giá món ăn
 
-class MenuItemShema(MenuItemBase):
+class MenuItemShchema(MenuItemBase):
     item_id: int  # ID món ăn
 
 

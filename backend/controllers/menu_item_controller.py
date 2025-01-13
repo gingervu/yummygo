@@ -8,7 +8,7 @@ from services.menu_item_service import (
     create_menu_item,
     list_menu_items,
     get_menu_item,
-    update_menu_item,
+    update_menu_item_info,
     delete_menu_item,
     available_items
 )
@@ -18,29 +18,29 @@ router = APIRouter(prefix="/items", tags=["Menu Items"])
 
 # Tạo menu_item mới, chỉ chủ nhà hàng có quyền này
 # đầu vào là name, description, img_url, price 
-@router.post("/create", response_model=MenuItemShema)
+@router.post("/create", response_model=MenuItemShchema)
 async def add_item(menu_item: MenuItemCreate, current_restaurant: dict = Depends(require_role('restaurant')),db: Session = Depends(get_db)):
     return create_menu_item(menu_item, current_restaurant['user_id'], db)
 
 # Lấy ra danh sách món ---> nhà hàng xem
-@router.get("/all", response_model=List[MenuItemShema])
+@router.get("/all", response_model=List[MenuItemShchema])
 async def get_all_menu_items(current_restaurant: dict = Depends(require_role('restaurant')),db: Session = Depends(get_db)):
     return list_menu_items(current_restaurant['user_id'], db)
 
 # Lấy ra danh sách món available ---> khách hàng duyệt món
-@router.get("/available", response_model=List[MenuItemShema])
+@router.get("/available", response_model=List[MenuItemShchema])
 async def get_available_menu_items(restaurant_id: int, db: Session = Depends(get_db)):
     return available_items(restaurant_id, db)
 
 # Lấy ra thông tin của một món dựa trên id
-@router.get("/info", response_model=MenuItemShema)
+@router.get("/{item_id}", response_model=MenuItemShchema)
 async def get_single_menu_item(item_id: int, db: Session = Depends(get_db)):
     return get_menu_item(item_id, db)
 
 # Chỉnh sửa thông tin món
-@router.put("/update", response_model=MenuItemShema)
-async def update_menu(item_id: int, menu_item: MenuItemUpdate, db: Session = Depends(get_db)):
-    return update_menu_item(item_id, menu_item, db)
+@router.put("/{item_id}", response_model=MenuItemShchema)
+async def update_menu(item_id: int, menu_item: MenuItemUpdate, current_restaurant: dict = Depends(require_role("restaurant")), db: Session = Depends(get_db)):
+    return update_menu_item_info(item_id, menu_item, db)
 
 # Xóa món
 @router.delete("/delete")
