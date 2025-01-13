@@ -1,0 +1,302 @@
+.admin-order-details main {
+
+    display: flex;
+    flex-direction: column;
+
+    min-height: 100vh;
+    /* Đảm bảo chiều cao đầy đủ */
+    padding: 20px;
+    font-family: "Poppins", sans-serif;
+    flex-grow: 1;
+    /* Chiếm hết phần còn lại của màn hình */
+    text-align: center;
+}
+
+.admin-order-details .back {
+    margin-top: 100px;
+    display: flex;
+    align-items: flex-start;
+    margin-left: 20%;
+}
+
+.admin-order-details h2 {
+    margin-top: 0px;
+
+    margin-bottom: 28px;
+}
+
+.admin-order-details .order-id {
+    display: flex;
+    justify-content: center;
+    /* Căn giữa theo chiều ngang */
+    align-items: center;
+    width: 30%;
+    /* Đặt chiều rộng của box */
+    height: 50px;
+    background: #F5F5F5;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    /* Để căn chỉnh nội dung nếu cần */
+    text-align: center;
+    margin: auto;
+    /* Canh giữa box trong trang */
+
+    box-sizing: border-box;
+    /* Đảm bảo padding không ảnh hưởng đến kích thước */
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.admin-order-details .driver-contact {
+    display: flex;
+
+    flex-direction: column;
+    /* Chuyển thành cột để phần info ở trên, action ở dưới */
+
+    margin: auto;
+    text-align: center;
+    width: 30%;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.admin-order-details .driver-contact .driver-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 5%;
+    font-weight: bold;
+
+}
+
+.admin-order-details .driver-contact .driver-info .icon {
+    margin-right: 10px;
+}
+
+.admin-order-details .driver-contact .driver-info .name {
+    font-size: 18px;
+}
+
+.admin-order-details .driver-contact .action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Căn giữa các nút theo chiều ngang */
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.admin-order-details .driver-contact .action .span {
+    display: flex;
+    justify-content: flex-start;
+
+}
+
+.action button {
+    display: flex;
+    /* Kích hoạt flexbox */
+    align-items: center;
+    /* Căn giữa theo chiều dọc */
+    justify-content: center;
+    /* Căn giữa theo chiều ngang */
+    /* Thêm khoảng cách bên trong nút */
+    border: none;
+    /* Xóa viền */
+    background-color: transparent;
+    /* Nền trong suốt */
+    cursor: pointer;
+    /* Đặt kích thước cố định cho nút */
+}
+
+.admin-order-details .chat-btn {
+    margin-right: 10px;
+    width: 75%;
+    border: none;
+    background-color: #F5F5F5;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.call-btn {
+    background-color: transparent;
+    /* Nền trong suốt */
+    cursor: pointer;
+    padding: 5px;
+}
+
+.action button:hover {
+    background-color: #F5F5F5;
+}
+
+.admin-order-details .order-info-box {
+    width: 30%;
+    /* Đặt chiều rộng của box */
+    background: #ffffff;
+    display: flex;
+    /* Để căn chỉnh nội dung nếu cần */
+    text-align: left;
+    margin: 5px auto;
+    /* Canh giữa box trong trang */
+    box-sizing: border-box;
+    /* Đảm bảo padding không ảnh hưởng đến kích thước */
+    flex-direction: column;
+    /* Xếp nội dung theo chiều dọc */
+
+    margin-top: 20px;
+}
+
+.admin-order-details .order-info-box h3 {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.admin-order-details .order-info-box p {
+    font-size: 16px;
+}
+
+.admin-order-details .order-info-box .cost-if {
+    display: flex;
+    justify-content: space-between;
+}
+
+.admin-order-details .contact-box {
+    width: 30%;
+    /* Đặt chiều rộng của box */
+    background: #ffffff;
+    display: flex;
+    /* Để căn chỉnh nội dung nếu cần */
+    text-align: left;
+    margin: 5px auto;
+    /* Canh giữa box trong trang */
+    box-sizing: border-box;
+    /* Đảm bảo padding không ảnh hưởng đến kích thước */
+    flex-direction: column;
+    /* Xếp nội dung theo chiều dọc */
+    margin-top: 35px;
+}
+
+.contact-buttons button {
+    background-color: #DBA718;
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-order-details .contact-section {
+    display: flex;
+    align-items: center;
+    /* Căn giữa theo chiều dọc */
+    margin-bottom: 10px;
+}
+
+.admin-order-details .contact-section span {
+    margin-right: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.admin-order-details .contact-section .contact-buttons {
+    display: flex;
+    /* Đặt các nút liên hệ nằm ngang */
+    gap: 8px;
+    /* Khoảng cách giữa các nút */
+}
+
+.admin-order-details .action-btn-container {
+    display: flex;
+    justify-content: center;
+    /* Căn giữa */
+    margin-top: 55px;
+    gap: 90px;
+    /* Thêm khoảng cách giữa các nút */
+    flex-direction: row;
+    /* Đảm bảo các button nằm ngang */
+}
+
+.admin-order-details .action-btn {
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 8px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 50px;
+}
+
+.admin-order-details .sucess-btn {
+    background-color: #E97522;
+
+}
+
+.admin-order-details .sucess-btn:hover {
+    background-color: #f97b20;
+}
+
+
+.admin-order-details .payment-box {
+    display: flex;
+    justify-content: flex-start;
+    /* Căn giữa theo chiều ngang */
+    align-items: center;
+    width: 30%;
+    /* Đặt chiều rộng của box */
+    height: 50px;
+    background: #F5F5F5;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    /* Để căn chỉnh nội dung nếu cần */
+    text-align: center;
+    margin: auto;
+    /* Canh giữa box trong trang */
+
+    box-sizing: border-box;
+    /* Đảm bảo padding không ảnh hưởng đến kích thước */
+
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.admin-order-details .note-box {
+    display: flex;
+    justify-content: flex-start;
+    /* Căn giữa theo chiều ngang */
+    align-items: center;
+    width: 30%;
+    /* Đặt chiều rộng của box */
+    height: 50px;
+    background: #F5F5F5;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    /* Để căn chỉnh nội dung nếu cần */
+    text-align: center;
+    margin: auto;
+    /* Canh giữa box trong trang */
+
+    box-sizing: border-box;
+    /* Đảm bảo padding không ảnh hưởng đến kích thước */
+
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.admin-order-details .payment-box p,
+.admin-order-details .note-box p {
+    margin-left: 8%;
+}
+
+.admin-order-details .close-btn {
+    display: flex;
+    justify-content: center;
+    background-color: #DBA718;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}

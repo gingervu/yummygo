@@ -1,0 +1,58 @@
+.admin-staff main{
+    
+    display: flex;
+  flex-direction: column;
+ /* Căn giữa theo chiều dọc */
+  min-height: 100vh; /* Đảm bảo chiều cao đầy đủ */
+  padding: 20px;
+    font-family: "Poppins", sans-serif;
+    flex-grow: 1; /* Chiếm hết phần còn lại của màn hình */
+  
+}
+
+
+.admin-staff h2{
+    margin-top: 100px;
+margin-left: 24%;
+margin-bottom: 30px;
+}
+
+.admin-staff .add-employee-btn{
+    margin-left: 24%;
+    font-size: 20px;
+    width: 260px;
+    height: 40px;
+    background-color: white;
+    border: 2px solid rgb(31, 31, 31);
+    border-radius: 10px;
+    margin-bottom: 50px;
+    }
+
+    .admin-staff .add-employee-btn:hover{
+        background-color: rgb(244, 242, 242);
+    }
+
+    .admin-staff .employee-container{
+        margin-left: 24%;
+        width: 26%;
+        border: 1px solid #8c8c8c;
+        border-radius: 8px;
+    }
+
+    .admin-staff .employee-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #8c8c8c;
+        padding: 10px;
+        font-size: 18px;
+    }
+
+    .admin-staff .edit-btn, .admin-staff .save-btn, .admin-staff .delete-btn  {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+    }
+    
+    
