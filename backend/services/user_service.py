@@ -18,6 +18,9 @@ def update_user(user: UserUpdate, user_id: int, db: Session) -> User:
     
     for key, value in user.model_dump(exclude_unset=True).items():
         if value is not None:
+            if isinstance(value, str):
+                if value == "":
+                    continue
             setattr(db_user, key, value)    
     
     db.commit()

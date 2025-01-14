@@ -19,7 +19,9 @@ async def get_user_(current_user: dict = Depends(get_current_user), db: Session 
     except Exception as e:
         raise HTTPException(status_code=404, detail=str(e))    
 
-# Cập nhật thông tin tài khoản
+# Cập nhật thông tin tài khoản, api đã được thiết kế để dù truyền vào bao nhiêu tham số
+# cũng update được, có thể sử dụng linh hoạt cho từng thông tin được chỉnh sửa
+# nếu gửi json rỗng hoặc chuỗi rỗng thì sẽ không update
 @router.put("/update")
 async def update_user_info(user: UserUpdate, current_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     return update_user(user, current_user['user_id'], db)

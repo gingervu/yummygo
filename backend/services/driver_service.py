@@ -25,6 +25,9 @@ def update_driver_service(driver: DriverUpdate, driver_id: int, db: Session):
     
     for key, value in driver.model_dump().items():
         if value is not None:
+            if isinstance(value, str):
+                if value == "":
+                    continue
             setattr(db_driver, key, value)        
     db.commit()
     db.refresh(db_driver)

@@ -24,6 +24,9 @@ def update_customer(customer_id: int, customer: CustomerCreate, db: Session):
     # Cập nhật thông tin từ dữ liệu mới
     for key, value in customer.model_dump().items():
         if value is not None:
+            if isinstance(value, str):
+                if value == "":
+                    continue
             setattr(db_customer, key, value)
     
     db.commit()

@@ -33,6 +33,9 @@ def update_restaurant(restaurant: RestaurantUpdate, restaurant_id: int, db: Sess
         raise HTTPException(status_code=404, detail="Nhà hàng không tồn tại")
     for key, value in restaurant.model_dump(exclude_unset=True).items():
         if value is not None:
+            if isinstance(value, str):
+                if value == "":
+                    continue
             setattr(db_restaurant, key, value)
     db.commit()
     db.refresh(db_restaurant)
