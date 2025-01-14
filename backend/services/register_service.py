@@ -2,10 +2,12 @@ from sqlalchemy.orm import Session
 from models.models import *
 from models.schemas import *
 from fastapi import HTTPException
+from utils.security import hash_password
+
 
 # Đăng ký thêm vai trò khách hàng
 def become_customer(customer: CustomerCreate, user_id: int, db: Session):
-    db_customer = db.query(Customer).filter(Customer.driver_id == user_id).first()
+    db_customer = db.query(Customer).filter(Customer.customer_id == user_id).first()
     if db_customer:
         raise HTTPException(status_code=400, detail="Customer already exists")
     new_customer = Customer(
@@ -24,7 +26,7 @@ def create_customer(user: UserCreate, customer: CustomerCreate, db: Session):
         raise Exception("User already exists")
     
     # Hash the password before saving (add actual hashing logic here)
-    hashed_password = user.password
+    hashed_password = hash_password(user.password).decode()
 
     db_user = User(
         user_name=user.user_name,
@@ -32,12 +34,12 @@ def create_customer(user: UserCreate, customer: CustomerCreate, db: Session):
         phone=user.phone,
         email=user.email
     )
+    db.add(db_user)
+    db.commit()  
+    db.refresh(db_user)  
+    user_id = db_user.user_id
     
-    try:
-        db.add(db_user)
-        db.commit()
-        user_id = db_user.user_id
-        
+    try:        
         db_customer = Customer(
             customer_id=user_id,
             name=customer.name
@@ -75,7 +77,7 @@ def create_driver(user: UserCreate, driver: DriverCreate, db: Session):
         raise Exception("User already exists")
     
     # Hash the password before saving (add actual hashing logic here)
-    hashed_password = user.password
+    hashed_password = hash_password(user.password).decode()
 
     db_user = User(
         user_name=user.user_name,
@@ -83,11 +85,11 @@ def create_driver(user: UserCreate, driver: DriverCreate, db: Session):
         phone=user.phone,
         email=user.email
     )
-    try:
-        db.add(db_user)
-        db.commit()
-        user_id = db_user.user_id
-        
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)  
+    user_id = db_user.user_id
+    try:        
         db_driver = Driver(
             driver_id=user_id,
             name=driver.name
@@ -127,7 +129,7 @@ def create_restaurant(user: UserCreate, restaurant: RestaurantCreate, db: Sessio
         raise Exception("Username already exists")
     
     # Hash the password before saving (add actual hashing logic here)
-    hashed_password = user.password
+    hashed_password = hash_password(user.password).decode()
 
     db_user = User(
         user_name=user.user_name,
@@ -137,6 +139,7 @@ def create_restaurant(user: UserCreate, restaurant: RestaurantCreate, db: Sessio
     )
     
     db.add(db_user)
+    db.refresh(db_user)  
     db.commit()
     user_id = db_user.user_id
     
