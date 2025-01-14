@@ -1,24 +1,49 @@
 import React, { useState } from "react";
 import "./LoginPopup.css";
+import axios from "axios";
 import { assets } from "../../assets/assets";
 
-const LoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginSuccess, setRole }) => {
-  const [email, setEmail] = useState(""); // Trường email
-  const [password, setPassword] = useState(""); // Trường mật khẩu
-  const [role, setRoleLocal] = useState(""); // Trường vai trò
+const LoginPopup = ({ setShowLogin, setShowSignUp, onLoginSuccess }) => {
+  const [username, setUsername] = useState(""); // Tên tài khoản
+  const [password, setPassword] = useState(""); // Mật khẩu
+  const [role, setRoleLocal] = useState(""); // Vai trò
   const [error, setError] = useState(""); // Thông báo lỗi
+  const [loading, setLoading] = useState(false); // Trạng thái loading
 
   // Hàm xử lý đăng nhập
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault(); // Ngăn chặn reload trang
-    const user = existingUsers.find(
-      (u) => u.email === email && u.password === password
-    );
+    setLoading(true);
+    setError("");
 
-    if (user) {
-      onLoginSuccess(user, role); // Đăng nhập thành công, kèm theo vai trò
-    } else {
-      setError("Email hoặc mật khẩu không đúng."); // Đăng nhập thất bại
+    try {
+      // Gửi request đăng nhập tới API
+      const response = await axios.post("http://127.0.0.1:8000/token", {
+        user_name: username,
+        password,
+        role,
+      });
+
+      // Xử lý phản hồi từ BE
+      if (response.status === 200) {
+        const { access_token, token_type } = response.data;
+
+        // Lưu token vào localStorage hoặc sessionStorage (tuỳ chọn)
+        localStorage.setItem("access_token", access_token);
+        alert("Đăng nhập thành công!");
+        onLoginSuccess(role); // Gọi hàm callback khi đăng nhập thành công
+        setShowLogin(false); // Đóng popup đăng nhập
+      }
+    } catch (err) {
+      console.error(err);
+      // Xử lý lỗi từ BE
+      if (err.response) {
+        setError(err.response.data.detail || "Đăng nhập thất bại.");
+      } else {
+        setError("Không thể kết nối đến máy chủ.");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -38,10 +63,10 @@ const LoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginSuccess
         {/* Input form */}
         <div className="login-popup-inputs">
           <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            placeholder="Tên tài khoản"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             required
           />
           <input
@@ -59,9 +84,9 @@ const LoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginSuccess
             required
           >
             <option value="">Chọn vai trò</option>
-            <option value="Khách hàng">Khách hàng</option>
-            <option value="Tài xế">Tài xế</option>
-            <option value="Doanh nghiệp">Doanh nghiệp</option>
+            <option value="customer">Khách hàng</option>
+            <option value="driver">Tài xế</option>
+            <option value="restaurant">Doanh nghiệp</option>
           </select>
         </div>
 
@@ -69,7 +94,9 @@ const LoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginSuccess
         {error && <p className="error">{error}</p>}
 
         {/* Nút hành động */}
-        <button type="submit">Đăng nhập</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Đang xử lý..." : "Đăng nhập"}
+        </button>
 
         {/* Chuyển sang đăng ký */}
         <p className="switch-to-signup">

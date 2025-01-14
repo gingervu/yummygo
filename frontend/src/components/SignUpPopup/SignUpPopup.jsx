@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import "./SignUpPopup.css";
+import axios from 'axios';
 
 const SignUpPopup = ({ setShowSignUp }) => {
-  const [step, setStep] = useState(1); // Step 1: Chọn vai trò, Step 2: Điền thông tin
-  const [role, setRole] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     username: "",
@@ -13,14 +12,14 @@ const SignUpPopup = ({ setShowSignUp }) => {
     email: "",
   });
   const [errors, setErrors] = useState({});
-
+  const [loading, setLoading] = useState(false);
   // Kiểm tra hợp lệ
   const validateForm = () => {
     const newErrors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[0-9]{10,11}$/;
 
-    if (!role) newErrors.role = "Vui lòng chọn vai trò.";
+    
     if (!formData.name) newErrors.name = "Tên không được để trống.";
     if (!formData.username) newErrors.username = "Tên tài khoản không được để trống.";
     if (!formData.password) newErrors.password = "Mật khẩu không được để trống.";
@@ -37,11 +36,6 @@ const SignUpPopup = ({ setShowSignUp }) => {
     return newErrors;
   };
 
-  const handleRoleSelect = (selectedRole) => {
-    setRole(selectedRole);
-    setStep(2);
-  };
-
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -49,20 +43,52 @@ const SignUpPopup = ({ setShowSignUp }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
-      alert("Đăng ký thành công!");
-      setShowSignUp(false); // Đóng popup
-      resetForm();
+        setLoading(true); // Bắt đầu trạng thái loading
+        try {
+            // Cấu trúc dữ liệu theo yêu cầu của API
+            const requestData = {
+              user: {
+                user_name: formData.username,
+                email: formData.email,
+                phone: formData.phoneNumber,
+                password: formData.password,
+              },
+              customer: {
+                name: formData.name,
+              },
+            };
+            const response = await axios.post("http://127.0.0.1:8000/register/customer", requestData);
+            if (response.status === 200 ) {
+                alert("Đăng ký thành công!");
+                setShowSignUp(false); // Đóng popup
+                resetForm();
+              }
+            } catch (error) {
+                console.error(error);
+              
+                // Kiểm tra lỗi trả về từ phía server
+                if (error.response) {
+                  alert(`Lỗi: ${error.response.data.message || "Đăng ký thất bại, vui lòng kiểm tra lại dữ liệu!"}`);
+                } else if (error.request) {
+                  alert("Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối mạng của bạn.");
+                } else {
+                  alert(`Đã xảy ra lỗi: ${error.message}`);
+                }
+              } finally {
+                setLoading(false); // Dừng trạng thái loading
+              }
+        
     }
   };
 
   const resetForm = () => {
-    setRole("");
+    
     setFormData({
       name: "",
       username: "",
@@ -72,27 +98,18 @@ const SignUpPopup = ({ setShowSignUp }) => {
       email: "",
     });
     setErrors({});
-    setStep(1);
+    
   };
 
   return (
     <div className="sign-up-popup">
       <div className="sign-up-popup-container">
         <div className="sign-up-popup-title">
-          <h2>{step === 1 ? "Chọn vai trò" : "Đăng ký tài khoản"}</h2>
+          <h2>Đăng ký người dùng</h2>
           <button onClick={() => setShowSignUp(false)}>✖</button>
         </div>
 
-        {step === 1 && (
-          <div className="sign-up-popup-role">
-            <button onClick={() => handleRoleSelect("Khách hàng")}>Khách hàng</button>
-            <button onClick={() => handleRoleSelect("Tài xế")}>Tài xế</button>
-            <button onClick={() => handleRoleSelect("Doanh nghiệp")}>Doanh nghiệp</button>
-            {errors.role && <p className="error">{errors.role}</p>}
-          </div>
-        )}
-
-        {step === 2 && (
+        
           <form onSubmit={handleSubmit}>
             <div className="sign-up-popup-inputs">
               <input
@@ -159,7 +176,7 @@ const SignUpPopup = ({ setShowSignUp }) => {
               Hoàn thành
             </button>
           </form>
-        )}
+        
       </div>
     </div>
   );
