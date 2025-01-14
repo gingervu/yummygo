@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "./SignUpPopup.css";
+import axios from 'axios';
 
 const SignUpPopup = ({ setShowSignUp }) => {
+  const [step, setStep] = useState(1); // Quản lý bước (1: tài khoản, 2: nhà hàng)
   const [formData, setFormData] = useState({
     name: "",
     username: "",
@@ -11,6 +13,12 @@ const SignUpPopup = ({ setShowSignUp }) => {
     email: "",
   });
   const [errors, setErrors] = useState({});
+  const [accountData, setAccountData] = useState(null); // Lưu thông tin tài khoản
+  const [restaurantData, setRestaurantData] = useState({
+    name: "",
+    category: "",
+    address: "",
+  });
 
   // Kiểm tra hợp lệ
   const validateForm = () => {
@@ -42,15 +50,60 @@ const SignUpPopup = ({ setShowSignUp }) => {
     });
   };
 
+  const handleRestaurantChange = (e) => {
+    setRestaurantData({
+      ...restaurantData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
-      alert("Đăng ký thành công!");
-      setShowSignUp(false); // Đóng popup
-      resetForm();
+      setAccountData({
+        user_name: formData.username,
+        phone: formData.phoneNumber,
+        email: formData.email,
+        password: formData.password,
+      });
+      setStep(2); // Chuyển sang bước điền thông tin nhà hàng
+    }
+  };
+
+  const handleRestaurantSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!restaurantData.name || !restaurantData.category || !restaurantData.address) {
+      alert("Vui lòng điền đầy đủ thông tin nhà hàng.");
+      return;
+    }
+
+    const payload = {
+      user: accountData,
+      restaurant: restaurantData,
+    };
+
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/register/restaurant", payload);
+      if (response.status === 200 ) {
+        alert("Đăng ký nhà hàng thành công!");
+        setShowSignUp(false); // Đóng popup  
+        resetForm();
+      }
+    } catch (error) {
+      console.error(error);
+    
+      // Kiểm tra lỗi trả về từ phía server
+      if (error.response) {
+        alert(`Lỗi: ${error.response.data.message || "Đăng ký thất bại, vui lòng kiểm tra lại dữ liệu!"}`);
+      } else if (error.request) {
+        alert("Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối mạng của bạn.");
+      } else {
+        alert(`Đã xảy ra lỗi: ${error.message}`);
+      }
     }
   };
 
@@ -71,13 +124,13 @@ const SignUpPopup = ({ setShowSignUp }) => {
   return (
     <div className="sign-up-popup">
       <div className="sign-up-popup-container">
+      {step === 1 ? (
+        <>
         <div className="sign-up-popup-title">
           <h2>Đăng ký nhà hàng</h2>
           <button onClick={() => setShowSignUp(false)}>✖</button>
         </div>
-
-        
-          <form onSubmit={handleSubmit}>
+                  <form onSubmit={handleSubmit}>
             <div className="sign-up-popup-inputs">
               <input
                 type="text"
@@ -140,10 +193,59 @@ const SignUpPopup = ({ setShowSignUp }) => {
               {errors.email && <p className="error">{errors.email}</p>}
             </div>
             <button type="submit" className="submit-button">
-              Hoàn thành
+              Tiếp tục
             </button>
           </form>
-        
+          </>
+          ) : (
+            <>
+            <div className="sign-up-popup-title">
+              <h2>Đăng ký nhà hàng</h2>
+              <button onClick={() => setShowSignUp(false)}>✖</button>
+            </div>
+            <form onSubmit={handleRestaurantSubmit}>
+              <div className="sign-up-popup-inputs">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Tên nhà hàng"
+                  value={restaurantData.name}
+                  onChange={handleRestaurantChange}
+                />
+                <select
+                  name="category"
+                  value={restaurantData.category}
+                  onChange={handleRestaurantChange}
+                >
+                  <option value="">Chọn loại hình nhà hàng</option>
+                  <option value="Bún - Phở - Cháo">Bún - Phở - Cháo</option>
+                  <option value="Bánh Mì - Xôi">Bánh Mì - Xôi</option>
+                  <option value="Gà rán - Burger">Gà rán - Burger</option>
+                  <option value="Cơm">Cơm</option>
+                  <option value="Hải sản">Hải sản</option>
+                  <option value="Đồ chay">Đồ chay</option>
+                  <option value="Cà phê">Cà phê</option>
+                  <option value="Trà sữa">Trà sữa</option>
+                  <option value="Tráng miệng">Tráng miệng</option>
+                  <option value="Ăn vặt">Ăn vặt</option>
+                  <option value="Pizza - Mì Ý">Pizza - Mì Ý</option>
+                  <option value="Bánh Việt Nam">Bánh Việt Nam</option>
+                  <option value="Lẩu - Nướng">Lẩu - Nướng</option>
+                </select>
+                <input
+                  type="text"
+                  name="address"
+                  placeholder="Địa chỉ"
+                  value={restaurantData.address}
+                  onChange={handleRestaurantChange}
+                />
+              </div>
+              <button type="submit" className="submit-button">
+                Hoàn thành
+              </button>
+            </form>
+          </>
+        )}
       </div>
     </div>
   );

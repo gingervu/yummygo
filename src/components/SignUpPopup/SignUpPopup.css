@@ -62,6 +62,7 @@
 
 /* Các ô nhập liệu */
 .sign-up-popup-inputs input,
+.sign-up-popup-inputs select,
 .sign-up-popup-role label {
     width: 100%;
     padding: 10px;
@@ -74,6 +75,7 @@
 }
 
 .sign-up-popup-inputs input:focus,
+.sign-up-popup-inputs select:focus,
 .sign-up-popup-role label input:focus {
     border-color: #c97c00;
     outline: none;

@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import Header from "../../../components/Header/Header";
-import { useNavigate } from "react-router-dom";
 import StaffSidebar from "../../../components/StaffSidebar/StaffSidebar";
 import "./StaffHome.css";
 import Toggle from "../../../components/Toggle/Toggle";
