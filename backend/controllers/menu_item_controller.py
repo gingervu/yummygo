@@ -28,7 +28,7 @@ async def get_all_menu_items(current_restaurant: dict = Depends(require_role('re
     return list_menu_items(current_restaurant['user_id'], db)
 
 # Lấy ra danh sách món available ---> khách hàng duyệt món
-@router.get("/available", response_model=List[MenuItemShchema])
+@router.get("/available/{restaurant_id}", response_model=List[MenuItemShchema])
 async def get_available_menu_items(restaurant_id: int, db: Session = Depends(get_db)):
     return available_items(restaurant_id, db)
 
