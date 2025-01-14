@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Header from '../../components/Header/Header'
 import LoginPopup from '../../components/LoginPopup/LoginPopup';
 import SignUpPopup from '../../components/SignUpPopup/SignUpPopup';
+import "./Home.css"
 
 const Home = () => {
     const [showLogin, setShowLogin] = useState(true); // Hiển thị popup đăng nhập
@@ -36,13 +37,17 @@ const Home = () => {
     };
 
     return (
-        <div className='home'>
+        <div className="home">
             <Header />
-            <div className='container'>
-                {/* Nút hiển thị popup (Nếu bạn muốn popup luôn hiển thị thì có thể bỏ 2 nút này) */}
-                <button onClick={() => setShowLogin(true)}>Đăng nhập</button>
-                <button onClick={() => setShowSignUp(true)}>Đăng ký</button> 
+            <div className="tille">
+                <h2>Đăng nhập để tiếp tục!</h2>
+                <div className="button-container">
+                    <button onClick={() => setShowLogin(true)}>Đăng nhập</button>
+                    <button onClick={() => setShowSignUp(true)}>Đăng ký</button>
+                </div>
+            </div>
 
+            <div className="popup-container">
                 {/* Popup đăng nhập */}
                 {showLogin && (
                     <LoginPopup

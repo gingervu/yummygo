@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import Header from "../../../components/Header/Header";
-import { useNavigate } from "react-router-dom";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import "./AdminHome.css";
 import Toggle from "../../../components/Toggle/Toggle";

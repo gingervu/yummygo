@@ -15,8 +15,7 @@
 
 .sign-up-popup-container {
     background-color: #fff;
-    width: 90%;
-    max-width: 500px;
+    width: 28%;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -24,7 +23,18 @@
     flex-direction: column;
     gap: 20px;
     position: relative;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    animation: fadeIn 0.4s ease;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Tiêu đề */
@@ -37,7 +47,7 @@
     color: #333;
 }
 
-.sign-up-popup-title button {
+.sign-up-popup .sign-up-popup-title button {
     background: none;
     border: none;
     font-size: 1.2rem;
@@ -46,7 +56,7 @@
     transition: color 0.3s ease;
 }
 
-.sign-up-popup-title button:hover {
+.sign-up-popup .sign-up-popup-title button:hover {
     color: #333;
 }
 
@@ -75,7 +85,7 @@
 }
 
 /* Hiển thị thông báo lỗi */
-.error {
+.sign-up-popup .error {
     color: #e74c3c;
     font-size: 0.875rem;
     margin-top: 5px;
@@ -84,45 +94,27 @@
 /* Vai trò */
 /* Vai trò với button */
 /* Vai trò với button */
-.sign-up-popup-role {
-    display: flex;
-    flex-direction: column; /* Sắp xếp các nút button theo chiều dọc */
-    gap: 20px; /* Khoảng cách giữa các nút button */
-}
 
-.sign-up-popup-role button {
-    padding: 10px 20px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #554100;
-    background-color: #fee7b9;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
 
-.sign-up-popup-role button:hover {
-    background-color: #ffb566;
-}
 
 /* Nút Tiếp tục / Hoàn thành */
-button[type="submit"] {
+.sign-up-popup .sign-up-popup-container button[type="submit"] {
+    margin-top: 35px;
     width: 100%;
-    margin-top: 30px;
-    padding: 10px;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #fff;
-    background-color: #a98002;
+    background: linear-gradient(to right, #ff9800, #ffc107);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    padding: 12px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
-button[type="submit"]:hover {
-    background-color: #b37a00;
+.sign-up-popup button[type="submit"]:hover {
+    background: linear-gradient(to right, #ff8c00, #ffa000);
+    transform: scale(1.05);
 }
 
 /* Responsive */
@@ -135,19 +127,19 @@ button[type="submit"]:hover {
         font-size: 1.25rem;
     }
 
-    button[type="submit"] {
+    .sign-up-popup button[type="submit"] {
         font-size: 0.9rem;
     }
 }
 
 /* Button khi không hợp lệ */
-button[type="submit"].invalid {
+.sign-up-popup button[type="submit"].invalid {
     background-color: #ccc;
     cursor: not-allowed;
 }
 
 /* Button khi hợp lệ */
-button[type="submit"].valid {
+.sign-up-popup button[type="submit"].valid {
     background-color: #ff7b00;
     color: white;
     font-size: 1rem;
@@ -158,23 +150,23 @@ button[type="submit"].valid {
     transition: background-color 0.3s ease;
 }
 
-button[type="submit"].valid:hover {
+.sign-up-popup button[type="submit"].valid:hover {
     background-color: #b37400;
 }
 
 /* Lỗi khi ô nhập sai */
-.error {
+.sign-up-popup .error {
     color: #e74c3c;
     font-size: 0.875rem;
     margin-top: 5px;
 }
 
 /* Thông báo lỗi trong button */
-button[type="submit"] {
+.sign-up-popup button[type="submit"] {
     position: relative;
 }
 
-button[type="submit"].invalid::after {
+.sign-up-popup button[type="submit"].invalid::after {
     content: attr(data-error-message);
     position: absolute;
     top: 50%;

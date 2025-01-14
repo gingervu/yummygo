@@ -61,4 +61,23 @@
       margin-right: 10px; /* Space between icon and text */
   
     }
+
+    .staff-sidebar .sidebar-footer {
+      margin-bottom: 100px;
+      
+      display: flex;
+      justify-content: flex-start;
+      margin-left: 70%;
+      z-index: 1000; 
+    }
+    
+    .staff-sidebar .logout-btn {
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      background-color: #ffffff
+    }
+    
+    
     

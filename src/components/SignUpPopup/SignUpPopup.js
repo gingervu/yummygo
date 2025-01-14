@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import "./SignUpPopup.css";
 
 const SignUpPopup = ({ setShowSignUp }) => {
-  const [step, setStep] = useState(1); // Step 1: Chọn vai trò, Step 2: Điền thông tin
-  const [role, setRole] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     username: "",
@@ -20,7 +18,7 @@ const SignUpPopup = ({ setShowSignUp }) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[0-9]{10,11}$/;
 
-    if (!role) newErrors.role = "Vui lòng chọn vai trò.";
+    
     if (!formData.name) newErrors.name = "Tên không được để trống.";
     if (!formData.username) newErrors.username = "Tên tài khoản không được để trống.";
     if (!formData.password) newErrors.password = "Mật khẩu không được để trống.";
@@ -35,11 +33,6 @@ const SignUpPopup = ({ setShowSignUp }) => {
     }
 
     return newErrors;
-  };
-
-  const handleRoleSelect = (selectedRole) => {
-    setRole(selectedRole);
-    setStep(2);
   };
 
   const handleChange = (e) => {
@@ -62,7 +55,7 @@ const SignUpPopup = ({ setShowSignUp }) => {
   };
 
   const resetForm = () => {
-    setRole("");
+    
     setFormData({
       name: "",
       username: "",
@@ -72,26 +65,18 @@ const SignUpPopup = ({ setShowSignUp }) => {
       email: "",
     });
     setErrors({});
-    setStep(1);
+    
   };
 
   return (
     <div className="sign-up-popup">
       <div className="sign-up-popup-container">
         <div className="sign-up-popup-title">
-          <h2>{step === 1 ? "Chọn vai trò" : "Đăng ký tài khoản"}</h2>
+          <h2>Đăng ký nhà hàng</h2>
           <button onClick={() => setShowSignUp(false)}>✖</button>
         </div>
 
-        {step === 1 && (
-          <div className="sign-up-popup-role">
-            <button onClick={() => handleRoleSelect("Doanh nghiệp")}>Doanh nghiệp</button>
-            <button onClick={() => handleRoleSelect("Nhân viên")}>Khách hàng</button>
-            {errors.role && <p className="error">{errors.role}</p>}
-          </div>
-        )}
-
-        {step === 2 && (
+        
           <form onSubmit={handleSubmit}>
             <div className="sign-up-popup-inputs">
               <input
@@ -158,7 +143,7 @@ const SignUpPopup = ({ setShowSignUp }) => {
               Hoàn thành
             </button>
           </form>
-        )}
+        
       </div>
     </div>
   );
