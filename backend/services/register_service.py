@@ -7,7 +7,7 @@ from fastapi import HTTPException
 def become_customer(customer: CustomerCreate, user_id: int, db: Session):
     db_customer = db.query(Customer).filter(Customer.driver_id == user_id).first()
     if db_customer:
-        raise HTTPException(status_code=400, detail="Nhà hàng đã tồn tại")
+        raise HTTPException(status_code=400, detail="Customer already exists")
     new_customer = Customer(
         name=customer.name,
     )
@@ -20,7 +20,7 @@ def become_customer(customer: CustomerCreate, user_id: int, db: Session):
 def create_customer(user: UserCreate, customer: CustomerCreate, db: Session):
     db_user = db.query(User).filter(User.user_name == user.user_name).first()
     if db_user:
-        raise Exception("Username already exists")
+        raise Exception("User already exists")
     
     # Hash the password before saving (add actual hashing logic here)
     hashed_password = user.password
@@ -52,7 +52,7 @@ def create_customer(user: UserCreate, customer: CustomerCreate, db: Session):
 def become_driver(driver: DriverCreate, user_id: int, db: Session):
     db_driver = db.query(Driver).filter(Driver.driver_id == user_id).first()
     if db_driver:
-        raise HTTPException(status_code=400, detail="Nhà hàng đã tồn tại")
+        raise HTTPException(status_code=400, detail="Driver already exists")
     new_driver = Driver(
         name=driver.name,
     )
@@ -65,7 +65,7 @@ def become_driver(driver: DriverCreate, user_id: int, db: Session):
 def create_driver(user: UserCreate, driver: DriverCreate, db: Session):
     db_user = db.query(User).filter(User.user_name == user.user_name).first()
     if db_user:
-        raise Exception("Username already exists")
+        raise Exception("User already exists")
     
     # Hash the password before saving (add actual hashing logic here)
     hashed_password = user.password
