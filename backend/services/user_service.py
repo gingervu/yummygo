@@ -3,25 +3,6 @@ from models.models import *
 from models.schemas import *
 from fastapi import HTTPException, status
 
-def create_user(user: UserCreate, db: Session) -> User:
-    db_user = db.query(User).filter(User.user_name == user.user_name).first()
-    if db_user:
-        raise Exception("Username already exists")
-    
-    # Hash the password before saving (add actual hashing logic here)
-    hashed_password = user.password
-
-    db_user = User(
-        user_name=user.user_name,
-        password=hashed_password,
-        phone=user.phone,
-        email=user.email
-    )
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
-    return db_user
-
 def get_user(user_id: int, db: Session) -> User:
     db_user = db.query(User).filter(User.user_id == user_id).first()
     if db_user is None:

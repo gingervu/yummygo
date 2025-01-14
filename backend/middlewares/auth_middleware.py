@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from db.database import get_db
 from models import models
 from typing import Annotated
-from utils.jwt import decode_access_token
+from utils.access_token import decode_access_token
 from typing import Annotated
 from fastapi.security import OAuth2PasswordBearer
 

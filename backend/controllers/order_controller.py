@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 from services import order_service
 from models.models import *
-from models.schemas import OrderSchema, OrderCreate, OrderUpdate
+from models.schemas import *
 from db.database import get_db
 from middlewares.auth_middleware import get_current_user, require_role
 import random, json
@@ -56,6 +56,8 @@ async def update_order(order_id: int, order_update: OrderUpdate,
     return order_service.update_order(order_id, order_update, db)
 
 
+
+
 # Tạo WebSocket để gửi đơn cho tài xế, nhà hàng 
 # Giả lập các kết nối WebSocket của tài xế
 driver_connections = {}
@@ -78,35 +80,35 @@ async def websocket_driver(websocket: WebSocket, driver_id: int):
         # Xóa kết nối khi tài xế ngắt kết nối
         del driver_connections[driver_id]
 
+
 # # API /find-driver 
-# @router.get("/find-driver/{order_id}", response_model=OrderSchema)
-# async def find_driver(order_id: int, db: Session):
-#     # Lấy order từ database và tìm restaurant_id
-#     order = db.query(Order).filter(Order.order_id == order_id).first()
-#     if not order:
-#         raise HTTPException(status_code=404, detail="Order not found")
+@router.get("/find-driver/{order_id}", response_model=None)
+async def find_driver(order_id: int, db: Session = Depends(get_db)) :
+    # Lấy order từ database và tìm restaurant_id
+    order = db.query(Order).filter(Order.order_id == order_id).first()
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found")
     
-#     # Lấy danh sách các tài xế đang active
-#     drivers = db.query(Driver).filter(Driver.status == DriverStatusEnum.active).all()
+    # Lấy danh sách các tài xế đang active
+    drivers = db.query(Driver).filter(Driver.status == DriverStatusEnum.active).all()
 
-#     if not drivers:
-#         raise HTTPException(status_code=404, detail="No active drivers found")
+    if not drivers:
+        raise HTTPException(status_code=404, detail="No active drivers found")
     
-#     # Chọn ngẫu nhiên một tài xế trong số các tài xế đang active
-#     selected_driver = random.choice(drivers)
+    # Chọn ngẫu nhiên một tài xế trong số các tài xế đang active
+    selected_driver = random.choice(drivers)
 
-#     # Lấy thông tin đơn hàng gợi ý
-#     order_info = {
-#         "order_id": order_id,
-#     }
+    # Lấy thông tin đơn hàng gợi ý
+    order_info = {
+        "order_id": order_id
+    }
 
-#     # Gửi thông tin đơn hàng tới tài xế qua WebSocket
-#     if selected_driver.id in driver_connections:
-#         websocket = driver_connections[selected_driver.id]
-#         try:
-#             await websocket.send_json(order_info)
-#             return {"message": "Order suggestion sent to driver", "driver_id": selected_driver.id}
-#         except WebSocketDisconnect:
-#             raise HTTPException(status_code=500, detail="Driver disconnected before receiving the order")
-    
+    # Gửi thông tin đơn hàng tới tài xế qua WebSocket
+    if selected_driver.driver_id in driver_connections:
+        websocket = driver_connections[selected_driver.driver_id]
+        try:
+            await websocket.send_json(order_info)
+            return { "driver_id": selected_driver.driver_id, "message": "Order suggestion sent to driver"}
+        except WebSocketDisconnect:
+            raise HTTPException(status_code=500, detail="Driver disconnected before receiving the order")
 

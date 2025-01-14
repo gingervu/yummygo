@@ -80,7 +80,7 @@ class CategoryEnum(str, Enum):
 class UserBase(BaseModel):
     user_name: str  # Tên người dùng
     phone: Optional[str] = None  # Số điện thoại, có thể rỗng
-    email: Optional[EmailStr] = None  # Email, có thể rỗng
+    email: Optional[str] = None  # Email, có thể rỗng
 
     class Config:
         from_attributes = True  # Chuyển đổi từ SQLAlchemy models sang Pydantic models
@@ -214,6 +214,9 @@ class DriverSchema(DriverBase):
     driver_id: int  # ID tài xế
     is_deleted: bool = False  # Trạng thái xóa tài xế
 
+class DriverResponse(BaseModel):
+    driver_id: int
+    message: str
 # ------------------------------
 # Mô hình Admin (Quản trị viên)
 # ------------------------------
@@ -315,3 +318,8 @@ class ManagerCreate(ManagerBase):
 
 class ManagerSchema(ManagerBase):
     manager_id: int  # ID quản lý
+
+
+class RegisterInput(BaseModel):
+    user: UserCreate
+    customer: CustomerCreate
