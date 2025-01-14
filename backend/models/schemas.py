@@ -100,7 +100,7 @@ class UserUpdate(UserBase):
 class UserLogin(BaseModel):
     user_name: str
     password: str
-    role: RoleEnum
+    role: str
     class Config:
         from_attributes = True  # Chuyển đổi từ SQLAlchemy models sang Pydantic models
 

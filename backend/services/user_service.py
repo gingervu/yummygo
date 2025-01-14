@@ -39,6 +39,7 @@ def delete_user(user_id: int, db: Session) -> str:
     restaurant_ids = [restaurant.restaurant_id for restaurant in db_restaurant.all()]
     db_manager = db.query(Manager).filter(Manager.restaurant_id.in_(restaurant_ids)).all()
 
+
     # Cập nhật trạng thái 'is_deleted' của các bản ghi nếu tồn tại
     if db_user is not None:
         db_user.is_deleted = True
