@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./SignUpPopup.css";
+import axios from "axios";
 
 const SignUpPopup = ({ setShowSignUp }) => {
   const [formData, setFormData] = useState({
@@ -11,7 +12,7 @@ const SignUpPopup = ({ setShowSignUp }) => {
     email: "",
   });
   const [errors, setErrors] = useState({});
-
+  const [loading, setLoading] = useState(false); // Để theo dõi trạng thái đang tải
   // Kiểm tra hợp lệ
   const validateForm = () => {
     const newErrors = {};
@@ -42,15 +43,47 @@ const SignUpPopup = ({ setShowSignUp }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
-      alert("Đăng ký thành công!");
-      setShowSignUp(false); // Đóng popup
-      resetForm();
+        setLoading(true); // Bắt đầu trạng thái loading
+        try {
+            // Cấu trúc dữ liệu theo yêu cầu của API
+            const requestData = {
+              user: {
+                user_name: formData.username,
+                email: formData.email,
+                phone: formData.phoneNumber,
+                password: formData.password,
+              },
+              driver: {
+                name: formData.name,
+              },
+            };
+            const response = await axios.post("http://127.0.0.1:8000/register/driver", requestData);
+            if (response.status === 200 ) {
+                alert("Đăng ký tài xế thành công!");
+                setShowSignUp(false); // Đóng popup
+                resetForm();
+              }
+            } catch (error) {
+                console.error(error);
+              
+                // Kiểm tra lỗi trả về từ phía server
+                if (error.response) {
+                  alert(`Lỗi: ${error.response.data.message || "Đăng ký thất bại, vui lòng kiểm tra lại dữ liệu!"}`);
+                } else if (error.request) {
+                  alert("Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối mạng của bạn.");
+                } else {
+                  alert(`Đã xảy ra lỗi: ${error.message}`);
+                }
+              } finally {
+                setLoading(false); // Dừng trạng thái loading
+              }
+        
     }
   };
 

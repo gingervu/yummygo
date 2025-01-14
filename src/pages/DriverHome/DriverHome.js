@@ -3,6 +3,7 @@ import Header from "../../components/Header/Header";
 import { useNavigate } from "react-router-dom";
 import Popup from "../../components/Popup/Popup";
 import "./DriverHome.css";
+import Sidebar from "../../components/Sidebar/Sidebar";
 
 const DriverHome = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -47,7 +48,7 @@ const DriverHome = () => {
     <div className="driver-home">
       {/* Header */}
       <Header />
-
+      <Sidebar />
       {/* Nội dung chính */}
       <main>
         <h1>Chào Trâm!</h1>

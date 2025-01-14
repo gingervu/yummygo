@@ -22,7 +22,7 @@ const Home = () => {
         setShowLogin(false); // Đóng popup đăng nhập
         // Điều hướng đến trang phù hợp
         if (user.role === "Tài xế") {
-            navigate("/driver"); // Chuyển đến trang Admin
+            navigate("/home"); // Chuyển đến trang Admin
         }
     };
 
