@@ -3,6 +3,7 @@ from models.models import *
 from models.schemas import *
 from fastapi import HTTPException, status
 from typing import List
+import random
 
 def get_customer_by_id(customer_id: int, db: Session):
     """
@@ -23,7 +24,11 @@ def update_customer(customer_id: int, customer: CustomerCreate, db: Session):
     
     # Cập nhật thông tin từ dữ liệu mới
     for key, value in customer.model_dump().items():
-        setattr(db_customer, key, value)
+        if value is not None:
+            if isinstance(value, str):
+                if value == "":
+                    continue
+            setattr(db_customer, key, value)
     
     db.commit()
     db.refresh(db_customer)
@@ -43,10 +48,20 @@ def delete_customer(customer_id: int, db: Session):
     db.commit()
     return {"detail": "Customer đã bị xóa"}
 
+def create_order(order_id: int, customer_id: int, db: Session):
+    db_order = db.query(Order).filter(Order.order_id == order_id,
+                                      Order.customer_id == customer_id).first()
+    if not db_order:
+        raise HTTPException(status_code=404, detail="Order not found")
 
-def list_all_customers(db: Session) -> List[Customer]:
-    """
-    Lấy danh sách tất cả các Customers chưa bị xóa (is_deleted=False).
-    """
-    db_customers = db.query(Customer).filter(Customer.is_deleted == False).all()
-    return db_customers
+    db_drivers = db.query(Driver).filter(Driver.status == DriverStatusEnum.active,
+                                         Driver.is_deleted == False).all()
+    if not db_drivers:
+        raise HTTPException(status_code=404, detail="Could not find active driver")
+        
+    driver = random.choice(db_drivers)
+
+    db_order.driver_id = driver.driver_id
+    db.commit()
+    
+    return db_order

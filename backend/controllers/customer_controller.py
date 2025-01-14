@@ -7,7 +7,7 @@ from db.database import get_db
 from middlewares.auth_middleware import get_current_user, require_role
 from services.customer_service import (
     get_customer_by_id,
-    list_all_customers,
+    create_order,
     update_customer,
     delete_customer,
 )
@@ -33,12 +33,10 @@ async def update_existing_customer(customer: CustomerCreate, current_customer: d
 async def delete_existing_customer(current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
     return delete_customer(current_customer, db)
 
-@router.get("/", response_model=List[CustomerSchema])
-async def list_customers(db: Session = Depends(get_db)):
-    return list_all_customers(db)
+# @router.get("/", response_model=List[CustomerSchema])
+# async def list_customers(db: Session = Depends(get_db)):
+#     return list_all_customers(db)
 
-
-# # Lấy ra order theo customer_id và restaurant_id
-# @router.get("/{restaurant_id}")
-# async def current_order(restaurant_id: int, customer_id: int = Depends(get_current_user), db: Session = Depends(get_db)):
-    
+@router.put("/send-order/{order_id}")
+async def create_an_order(order_id: int, current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
+    return create_order(order_id, current_customer['user_id'], db)
