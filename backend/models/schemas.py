@@ -76,7 +76,7 @@ class CategoryEnum(str, Enum):
 # ------------------------------
 # Mô hình User (Người dùng)
 # ------------------------------
-    
+
 class UserBase(BaseModel):
     user_name: str  # Tên người dùng
     phone: Optional[str] = None  # Số điện thoại, có thể rỗng
@@ -84,9 +84,6 @@ class UserBase(BaseModel):
 
     class Config:
         from_attributes = True  # Chuyển đổi từ SQLAlchemy models sang Pydantic models
-
-class UserCreate(UserBase):
-    password: str  # Mật khẩu khi tạo người dùng mới
 
 class UserSchema(UserBase):
     user_id: int  # ID người dùng
@@ -105,6 +102,62 @@ class UserLogin(BaseModel):
     role: str
     class Config:
         from_attributes = True  # Chuyển đổi từ SQLAlchemy models sang Pydantic models
+
+class UserResponse(BaseModel):
+    user_id: int
+    user_name: str
+    phone: Optional[str]
+    email: Optional[str]
+    role: str
+    
+class UserUpdate(BaseModel):
+    user_name: Optional[str] = None
+    phone: Optional[str] = None
+    email: Optional[str] = None
+    
+    
+from pydantic import BaseModel
+from typing import Optional, List
+
+class UserCreate(BaseModel):
+    user_name: str
+    password: str
+    phone: Optional[str] = None
+    email: Optional[str] = None
+
+class UserLogin(BaseModel):
+    user_name: str
+    password: str
+
+class UserProfile(BaseModel):
+    user_name: str
+    phone: Optional[str] = None
+    email: Optional[str] = None
+
+class Address(BaseModel):
+    address: str
+    coord: Optional[str] = None
+
+class Order(BaseModel):
+    order_id: int
+    restaurant_id: int
+    driver_id: Optional[int]
+    address: str
+    coord: Optional[str]
+    delivery_fee: float
+    food_fee: float
+    order_status: str
+
+class OrderDetail(Order):
+    items: List[dict]
+
+class PaymentMethod(BaseModel):
+    method_name: str
+    details: Optional[str] = None
+
+class Review(BaseModel):
+    rating: int
+    review_text: Optional[str] = None
 
 # ------------------------------
 # Mô hình Restaurant (Nhà hàng)
@@ -229,8 +282,18 @@ class DriverSchema(DriverBase):
     is_deleted: bool = False  # Trạng thái xóa tài xế
 
 class DriverResponse(BaseModel):
-    driver_id: int
     message: str
+    driver_id: int
+    
+class Message(BaseModel):
+    sender_id: int
+    receiver_id: int
+    content: str
+    timestamp: Optional[datetime] = None 
+
+    class Config:
+        from_attributes = True  
+
 # ------------------------------
 # Mô hình Admin (Quản trị viên)
 # ------------------------------
@@ -346,3 +409,71 @@ class ManagerCreate(ManagerBase):
 class ManagerSchema(ManagerBase):
     manager_id: int  # ID quản lý
 
+
+class RegisterInput(BaseModel):
+    user: UserCreate
+    customer: CustomerCreate
+
+from pydantic import BaseModel, Field
+from typing import Optional, List
+from datetime import datetime
+from enum import Enum
+
+# Enum cho trạng thái tài xế
+class DriverStatusEnum(str, Enum):
+    active = "active"
+    inactive = "inactive"
+
+
+# Schema cho tài xế
+class DriverCreate(BaseModel):
+    name: str
+    password: str
+
+
+class DriverLogin(BaseModel):
+    name: str
+    password: str
+
+
+class DriverOut(BaseModel):
+    driver_id: int
+    name: str
+    status: DriverStatusEnum
+
+    class Config:
+        from_attributes = True
+
+
+class DriverStatusUpdate(BaseModel):
+    driver_id: int
+    status: DriverStatusEnum
+
+
+# Schema cho đơn hàng
+class OrderAssign(BaseModel):
+    order_id: int
+    driver_id: int
+
+
+class OrderStatusEnum(str, Enum):
+    cart = "cart"
+    pending = "pending"
+    preparing = "preparing"
+    delivering = "delivering"
+    delivered = "delivered"
+    completed = "completed"
+    cancelled = "cancelled"
+
+
+class OrderStatusUpdate(BaseModel):
+    order_id: int
+    status: OrderStatusEnum
+
+
+# Schema cho đánh giá tài xế
+class DriverReviewCreate(BaseModel):
+    driver_id: int
+    customer_id: int
+    rating: float = Field(..., ge=1.0, le=5.0, example=4.5)
+    comment: Optional[str] = Field(None, example="Great service!")

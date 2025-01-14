@@ -3,6 +3,20 @@ from models.models import *
 from models.schemas import *
 from fastapi import HTTPException, status
 
+def create_user(user: UserCreate, db: Session) -> User:
+    # Kiểm tra người dùng đã tồn tại chưa (dựa trên email hoặc tên đăng nhập)
+    db_user = db.query(User).filter(User.user_name == user.user_name).first()
+    if db_user:
+        raise ValueError(f"User with email {user.user_name} already exists.")  # Hoặc một thông báo lỗi khác
+
+    # Nếu không tồn tại, tạo người dùng mới
+    db_user = User(user_name=user.user_name, password=user.password, phone=user.phone, email=user.email)
+    
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
 def get_user(user_id: int, db: Session) -> User:
     db_user = db.query(User).filter(User.user_id == user_id).first()
     if db_user is None:
