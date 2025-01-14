@@ -28,9 +28,6 @@ async def create_user(user: UserCreate, db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-# @router.get("/", response_model=List[User])
-# async def list_users(db: Session = Depends(get_db)):
-#     return list_users(db)
 
 # sửa thông tin tài khoản
 @router.put("/update")

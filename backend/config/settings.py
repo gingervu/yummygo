@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     database_url: str
     secret_key: str
     debug: bool = True
+    algorithm: str = "HS256"
     
     class Config:
         env_file = ".env"  # Đảm bảo rằng .env được sử dụng nếu có
