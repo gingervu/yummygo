@@ -1,0 +1,109 @@
+.order-details main {
+    font-family: "Poppins", sans-serif;
+    margin-top: 60px;
+}
+  
+  
+.order-details main h2 {
+    display: flex;
+    text-align: center;
+    justify-content: center; 
+    background: linear-gradient(180deg, #000 0%, #7C6F56 100%); /* Gradient từ đen (#000) đến màu nâu (#7C6F56) */
+    background-clip: text; /* Chỉ áp dụng background vào vùng văn bản */
+    -webkit-background-clip: text; /* Tương thích với các trình duyệt dựa trên WebKit */
+    -webkit-text-fill-color: transparent; /* Đặt màu văn bản là trong suốt để chỉ nhìn thấy gradient */
+    font-size: 28px;
+ }
+ .order-details .order-summary-box {
+    width: 520px; /* Đặt chiều rộng của box */
+    border-radius: 10px;
+    background: #F5F5F5;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    display: flex; /* Để căn chỉnh nội dung nếu cần */
+    text-align: left;
+    margin: 5px auto; /* Canh giữa box trong trang */
+    padding: 20px 30px 20px 30px;
+    box-sizing: border-box; /* Đảm bảo padding không ảnh hưởng đến kích thước */
+    flex-direction: column; /* Xếp nội dung theo chiều dọc */
+    gap: 5px;
+    margin-top: 35px;
+    
+  }
+
+  .order-details .order-summary-box p {
+    margin: 10px 0; /* Khoảng cách giữa các đoạn văn */
+    color: #000000; /* Màu chữ */
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+  }
+
+  .order-details .icon {
+    margin-right: 10px;
+  }
+
+  .order-details .order-summary-box hr {
+    border: none;
+    border-top: 1px solid #868686;
+    margin: 5px 0;
+  }
+  
+  .order-info, .payment-method {
+    display: flex;
+    flex-direction: column; /* Xếp nội dung con theo cột */
+    align-items: flex-start; /* Đảm bảo căn trái */
+  }
+  
+  .order-info p, .payment-method p {
+    margin: 5px 0; /* Khoảng cách giữa các dòng */
+    text-align: left; /* Căn trái từng đoạn văn */
+  }
+  
+  .order-distance {
+    margin-left: 34px; 
+    font-weight: bold;
+  }
+
+  .cost-info {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .order-details .action-btn-container {
+    display: flex;
+    justify-content: center; /* Căn giữa */
+    margin-top: 55px;
+    gap: 90px; /* Thêm khoảng cách giữa các nút */
+    flex-direction: row; /* Đảm bảo các button nằm ngang */
+  }
+
+  .order-details .action-btn {
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 8px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .order-details .reject-btn{
+    background-color: #7C6351
+  }
+
+  .order-details .reject-btn:hover {
+    background-color: #737372;
+  }
+
+  .order-details .accept-btn {
+    background-color: #E97522;
+    
+  }
+  
+  .order-details .accept-btn:hover {
+    background-color: #f97b20;
+  }
+  
+
+  
+  

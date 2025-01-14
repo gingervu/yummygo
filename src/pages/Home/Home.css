@@ -1,0 +1,37 @@
+.home {
+    
+    text-align: center;
+  
+ /* Căn giữa theo chiều dọc */
+  /* Đảm bảo chiều cao đầy đủ */
+  
+    font-family: "Poppins", sans-serif;
+     /* Chiếm hết phần còn lại của màn hình */
+}
+
+
+.home .tille{
+    margin-top: 190px;
+    
+}
+
+.home .tille .button-container{
+    margin-top: 80px;
+}
+
+.home .button-container button {
+    background: linear-gradient(to right, #ff9800, #ffc107);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.home .button-container button:hover {
+    background: linear-gradient(to right, #ff8c00, #ffa000);
+    transform: scale(1.05);
+}

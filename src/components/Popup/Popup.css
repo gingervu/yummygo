@@ -1,4 +1,4 @@
-.popup-overlay {
+.popup .popup-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -11,7 +11,7 @@
     z-index: 1000;
   }
   
-  .popup-container {
+  .popup .popup-container {
     background: white;
     padding: 20px;
     border-radius: 10px;
@@ -22,14 +22,14 @@
     position: relative;
   }
   
-  .popup-buttons {
+  .popup .popup-buttons {
     display: flex;
     justify-content: center;
     gap: 70px; 
     margin-top: 20px;
   }
     
-  .stop-btn {
+  .popup .stop-btn {
     margin-top: 15px;
     padding: 10px 20px;
     background-color: #727272;
@@ -42,7 +42,7 @@
   }
   
   
-  .close-btn {
+  .popup .close-btn {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -52,7 +52,7 @@
     cursor: pointer;
   }
   
-  .view-order-btn {
+  .popup .view-order-btn {
     margin-top: 15px;
     padding: 10px 20px;
     background-color: #25e44c;
@@ -64,7 +64,7 @@
     cursor: pointer;
   }
 
-  .try-again-btn {
+  .popup .try-again-btn {
     margin-top: 15px;
     padding: 10px 20px;
     background-color: #e97522;
@@ -76,15 +76,15 @@
     cursor: pointer;
   }
 
-  .stop-btn:hover {
+  .popup .stop-btn:hover {
     background-color: #bdbdbd;
   }
   
-  .view-order-btn:hover {
+  .popup .view-order-btn:hover {
     background-color: #11f03d;
   }
   
-  .try-again-btn:hover {
+  .popup .try-again-btn:hover {
     background-color:  #d96b1f ;
   }
   

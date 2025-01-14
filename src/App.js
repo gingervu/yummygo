@@ -1,11 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import DriverHome from './pages/Driver/DriverHome.js';
-import OrderDetails from './pages/Driver/OrderDetails.js';
-import AcceptOrder from './pages/Driver/AcceptOrder.js';
-import PickupSuccess from './pages/Driver/PickupSuccess.js';
-import DeliverToCustomer from './pages/Driver/DeliverToCustomer.js';
-import DeliverySuccess from './pages/Driver/DeliverySuccess.js';
+import DriverHome from './pages/DriverHome/DriverHome.js';
+import OrderDetails from './pages/OrderDetails/OrderDetails.js';
+import AcceptOrder from './pages/AcceptOrder/AcceptOrder.js';
+import PickupSuccess from './pages/PickupSuccess/PickupSuccess.js';
+import DeliverToCustomer from './pages/DeliverToCustomer/DeliverToCustomer.js';
+import DeliverySuccess from './pages/DeliverySuccess/DeliverySuccess.js';
+import Home from './pages/Home/Home.js';
 
 
 const App = () => {
@@ -13,9 +14,10 @@ const App = () => {
     <Router>
       <Routes>
         {/* Trang chính Driver */}
-        <Route path="/" element={<DriverHome />} />
+        <Route path="/" element={<Home />} />
 
         {/* Các route */}
+        <Route path="/home" element={<DriverHome />} />
         <Route path="/orderdetails" element={<OrderDetails />} />
         <Route path="/orderaccept" element={<AcceptOrder />} />
         <Route path="/pickupsuccess" element={<PickupSuccess />} />

@@ -4,6 +4,7 @@ import "./Popup.css";
 
 const Popup = ({ onClose, children }) => {
   return ReactDOM.createPortal(
+    <div className="popup">
     <div className="popup-overlay">
       <div className="popup-container">
         <button className="close-btn" onClick={onClose}>
@@ -13,6 +14,7 @@ const Popup = ({ onClose, children }) => {
       </div>
     </div>,
     document.getElementById("popup-root")
+    </div>
   );
 };
 
