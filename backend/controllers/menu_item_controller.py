@@ -46,10 +46,3 @@ async def update_menu(item_id: int, menu_item: MenuItemUpdate, current_restauran
 @router.delete("/delete")
 async def remove_menu_item(item_id: int, restaurant_id = Depends(get_current_user),db: Session = Depends(get_db)):
     return delete_menu_item(item_id, restaurant_id, db)
-
-# Lấy ra menu của nhà hàng ---> khách hàng xem
-@router.get('/{restaurant_id}')
-async def get_menu_by_res_id(restaurant_id: int, db: Session = Depends(get_db)):
-    db.query(MenuItem).filter(MenuItem.restaurant_id == restaurant_id,
-                              MenuItem.is_deleted == False,
-                              MenuItem.status == ItemStatusEnum.available)
