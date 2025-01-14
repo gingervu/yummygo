@@ -27,7 +27,7 @@ async def add_item(menu_item: MenuItemCreate, current_restaurant: dict = Depends
 async def get_all_menu_items(current_restaurant: dict = Depends(require_role('restaurant')),db: Session = Depends(get_db)):
     return list_menu_items(current_restaurant['user_id'], db)
 
-# Lấy ra danh sách món available ---> khách hàng duyệt món
+# Lấy ra danh sách món available của nhà hàng ---> khách hàng duyệt món
 @router.get("/available/{restaurant_id}", response_model=List[MenuItemShchema])
 async def get_available_menu_items(restaurant_id: int, db: Session = Depends(get_db)):
     return available_items(restaurant_id, db)
@@ -38,16 +38,16 @@ async def get_single_menu_item(item_id: int, db: Session = Depends(get_db)):
     return get_menu_item(item_id, db)
 
 # Chỉnh sửa thông tin món
-@router.put("/{item_id}", response_model=MenuItemShchema)
+@router.put("/update/{item_id}", response_model=MenuItemShchema)
 async def update_menu(item_id: int, menu_item: MenuItemUpdate, current_restaurant: dict = Depends(require_role("restaurant")), db: Session = Depends(get_db)):
-    return update_menu_item_info(item_id, menu_item, db)
+    return update_menu_item_info(item_id, menu_item, current_restaurant["user_id"], db)
 
 # Xóa món
 @router.delete("/delete")
-async def remove_menu_item(item_id: int, restaurant_id = Depends(get_current_user),db: Session = Depends(get_db)):
+async def remove_menu_item(item_id: int, restaurant_id = Depends(require_role("restaurant")),db: Session = Depends(get_db)):
     return delete_menu_item(item_id, restaurant_id, db)
 
-# Lấy ra menu của nhà hàng ---> khách hàng xem
+# Lấy ra danh sách món available của nhà hàng ---> khách hàng duyệt món
 @router.get('/menu/{restaurant_id}', response_model=List[MenuItemShchema])
 async def get_menu_by_res_id(restaurant_id: int, db: Session = Depends(get_db)):
     return db.query(MenuItem).filter(MenuItem.restaurant_id == restaurant_id,

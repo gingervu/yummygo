@@ -43,17 +43,27 @@ async def get_order(order_id: int, db: Session = Depends(get_db)):
 async def current_cart(restaurant_id: int, current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
     return order_service.get_current_cart(restaurant_id, current_customer['user_id'], db)
 
+
+# Cập nhật thông tin đơn hàng cho khách hàng
+# Khách hàng có thể thay đổi địa chỉ và note
+
+@router.put("/update/{order_id}")
+async def update_order_info(order_id: int, order_update: OrderUpdate, 
+                       current_driver: dict = Depends(require_role('driver')), 
+                       db: Session = Depends(get_db)):
+    return order_service.update_order_status(order_id, order_update, current_driver['user_id'], db)
+
 # Cập nhật trạng thái đơn hàng cho tài xế
 # Đầu vào order_update được xác định cụ thể trong từng
 # trường hợp button tài xế bấm. Ví dụ: "Nhận đơn" => "preparing"
 # "Đã lấy đơn" => "delivering"
 # "Đã đến điểm giao" => "delivered"
 # "Giao hàng thành công" => "completed"
-@router.put("/{order_id}")
-async def update_order(order_id: int, order_update: OrderUpdate, 
+@router.put("/change-status/{order_id}")
+async def update_order(order_id: int, new_status: str, 
                        current_driver: dict = Depends(require_role('driver')), 
                        db: Session = Depends(get_db)):
-    return order_service.update_order(order_id, order_update, db)
+    return order_service.update_order_status(order_id, new_status, current_driver['user_id'], db)
 
 
 

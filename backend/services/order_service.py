@@ -106,8 +106,27 @@ def get_orders_in_cart(customer_id: int, db: Session):
 def get_order(order_id: int, db: Session):
     return db.query(OrderItem).filter(OrderItem.order_id == order_id).all()
 
+# khách hàng cập nhật thông tin order (có thể là address, note)
+def update_order(order_id: int, order: OrderUpdate, driver_id: int, db: Session):
+    db_order = db.query(Order).filter(Order.order_id == order_id,
+                                      Order.driver_id == driver_id).first()
+    if db_order is None:
+        raise HTTPException(status_code=404, detail="Order not found")
+    
+    update_info = order.model_dump(exclude_unset=True)
+    
+    
+    # Cập nhật thông tin
+    for key, value in update_info.items():
+        if value is not None:
+            setattr(db_order, key, value)
+
+    db.commit()
+    db.refresh(db_order)
+    return db_order
+
 # hàm cập nhật trạng thái đơn hàng bởi tài xế
-def update_order(order_id: int, new_status: str, driver_id: int, db: Session):
+def update_order_status(order_id: int, new_status: str, driver_id: int, db: Session):
     db_order = db.query(Order).filter(Order.order_id == order_id,
                                       Order.driver_id == driver_id).first()
     if db_order is None:
@@ -124,8 +143,8 @@ def delete_order(order_id: int, customer_id: int, db: Session):
                                       Order.customer_id == customer_id,
                                       Order.order_status == OrderStatusEnum.cart).first()
     if db_order is None:
-        raise HTTPException(status_code=404, detail="Order not found")
-    
+        raise HTTPException(status_code=404, detail="Order not found")    
     db.delete(db_order)
+    
     db.commit()
     return {"detail": "Đơn hàng đã bị xóa."}

@@ -11,13 +11,13 @@ router = APIRouter(prefix="/restaurants", tags=["Restaurants"])
     
 #Lấy thông tin nhà hàng --> cho tài khoản nhà hàng xem
 @router.get("/me")
-async def get_restaurant_info(current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
-    return get_restaurant(current_restaurant['user_id'], db)
+async def get_restaurant_me(current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
+    return get_restaurant_info(current_restaurant['user_id'], db)
 
 # Cập nhật thông tin nhà hàng
 @router.put("/update")
 async def update_restaurant_(restaurant: RestaurantUpdate, current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
-    return update_restaurant(current_restaurant['user_id'], restaurant, db)
+    return update_restaurant(restaurant, current_restaurant['user_id'], db)
 
 # Xóa nhà hàng
 @router.delete("/delete")
@@ -27,7 +27,8 @@ async def delete_restaurant_(current_restaurant: dict = Depends(require_role('re
 #Chuyển trạng thái hoạt động của nhà hàng
 @router.put("/change-status")
 async def change_status(current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
-    return update_restaurant_status(current_restaurant['user_id'], db)
+    restaurant = update_restaurant_status(current_restaurant['user_id'], db)
+    return {"message" : "status changed", "status": restaurant.status}
 
 # Lấy danh sách các nhà hàng đang active --> customer duyệt
 @router.get("/active")
