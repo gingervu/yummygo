@@ -61,3 +61,8 @@ def delete_driver_service(driver_id: int, db: Session):
 def list_drivers_service(db: Session) -> List[Driver]:
     """Lấy danh sách tất cả tài xế chưa bị xóa"""
     return db.query(Driver).filter(Driver.is_deleted == False).all()
+
+
+def get_available_drivers(db: Session) -> List[Driver]:
+    """Lấy danh sách tài xế có thể nhận đơn hàng"""
+    return db.query(Driver).filter(Driver.status == DriverStatusEnum.active).all()

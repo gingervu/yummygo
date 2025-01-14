@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from models.models import *
 from models.schemas import *
 from fastapi import HTTPException
-
+        
 def create_order_item(order_item: OrderItemCreate, db: Session) -> OrderItem:
     db_order_item = db.query(OrderItem).filter(
         OrderItem.item_id == order_item.item_id,

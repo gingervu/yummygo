@@ -45,3 +45,5 @@ async def get_menu_by_res_id(restaurant_id: int, db: Session = Depends(get_db)):
     db.query(MenuItem).filter(MenuItem.restaurant_id == restaurant_id,
                               MenuItem.is_deleted == False,
                               MenuItem.status == ItemStatusEnum.available)
+    
+    

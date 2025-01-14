@@ -1,12 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException, WebSocket, WebSocketDisconnect, Response, Cookie
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from typing import List, Optional
 from services import order_service
 from models.models import *
 from models.schemas import *
 from db.database import get_db
-from middlewares.auth_middleware import get_current_user, require_role
-import random, json
+from middlewares.auth_middleware import require_role
+from services.order_service import *
 
 router = APIRouter(prefix="/orders", tags=["Orders"])
 
@@ -56,59 +55,125 @@ async def update_order(order_id: int, order_update: OrderUpdate,
     return order_service.update_order(order_id, order_update, db)
 
 
-
+# API tạo đơn hàng mới
+@router.post("/order")
+async def create_order(order: Order, db: Session = Depends(get_db)):
+    # Lưu đơn hàng vào cơ sở dữ liệu
+    process_new_order(order, db)
+    return {"message": "Đơn hàng đã được tạo thành công"}
 
 # Tạo WebSocket để gửi đơn cho tài xế, nhà hàng 
-# Giả lập các kết nối WebSocket của tài xế
-driver_connections = {}
+# và cập nhật trạng thái đơn hàng
 
-# Kết nối WebSocket cho tài xế
-@router.websocket("/ws/driver/{driver_id}")
-async def websocket_driver(websocket: WebSocket, driver_id: int):
-    # Chấp nhận kết nối WebSocket
-    await websocket.accept()
-
-    # Lưu kết nối WebSocket của tài xế
-    driver_connections[driver_id] = websocket
-
-    try:
-        while True:
-            # Nhận tin nhắn từ tài xế (có thể bỏ qua nếu không cần)
-            data = await websocket.receive_text()
-            print(f"Received from driver {driver_id}: {data}")
-    except WebSocketDisconnect:
-        # Xóa kết nối khi tài xế ngắt kết nối
-        del driver_connections[driver_id]
-
-
-# # API /find-driver 
-@router.get("/find-driver/{order_id}", response_model=None)
-async def find_driver(order_id: int, db: Session = Depends(get_db)) :
-    # Lấy order từ database và tìm restaurant_id
-    order = db.query(Order).filter(Order.order_id == order_id).first()
-    if not order:
-        raise HTTPException(status_code=404, detail="Order not found")
+# # Kết nối WebSocket cho tài xế
+# @router.websocket("/ws/driver/{driver_id}")
+# async def websocket_driver(websocket: WebSocket, driver_id: int):
+#     # Chấp nhận kết nối WebSocket
+#     await websocket.accept()
+#     # Lưu kết nối vào ConnectionManager
+#     manager.connect(websocket, "drivers", driver_id)
     
-    # Lấy danh sách các tài xế đang active
-    drivers = db.query(Driver).filter(Driver.status == DriverStatusEnum.active).all()
+#     try:
+#         while True:
+#             # Nhận tin nhắn từ tài xế (có thể bỏ qua nếu không cần)
+#             data = await websocket.receive_text()
+#             print(f"Received from driver {driver_id}: {data}")
+#     except WebSocketDisconnect:
+#         # Xóa kết nối khi tài xế ngắt kết nối
+#         manager.disconnect("drivers", driver_id)
 
-    if not drivers:
-        raise HTTPException(status_code=404, detail="No active drivers found")
+
+# # # API /find-driver 
+# @router.get("/find-driver/{order_id}", response_model=None)
+# async def find_driver(order_id: int, db: Session = Depends(get_db)) :
+#     # Lấy order từ database và tìm restaurant_id
+#     order = db.query(Order).filter(Order.order_id == order_id).first()
+#     if not order:
+#         raise HTTPException(status_code=404, detail="Order not found")
     
-    # Chọn ngẫu nhiên một tài xế trong số các tài xế đang active
-    selected_driver = random.choice(drivers)
+#     # Lấy danh sách các tài xế đang active
+#     drivers = db.query(Driver).filter(Driver.status == DriverStatusEnum.active).all()
 
-    # Lấy thông tin đơn hàng gợi ý
-    order_info = {
-        "order_id": order_id
-    }
+#     if not drivers:
+#         raise HTTPException(status_code=404, detail="No active drivers found")
+    
+#     # Chọn ngẫu nhiên một tài xế trong số các tài xế đang active
+#     selected_driver = random.choice(drivers)
 
-    # Gửi thông tin đơn hàng tới tài xế qua WebSocket
-    if selected_driver.driver_id in driver_connections:
-        websocket = driver_connections[selected_driver.driver_id]
-        try:
-            await websocket.send_json(order_info)
-            return { "driver_id": selected_driver.driver_id, "message": "Order suggestion sent to driver"}
-        except WebSocketDisconnect:
-            raise HTTPException(status_code=500, detail="Driver disconnected before receiving the order")
+#     # Lấy thông tin đơn hàng gợi ý
+#     order_info = {
+#         "order_id": order_id
+#     }
 
+#     # Gửi thông tin đơn hàng tới tài xế qua WebSocket
+#     if selected_driver.driver_id in manager.drivers:
+#         # Lấy kết nối WebSocket của tài xế
+#         websocket = manager.drivers[selected_driver.driver_id]
+#         try:
+#             # Gửi thông tin đơn hàng tới tài xế
+#             await websocket.send_json(order_info)
+#             # Trả về thông báo cho người dùng
+#             return { "driver_id": selected_driver.driver_id, "message": "Order suggestion sent to driver"}
+#         except WebSocketDisconnect:
+#             # Xóa kết nối khi tài xế ngắt kết nối
+#             raise HTTPException(status_code=500, detail="Driver disconnected before receiving the order")
+
+
+# @router.websocket("/ws/restaurant/{restaurant_id}")
+# async def websocket_restaurant(websocket: WebSocket, restaurant_id: int, current_user: dict = Depends(require_role('restaurant'))):
+#     # Xác thực và chấp nhận kết nối WebSocket
+#     await websocket.accept()
+#     # Lưu kết nối vào ConnectionManager
+#     manager.connect(websocket, "restaurants", restaurant_id)
+    
+#     try:
+#         while True:
+#             # Nhận tin nhắn từ nhà hàng (có thể bỏ qua nếu không cần)
+#             data = await websocket.receive_text()
+#             print(f"Received from restaurant {restaurant_id}: {data}")
+#     except WebSocketDisconnect:
+#         # Xóa kết nối khi nhà hàng ngắt kết nối
+#         manager.disconnect("restaurants", restaurant_id)
+
+        
+# # Kết nối WebSocket cho khách hàng
+# @router.websocket("/ws/customer/{customer_id}")
+# async def websocket_customer(websocket: WebSocket, customer_id: int):
+#     # Chấp nhận kết nối WebSocket
+#     await websocket.accept()
+#     # Lưu kết nối vào ConnectionManager
+#     manager.connect(websocket, "customers", customer_id)
+    
+#     try:
+#         while True:
+#             # Nhận tin nhắn từ khách hàng (có thể bỏ qua nếu không cần)
+#             data = await websocket.receive_text()
+#             print(f"Received from customer {customer_id}: {data}")
+#     except WebSocketDisconnect:
+#         # Xóa kết nối khi khách hàng ngắt kết nối
+#         manager.disconnect("customers", customer_id)
+        
+# # API /send-message
+# @router.post("/send-message")
+# async def send_message(message: Message, db: Session = Depends(get_db)):
+#     # Lấy thông tin người gửi và người nhận
+#     sender = db.query(User).filter(User.user_id == message.sender_id).first()
+#     receiver = db.query(User).filter(User.user_id == message.receiver_id).first()
+    
+#     if not sender or not receiver:
+#         raise HTTPException(status_code=404, detail="User not found")
+    
+#     # Gửi tin nhắn tới người nhận qua WebSocket
+#     if receiver.user_id in manager.connections:
+#         # Lấy kết nối WebSocket của người nhận
+#         websocket = manager.connections[receiver.user_id]
+#         try:
+#             # Gửi tin nhắn tới người nhận
+#             await websocket.send_json(message.dict())
+#             # Trả về thông báo cho người gửi
+#             return { "message": "Message sent successfully"}
+#         except WebSocketDisconnect:
+#             # Xóa kết nối khi người nhận ngắt kết nối
+#             raise HTTPException(status_code=500, detail="Receiver disconnected before receiving the message")
+#     else:
+#         raise HTTPException(status_code=404, detail="Receiver not connected")

@@ -3,7 +3,7 @@ from fastapi import HTTPException
 from models.models import *
 from models.schemas import OrderCreate, OrderUpdate
 from datetime import datetime
-
+from services.driver_service import *
 
 # Giảm số lượng của item trong giỏ
 def subtract_item(item_id: int, order_id: int, customer_id: int, db: Session):
@@ -129,3 +129,58 @@ def delete_order(order_id: int, customer_id: int, db: Session):
     db.delete(db_order)
     db.commit()
     return {"detail": "Đơn hàng đã bị xóa."}
+
+from services.connection_manager import ConnectionManager
+manager = ConnectionManager()
+
+# Hàm gửi thông báo cho nhà hàng
+async def notify_restaurant(order: Order, restaurant_id: int):
+    if restaurant_id not in manager.connections["restaurants"]:
+        return HTTPException(status_code=404, detail="Nhà hàng không online")
+    
+    notification = {
+        "message": "Có đơn hàng mới",
+        "order_id": order.order_id,
+        "restaurant_id": order.restaurant_id,
+        "order_details": {
+            "customer_id": order.customer_id,
+            "items": [item.item_id for item in order.order_items]
+        },
+        "timestamp": datetime.now().isoformat()
+    }
+    
+    for ws in manager.connections["restaurants"][restaurant_id]:
+        await ws.send_json(notification)
+
+# Hàm gửi thông báo cho tài xế khi có đơn hàng mới
+async def notify_driver_for_order(order: Order, driver_id: int):
+    if driver_id not in manager.connections["drivers"]:
+        return HTTPException(status_code=404, detail="Tài xế không online")
+    
+    notification = {
+        "message": "Có đơn hàng mới cần giao",
+        "order_id": order.order_id,
+        "restaurant_id": order.restaurant_id,
+        "customer_id": order.customer_id,
+        "order_details": [item.item_id for item in order.order_items],
+        "timestamp": datetime.now().isoformat()
+    }
+    
+    for ws in manager.connections["drivers"][driver_id]:
+        await ws.send_json(notification)
+        
+        
+# Hàm xử lý đơn hàng khi đặt thành công
+async def process_new_order(order: Order, db: Session):
+    db.add(order)
+    db.commit()
+    
+    # Tìm nhà hàng và gửi thông báo
+    restaurant = db.query(Restaurant).filter(Restaurant.restaurant_id == order.restaurant_id).first()
+    await notify_restaurant(order, restaurant.restaurant_id)
+
+    
+    # Tìm tài xế có sẵn và gửi thông báo
+    available_drivers = get_available_drivers(order.restaurant_id, db)
+    for driver in available_drivers:
+        await notify_driver_for_order(order, driver.driver_id)

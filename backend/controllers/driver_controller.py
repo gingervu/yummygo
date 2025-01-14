@@ -4,12 +4,7 @@ from typing import List
 from db.database import get_db
 from models.schemas import *
 from models.models import *
-from services.driver_service import (
-    list_drivers_service,
-    get_driver_service,
-    update_driver_service,
-    delete_driver_service,
-)
+from services.driver_service import *
 
 from middlewares.auth_middleware import get_current_user, require_role
 

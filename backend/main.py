@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from routes.api_router import api_router
 import sys
 sys.path.append("d:/yummygo/backend")
@@ -13,7 +13,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # Cho phép chia sẻ cookie giữa các domain
+    allow_origins=["*"],  # Cho phép tất cả nguồn, bạn có thể giới hạn cụ thể nếu cần
     allow_credentials=True,  # Bật gửi cookies trong các yêu cầu
     allow_methods=["*"],
     allow_headers=["*"],
@@ -25,3 +25,13 @@ app.include_router(api_router)
 @app.get("/")
 async def root():
     return {"message": "Welcome to FastAPI application!"}
+
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    try:
+        while True:
+            data = await websocket.receive_text()
+            await websocket.send_text(f"Message text was: {data}")
+    except WebSocketDisconnect:
+        print("Client disconnected")

@@ -279,8 +279,18 @@ class DriverSchema(DriverBase):
     is_deleted: bool = False  # Trạng thái xóa tài xế
 
 class DriverResponse(BaseModel):
-    driver_id: int
     message: str
+    driver_id: int
+    
+class Message(BaseModel):
+    sender_id: int
+    receiver_id: int
+    content: str
+    timestamp: Optional[datetime] = None 
+
+    class Config:
+        from_attributes = True  
+
 # ------------------------------
 # Mô hình Admin (Quản trị viên)
 # ------------------------------
@@ -392,7 +402,6 @@ class ManagerCreate(ManagerBase):
 class ManagerSchema(ManagerBase):
     manager_id: int  # ID quản lý
 
-<<<<<<< HEAD
 
 class RegisterInput(BaseModel):
     user: UserCreate
@@ -461,5 +470,3 @@ class DriverReviewCreate(BaseModel):
     customer_id: int
     rating: float = Field(..., ge=1.0, le=5.0, example=4.5)
     comment: Optional[str] = Field(None, example="Great service!")
-=======
->>>>>>> feb43bd6e452f8a457640a20f37f0acad4a8fe36
