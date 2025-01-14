@@ -23,26 +23,23 @@ def get_user(user_id: int, db: Session) -> User:
         raise Exception("User not found")
     return db_user
 
-def list_users(db: Session) -> list:
-    return db.query(User).filter(User.is_deleted == False).all()
 
-# def update_user(user_id: int, user: UserUpdate, db: Session) -> User:
-#     db_user = db.query(User).filter(User.user_id == user_id).first()
-#     if db_user is None:
-#         raise Exception("User not found")
+
+def update_user(user: UserUpdate, user_id: int, db: Session) -> User:
+    db_user = db.query(User).filter(User.user_id == user_id).first()
+    if db_user is None:
+        raise Exception("User not found")
     
-#     if user.user_name:
-#         db_user.user_name = user.user_name
-#     if user.password:
-#         db_user.password = user.password
-#     if user.phone:
-#         db_user.phone = user.phone
-#     if user.email:
-#         db_user.email = user.email
+    for key, value in user.model_dump(exclude_unset=True).items():
+        if value is not None:
+            if isinstance(value, str):
+                if value == "":
+                    continue
+            setattr(db_user, key, value)    
     
-#     db.commit()
-#     db.refresh(db_user)
-#     return db_user
+    db.commit()
+    db.refresh(db_user)
+    return db_user
 
 def delete_user(user_id: int, db: Session) -> str:
     # Truy vấn các bản ghi trong bảng User, Customer, Driver, Merchant, Restaurant và Manager
@@ -71,3 +68,6 @@ def delete_user(user_id: int, db: Session) -> str:
     db.commit()
 
     return "User and related records have been deleted."
+
+# def list_users(db: Session) -> list:
+#     return db.query(User).filter(User.is_deleted == False).all()

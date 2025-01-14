@@ -11,13 +11,13 @@ router = APIRouter(prefix="/restaurants", tags=["Restaurants"])
     
 #Lấy thông tin nhà hàng --> cho tài khoản nhà hàng xem
 @router.get("/me")
-async def get_restaurant_info(current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
-    return get_restaurant(current_restaurant['user_id'], db)
+async def get_restaurant_me(current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
+    return get_restaurant_info(current_restaurant['user_id'], db)
 
 # Cập nhật thông tin nhà hàng
 @router.put("/update")
 async def update_restaurant_(restaurant: RestaurantUpdate, current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
-    return update_restaurant(current_restaurant['user_id'], restaurant, db)
+    return update_restaurant(restaurant, current_restaurant['user_id'], db)
 
 # Xóa nhà hàng
 @router.delete("/delete")
@@ -27,7 +27,8 @@ async def delete_restaurant_(current_restaurant: dict = Depends(require_role('re
 #Chuyển trạng thái hoạt động của nhà hàng
 @router.put("/change-status")
 async def change_status(current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
-    return update_restaurant_status(current_restaurant['user_id'], db)
+    restaurant = update_restaurant_status(current_restaurant['user_id'], db)
+    return {"message" : "status changed", "status": restaurant.status}
 
 # Lấy danh sách các nhà hàng đang active --> customer duyệt
 @router.get("/active")
@@ -37,6 +38,7 @@ async def list_restaurants_(db: Session = Depends(get_db)):
 # Lấy thông tin nhà hàng theo ID ---> hiện trên giao diện customer
 @router.get("/{restaurant_id}", response_model=RestaurantSchema)
 async def get_restaurant_by_id(restaurant_id: int, db: Session = Depends(get_db)):
+<<<<<<< HEAD
     return get_restaurant(restaurant_id, db)
 
 # Lấy ra menu của nhà hàng ---> khách hàng xem
@@ -47,3 +49,6 @@ async def get_menu_by_res_id(restaurant_id: int, db: Session = Depends(get_db)):
                               MenuItem.status == ItemStatusEnum.available)
     
     
+=======
+    return get_restaurant(restaurant_id, db)
+>>>>>>> 296a9a0587dde54322aead3411db1d27a5f101e3
