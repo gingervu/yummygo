@@ -9,17 +9,25 @@ const axiosInstance = axios.create({
     Accept: "application/json",
   },
 });
+axiosInstance.defaults.withCredentials = true;
 
-// Interceptor: Thêm token vào mỗi request (nếu cần)
+// Interceptor: Thêm token vào mỗi request (nếu có)
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token"); // Lấy token từ localStorage
+    // Lấy token từ cookie
+    const token = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("access_token="))
+      ?.split("=")[1];  // Lấy giá trị token từ cookie
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
     return config;
   },
   (error) => {
+    console.error("Request error:", error);
     return Promise.reject(error);
   }
 );
@@ -28,9 +36,11 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
+    // Log thông tin chi tiết về lỗi
     if (error.response) {
-      // Xử lý lỗi trả về từ server
       console.error("API Error:", error.response.data);
+      console.error("API Error Status:", error.response.status);
+      console.error("API Error Headers:", error.response.headers);
     } else if (error.request) {
       // Lỗi không nhận được phản hồi từ server
       console.error("No response received:", error.request);

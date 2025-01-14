@@ -35,7 +35,7 @@ const Navbar = ({ setShowLogin, setShowSignUp, currentUser, handleLogout }) => {
     <div className="navbar">
       {/* Logo hoặc tiêu đề bên trái */}
       <div className="navbar-left">
-        <Link to='/home'><p>YUMMYGO</p></Link>
+        <Link to='/cart'><p>YUMMYGO</p></Link>
       </div>
 
       {/* Phần giữa */}

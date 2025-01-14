@@ -29,7 +29,7 @@ const LoginPopup = ({ setShowLogin, setShowSignUp, onLoginSuccess }) => {
         const { access_token, token_type } = response.data;
 
         // Lưu token vào localStorage hoặc sessionStorage (tuỳ chọn)
-        localStorage.setItem("access_token", access_token);
+        localStorage.setItem("token", access_token);
         alert("Đăng nhập thành công!");
         onLoginSuccess(role); // Gọi hàm callback khi đăng nhập thành công
         setShowLogin(false); // Đóng popup đăng nhập
