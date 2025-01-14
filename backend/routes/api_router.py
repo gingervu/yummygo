@@ -11,6 +11,8 @@ from controllers.restaurant_controller import router as restaurant_router
 from controllers.user_controller import router as user_router
 from controllers.register_controller import router as register_router
 from controllers.login_controller import router as login_router
+from controllers.logout_controller import router as logout_router
+
 # Tập hợp tất cả các router
 api_router = APIRouter()
 
@@ -24,4 +26,5 @@ api_router.include_router(restaurant_router)
 api_router.include_router(menu_item_router)
 api_router.include_router(order_item_router)
 api_router.include_router(login_router)
+api_router.include_router(logout_router)
 api_router.include_router(register_router)

@@ -55,23 +55,27 @@ def get_menu_item(item_id: int, db: Session) -> MenuItem:
     return menu_item
 
 
-def update_menu_item_info(item_id: int, menu_item: MenuItemUpdate, db: Session) -> MenuItem:
+def update_menu_item_info(item_id: int, menu_item: MenuItemUpdate, restaurant_id: int, db: Session) -> MenuItem:
     """
     Cập nhật thông tin của một menu item.
     """
     db_menu_item = db.query(MenuItem).filter(MenuItem.item_id == item_id,
-                                             MenuItem.is_deleted == False).first()
+                                             MenuItem.is_deleted == False,
+                                             MenuItem.restaurant_id == restaurant_id).first()
     if not db_menu_item:
         raise HTTPException(status_code=404, detail="Món ăn không tồn tại")
     
-    update_info = menu_item.model_dump()
+    update_info = menu_item.model_dump(exclude_unset=True)
+    
+    
     # Cập nhật thông tin
     for key, value in update_info.items():
-        setattr(db_menu_item, key, value)
+        if value is not None:
+            setattr(db_menu_item, key, value)
+            if key == "price":
+                price_update(item_id, update_info['price'], db)
 
-    # Cập nhật giá món ăn trong giỏ
-    if "price" in update_info:
-        price_update(item_id, update_info['price'], db)
+
     db.commit()
     db.refresh(db_menu_item)
     return db_menu_item
@@ -88,13 +92,9 @@ def delete_menu_item(item_id: int, restaurant_id: int, db: Session):
     """
     Xóa mềm (soft delete) một menu item.
     """
-    # Kiểm tra nhà hàng tồn tại
-    db_restaurant = db.query(Restaurant).filter(Restaurant.restaurant_id == restaurant_id).first()
-    if not db_restaurant:
-        raise HTTPException(status_code=404, detail="Restaurant not found")
-
     # Kiểm tra món ăn tồn tại
-    db_menu_item = db.query(MenuItem).filter(MenuItem.item_id == item_id).first()
+    db_menu_item = db.query(MenuItem).filter(MenuItem.item_id == item_id,
+                                             MenuItem.restaurant_id == restaurant_id).first()
     if not db_menu_item:
         raise HTTPException(status_code=404, detail="Menu item not found")
 

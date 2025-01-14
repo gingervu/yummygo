@@ -11,20 +11,21 @@ router = APIRouter(prefix="/oder_items", tags=["Oder Items"])
 # Quản lý Order Items
 # ------------------------------
 
-@router.post("/", response_model=schemas.OrderItemSchema)
-async def create_order_item(order_item: schemas.OrderItemCreate, db: Session = Depends(get_db)):
-    return order_item_service.create_order_item(order_item, db)
+# @router.post("/", response_model=schemas.OrderItemSchema)
+# async def create_order_item(order_item: schemas.OrderItemCreate, db: Session = Depends(get_db)):
+#     return order_item_service.create_order_item(order_item, db)
 
-@router.put("/")
-@router.get("/{order_id}", response_model=List[schemas.OrderItemSchema])
-async def get_order_items(order_id: int, db: Session = Depends(get_db)):
-    return order_item_service.get_order_items(order_id, db)
+# @router.put("/")
+# @router.get("/{order_id}", response_model=List[schemas.OrderItemSchema])
+# async def get_order_items(order_id: int, db: Session = Depends(get_db)):
+#     return order_item_service.get_order_items(order_id, db)
 
-@router.put("/{order_id}/{item_id}", response_model=schemas.OrderItemSchema)
-async def update_order_item(order_id: int, item_id: int, order_item: schemas.OrderItemCreate, db: Session = Depends(get_db)):
-    return order_item_service.update_order_item(order_id, item_id, order_item, db)
+# @router.put("/{order_id}/{item_id}", response_model=schemas.OrderItemSchema)
+# async def update_order_item(order_id: int, item_id: int, order_item: schemas.OrderItemCreate, db: Session = Depends(get_db)):
+#     return order_item_service.update_order_item(order_id, item_id, order_item, db)
 
-@router.delete("/{order_id}/{item_id}")
-async def delete_order_item(order_id: int, item_id: int, db: Session = Depends(get_db)):
-    order_item_service.delete_order_item(order_id, item_id, db)
-    return {"detail": "Mục đơn hàng đã bị xóa"}
+# @router.delete("/{order_id}/{item_id}")
+# async def delete_order_item(order_id: int, item_id: int, db: Session = Depends(get_db)):
+#     order_item_service.delete_order_item(order_id, item_id, db)
+#     return {"detail": "Mục đơn hàng đã bị xóa"}
+
