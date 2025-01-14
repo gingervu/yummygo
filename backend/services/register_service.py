@@ -9,7 +9,8 @@ def become_customer(customer: CustomerCreate, user_id: int, db: Session):
     if db_customer:
         raise HTTPException(status_code=400, detail="Customer already exists")
     new_customer = Customer(
-        name=customer.name,
+        customer_id = user_id,
+        name=customer.name
     )
     db.add(new_customer)
     db.commit()
@@ -59,7 +60,8 @@ def become_driver(driver: DriverCreate, user_id: int, db: Session):
     if db_driver:
         raise HTTPException(status_code=400, detail="Driver already exists")
     new_driver = Driver(
-        name=driver.name,
+        driver_id = user_id,
+        name=driver.name
     )
     db.add(new_driver)
     db.commit()
@@ -108,6 +110,7 @@ def become_restaurant(restaurant: RestaurantCreate, user_id: int, db: Session):
     if db_restaurant:
         raise HTTPException(status_code=400, detail="Nhà hàng đã tồn tại")
     new_restaurant = Restaurant(
+        restaurant_id = user_id,
         name=restaurant.name,
         category=restaurant.category,
         address=restaurant.address,
