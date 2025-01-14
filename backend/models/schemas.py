@@ -198,6 +198,7 @@ class MenuItemShchema(MenuItemBase):
     item_id: int  # ID món ăn
 
 
+
 # ------------------------------
 # Mô hình Driver (Tài xế giao hàng)
 # ------------------------------

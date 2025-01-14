@@ -122,7 +122,12 @@ class MenuItem(Base):
     img_url = Column(Text)  # URL hình ảnh món ăn
     description = Column(Text)  # Mô tả món ăn
     price = Column(DECIMAL(10, 2), nullable=False)
-    status = Column(Enum(ItemStatusEnum), default=ItemStatusEnum.unavailable)  # Trạng thái món ăn
+    status = Column(
+        Enum(
+            ItemStatusEnum, 
+             native_enum=False,  # Không lưu theo tên enum
+             values_callable=lambda x: [e.value for e in x]), 
+        default=ItemStatusEnum.unavailable)  # Trạng thái món ăn
     is_deleted = Column(Boolean, default=False)
 
     restaurant = relationship("Restaurant", back_populates="menu_items")
