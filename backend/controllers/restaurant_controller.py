@@ -38,3 +38,10 @@ async def list_restaurants_(db: Session = Depends(get_db)):
 @router.get("/{restaurant_id}", response_model=RestaurantSchema)
 async def get_restaurant_by_id(restaurant_id: int, db: Session = Depends(get_db)):
     return get_restaurant(restaurant_id, db)
+
+# Lấy ra menu của nhà hàng ---> khách hàng xem
+@router.get('/menu/{restaurant_id}')
+async def get_menu_by_res_id(restaurant_id: int, db: Session = Depends(get_db)):
+    db.query(MenuItem).filter(MenuItem.restaurant_id == restaurant_id,
+                              MenuItem.is_deleted == False,
+                              MenuItem.status == ItemStatusEnum.available)

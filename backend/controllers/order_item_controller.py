@@ -28,3 +28,4 @@ async def update_order_item(order_id: int, item_id: int, order_item: schemas.Ord
 async def delete_order_item(order_id: int, item_id: int, db: Session = Depends(get_db)):
     order_item_service.delete_order_item(order_id, item_id, db)
     return {"detail": "Mục đơn hàng đã bị xóa"}
+

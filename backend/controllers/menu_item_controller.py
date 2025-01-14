@@ -28,7 +28,7 @@ async def get_all_menu_items(current_restaurant: dict = Depends(require_role('re
     return list_menu_items(current_restaurant['user_id'], db)
 
 # Lấy ra danh sách món available ---> khách hàng duyệt món
-@router.get("/available", response_model=List[MenuItemShchema])
+@router.get("/available/{restaurant_id}", response_model=List[MenuItemShchema])
 async def get_available_menu_items(restaurant_id: int, db: Session = Depends(get_db)):
     return available_items(restaurant_id, db)
 
@@ -48,8 +48,8 @@ async def remove_menu_item(item_id: int, restaurant_id = Depends(get_current_use
     return delete_menu_item(item_id, restaurant_id, db)
 
 # Lấy ra menu của nhà hàng ---> khách hàng xem
-@router.get('/{restaurant_id}')
+@router.get('/menu/{restaurant_id}', response_model=List[MenuItemShchema])
 async def get_menu_by_res_id(restaurant_id: int, db: Session = Depends(get_db)):
-    db.query(MenuItem).filter(MenuItem.restaurant_id == restaurant_id,
+    return db.query(MenuItem).filter(MenuItem.restaurant_id == restaurant_id,
                               MenuItem.is_deleted == False,
-                              MenuItem.status == ItemStatusEnum.available)
+                              MenuItem.status == ItemStatusEnum.available).all()

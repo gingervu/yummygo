@@ -29,15 +29,6 @@ async def create_user(user: UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail=str(e))
 
 
-# sửa thông tin tài khoản
-@router.put("/update")
-async def update_user(user: UserUpdate, current_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
-    try:
-        db_user = user_service.update_user(current_user['user_id'], user, db)
-        return db_user
-    except Exception as e:
-        raise HTTPException(status_code=404, detail=str(e))
-
 # xóa user
 @router.delete("/delete")
 async def delete_user(current_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
