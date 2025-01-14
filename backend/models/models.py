@@ -95,8 +95,8 @@ class Restaurant(Base):
         nullable=False
     )
     address = Column(Text, nullable=False)
-    x = Column(DECIMAL(10,7), nullable=False)
-    y = Column(DECIMAL(10,7), nullable=False)    
+    x = Column(DECIMAL(10,7))
+    y = Column(DECIMAL(10,7))    
     status = Column(Enum(RestaurantStatusEnum), default=RestaurantStatusEnum.inactive)  # Trạng thái
     is_deleted = Column(Boolean, default=False)
 

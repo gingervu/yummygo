@@ -32,15 +32,20 @@ def create_customer(user: UserCreate, customer: CustomerCreate, db: Session):
         email=user.email
     )
     
-    db.add(db_user)
-    db.commit()
-    user_id = db_user.user_id
-    
-    db_customer = Customer(
-        customer_id=user_id,
-        name=customer.name
-    )
-   
+    try:
+        db.add(db_user)
+        db.commit()
+        user_id = db_user.user_id
+        
+        db_customer = Customer(
+            customer_id=user_id,
+            name=customer.name
+        )
+    except Exception as e:
+        db.delete(db_user)
+        db.commit()
+        raise e
+       
     db.add(db_customer)
     db.commit()
     db.refresh(db_user)
@@ -76,16 +81,20 @@ def create_driver(user: UserCreate, driver: DriverCreate, db: Session):
         phone=user.phone,
         email=user.email
     )
+    try:
+        db.add(db_user)
+        db.commit()
+        user_id = db_user.user_id
+        
+        db_driver = Driver(
+            driver_id=user_id,
+            name=driver.name
+        )
+    except Exception as e:
+        db.delete(db_user)
+        db.commit()
+        raise e
     
-    db.add(db_user)
-    db.commit()
-    user_id = db_user.user_id
-    
-    db_driver = Driver(
-        driver_id=user_id,
-        name=driver.name
-    )
-   
     db.add(db_driver)
     db.commit()
     db.refresh(db_user)
@@ -102,7 +111,6 @@ def become_restaurant(restaurant: RestaurantCreate, user_id: int, db: Session):
         name=restaurant.name,
         category=restaurant.category,
         address=restaurant.address,
-        coord=restaurant.coord,
     )
     db.add(new_restaurant)
     db.commit()
@@ -129,16 +137,18 @@ def create_restaurant(user: UserCreate, restaurant: RestaurantCreate, db: Sessio
     db.commit()
     user_id = db_user.user_id
     
-    db_restaurant = Restaurant(
-        restaurant_id=user_id,
-        name=restaurant.name,
-        category=restaurant.category,
-        phone=restaurant.phone,
-        address=restaurant.address,
-        coord=restaurant.coord
-    )
-   
-    db.add(db_restaurant)
+    try:
+        db_restaurant = Restaurant(
+            restaurant_id=user_id,
+            name=restaurant.name,
+            category=restaurant.category,
+            address=restaurant.address
+        )
+        db.add(db_restaurant)
+    except Exception as e:
+        db.delete(db_user)
+        db.commit()
+        raise e
     db.commit()
     db.refresh(db_user)
     db.refresh(db_restaurant)
