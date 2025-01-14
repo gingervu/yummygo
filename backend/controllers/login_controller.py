@@ -6,22 +6,28 @@ from models.schemas import *
 from fastapi.responses import JSONResponse
 from services.login_service import authenticate_login
 from utils.access_token import create_access_token
+from datetime import timedelta
 
 router = APIRouter()
 
 # endpoint đăng nhập
 @router.post("/token")
-async def login(user: UserLogin, db: Session = Depends(get_db)):
+async def login(user: UserLogin, response: Response, db: Session = Depends(get_db)):
     user_id, role = authenticate_login(user, db)
     if not user_id:
         raise HTTPException(status_code=401, detail="Thông tin đăng nhập không hợp lệ")
     access_token = create_access_token({"user_id": user_id, "role": role})
-    return {"access_token": access_token, "token_type": "bearer"}
+    
+    response.set_cookie(
+        key="access_token",
+        value=access_token,
+        path="/",
+        httponly=True,
+        secure=False,  
+        max_age=timedelta(days=3),
+        expires=timedelta(days=3),
+        samesite="Strict" 
+    )
+    
+    return {"message": "Login successful"}
 
-# @router.post("/login")
-# async def login(user_name: str, password: str, role: str, db: Session = Depends(get_db)):
-#     user_id, role = authenticate_login_test(user_name, password, role, db)
-#     if not user_id:
-#         raise HTTPException(status_code=401, detail="Thông tin đăng nhập không hợp lệ")
-#     access_token = create_access_token({"user_id": user_id, "role": role})
-#     return {"access_token": access_token, "token_type": "bearer"}
