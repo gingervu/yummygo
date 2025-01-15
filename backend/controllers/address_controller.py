@@ -10,6 +10,7 @@ from services.address_service import *
 
 router = APIRouter(prefix="/address", tags=["Address"])
 
+# api dùng để search 
 @router.get("/search", response_model=List[AddressSuggestion])
 async def search(object: ObjectUpdateAddress):
     return address_suggestion(object)

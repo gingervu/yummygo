@@ -33,10 +33,12 @@ async def delete_existing_customer(current_customer: dict = Depends(require_role
 # async def list_customers(db: Session = Depends(get_db)):
 #     return list_all_customers(db)
 
+# Tạo đơn
 @router.put("/send-order/{order_id}")
 async def create_an_order(order_id: int, current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
     return create_order(order_id, current_customer['user_id'], db)
 
+# Tìm kiếm trên thanh tìm kiếm, trả về danh sách nhà hàng
 @router.get("/search")
 async def search(query: str = Query(None, min_length=1, max_length=50), db: Session = Depends(get_db)):
     restaurants = db.query(Restaurant).filter(
@@ -52,9 +54,11 @@ async def search(query: str = Query(None, min_length=1, max_length=50), db: Sess
         restaurants.extend(db_restaurant)
     return restaurants
 
+# Tìm kiếm bằng category filter
 @router.get("/filter")
 async def filter(category: str, db: Session = Depends(get_db)):
     return db.query(Restaurant).filter(Restaurant.category == category).all()
+
 
 
 @router.get("/restaurants", response_model=PaginatedRestaurantsResponse)
