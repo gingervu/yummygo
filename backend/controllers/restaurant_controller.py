@@ -10,12 +10,12 @@ from middlewares.auth_middleware import get_current_user, require_role
 router = APIRouter(prefix="/restaurants", tags=["Restaurants"])
     
 #Lấy thông tin nhà hàng --> cho tài khoản nhà hàng xem
-@router.get("/me")
+@router.get("/me", response_model=RestaurantResponse)
 async def get_restaurant_me(current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
     return get_restaurant_info(current_restaurant['user_id'], db)
 
 # Cập nhật thông tin nhà hàng
-@router.put("/update")
+@router.put("/update", response_model=RestaurantResponse)
 async def update_restaurant_(restaurant: RestaurantUpdate, current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
     return update_restaurant(restaurant, current_restaurant['user_id'], db)
 
@@ -32,17 +32,17 @@ async def change_status(current_restaurant: dict = Depends(require_role('restaur
 
 # Lấy ra danh sách mã đơn hàng hiện tại của nhà hàng
 # Dùng mã đơn để hiển thị các món trong đơn hàng khi nhà hàng
-# chọn xem đơn
+# chọn xem đơn ---> get '/orders/{order_id}'
 @router.get("/orders")
 async def restaurant_orders(current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
     return get_current_restaurant_order(current_restaurant['user_id'], db)
 
 # Lấy danh sách các nhà hàng đang active --> customer duyệt
-@router.get("/active")
+@router.get("/active", response_model=List[RestaurantResponse])
 async def list_restaurants_(db: Session = Depends(get_db)):
     return list_restaurants(db)
 
 # Lấy thông tin nhà hàng theo ID ---> hiện trên giao diện customer
-@router.get("/{restaurant_id}", response_model=RestaurantSchema)
+@router.get("/{restaurant_id}", response_model=RestaurantResponse)
 async def get_restaurant_by_id(restaurant_id: int, db: Session = Depends(get_db)):
     return get_restaurant(restaurant_id, db)

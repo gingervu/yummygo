@@ -74,11 +74,7 @@ class CategoryEnum(str, Enum):
         return None
     
 
-# Mô hình dữ liệu thông báo
-class Notification(BaseModel):
-    sender: str
-    message: str
-    timestamp: datetime
+
 # ------------------------------
 # Mô hình User (Người dùng)
 # ------------------------------
@@ -111,14 +107,44 @@ class UserLogin(BaseModel):
     role: str
     class Config:
         from_attributes = True  # Chuyển đổi từ SQLAlchemy models sang Pydantic models
+        
+class UserResponse(BaseModel):
+    user_name: str
+    phone: str
+    email: str
+    class Config:
+        from_attribute = True
+        
+# ------------------------------
+# Mô hình Customer (Khách hàng)
+# ------------------------------
+
+class CustomerBase(BaseModel):
+    name: str  # Tên khách hàng
+    is_deleted: bool = False  # Trạng thái xóa khách hàng
+
+    class Config:
+        from_attributes = True  # Chuyển đổi từ SQLAlchemy models sang Pydantic models
+
+class CustomerCreate(CustomerBase):
+    pass  # Tạo mới khách hàng
+
+class CustomerUpdate(BaseModel):
+    name: Optional[str] = None 
+    class Config:
+        from_attributes = True  # Chuyển đổi từ SQLAlchemy models sang Pydantic models
+
+
+class CustomerSchema(CustomerBase):
+    customer_id: int  # ID khách hàng
+    
+class CustomerResponse(BaseModel):
+    name: str
+
 
 # ------------------------------
 # Mô hình Restaurant (Nhà hàng)
 # ------------------------------
-class RestaurantStatusEnum(str, Enum):
-    active = "active"  # Nhà hàng hoạt động
-    inactive = "inactive"  # Nhà hàng không hoạt động
-    # closed = "closed"  # Nhà hàng đã đóng cửa
 
 class RestaurantBase(BaseModel):
     name: str  # Tên nhà hàng
@@ -152,11 +178,18 @@ class RestaurantUpdate(BaseModel):
     
 class RestaurantSchema(RestaurantBase):
     restaurant_id: int  # ID nhà hàng
-
-
+    
     class Config:
         from_attributes = True  # Chuyển đổi từ SQLAlchemy models sang Pydantic models
-
+        
+class RestaurantResponse(BaseModel):
+    restaurant_id: int
+    name: str
+    category: str
+    address: str
+    
+    class Config:
+        from_attributes = True  
 
 # ------------------------------
 # Mô hình Thời gian hoạt động của nhà hàng
@@ -208,6 +241,16 @@ class MenuItemUpdate(BaseModel):
 
 class MenuItemShchema(MenuItemBase):
     item_id: int  # ID món ăn
+    
+class MenuItemResponse(BaseModel):
+    item_id: int
+    name: str
+    img_url: Optional[str]
+    description: Optional[str]
+    price: Decimal
+    
+    class Config:
+        from_attribute = True    
 
 
 
@@ -235,8 +278,8 @@ class DriverSchema(DriverBase):
     is_deleted: bool = False  # Trạng thái xóa tài xế
 
 class DriverResponse(BaseModel):
-    driver_id: int
-    message: str
+    name: str
+    status: str
 # ------------------------------
 # Mô hình Admin (Quản trị viên)
 # ------------------------------
@@ -253,31 +296,6 @@ class AdminCreate(AdminBase):
 class AdminSchema(AdminBase):
     admin_id: int  # ID quản trị viên
 
-
-# ------------------------------
-# Mô hình Customer (Khách hàng)
-# ------------------------------
-
-class CustomerBase(BaseModel):
-    name: str  # Tên khách hàng
-    is_deleted: bool = False  # Trạng thái xóa khách hàng
-
-    class Config:
-        from_attributes = True  # Chuyển đổi từ SQLAlchemy models sang Pydantic models
-
-class CustomerCreate(CustomerBase):
-    pass  # Tạo mới khách hàng
-
-class CustomerUpdate(BaseModel):
-    name: Optional[str] = None 
-    class Config:
-        from_attributes = True  # Chuyển đổi từ SQLAlchemy models sang Pydantic models
-
-
-class CustomerSchema(CustomerBase):
-    customer_id: int  # ID khách hàng
-
-
 # ------------------------------
 # Mô hình Order (Đơn hàng)
 # ------------------------------\
@@ -289,7 +307,7 @@ class OrderBase(BaseModel):
     address: Optional[str] = None  # Địa chỉ giao hàng, có thể rỗng
     x: Optional[float] = None  # Tọa độ giao hàng
     y: Optional[float] = None
-    distance: Optional[float] = None  # Phí giao hàng
+    distance: Optional[float] = None  
     food_fee: Optional[float] = None  # Phí món ăn
     delivery_fee: Optional[float] = None
     order_status: str = OrderStatusEnum.cart  # Trạng thái đơn hàng
@@ -314,7 +332,21 @@ class OrderUpdate(BaseModel):
     
     class Config:
         from_attribute = True
-    
+        
+class OrderResponse(BaseModel):
+    order_id: int
+    restaurant_id: int
+    driver_id: Optional[int]
+    address: Optional[str]
+    food_fee: Optional[float]
+    delivery_fee: Optional[float]
+    order_status: str
+    note: Optional[str]
+    created_at: Optional[datetime]
+    delivered_at: Optional[datetime]
+        
+    class Config:
+        from_attribute = True       
 # ------------------------------
 # Mô hình Order Item (Món trong đơn hàng)
 # ------------------------------
@@ -332,8 +364,15 @@ class OrderItemCreate(OrderItemBase):
 
 class OrderItemSchema(OrderItemBase):
     order_id: int  # ID đơn hàng
+    
+class OrderItemResponse(BaseModel):
+    item_id: int
+    order_id: int
+    price: float
+    quantity: int
 
-
+    class Config:
+        from_attribute = True   
 # ------------------------------
 # Mô hình Manager (Quản lý nhà hàng)
 # ------------------------------

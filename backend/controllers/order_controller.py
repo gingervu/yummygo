@@ -26,7 +26,7 @@ async def subtract_on_cart(item_id: int, order_id: int, current_customer: dict =
 # ---> trả về danh sách thông tin các order, có thể dùng order_id để 
 # xem thông tin chi tiết của order, dùng api /restaurant/get/{restaurant_id}
 # để lấy thông tin nhà hàng
-@router.get("/cart")
+@router.get("/cart", response_model=List[OrderItemResponse])
 async def get_cart(current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
     return order_service.get_orders_in_cart(current_customer['user_id'], db)
 
@@ -45,10 +45,10 @@ async def current_cart(restaurant_id: int, current_customer: dict = Depends(requ
     return order_service.get_current_cart(restaurant_id, current_customer['user_id'], db)
 
 
-# Cập nhật thông tin đơn hàng cho khách hàng
+# Khách hàng cập nhật thông tin đơn hàng
 # Khách hàng có thể thay đổi địa chỉ và note
 
-@router.put("/update/{order_id}")
+@router.put("/update/{order_id}", response_model=OrderResponse)
 async def update_order_info(order_id: int, order_update: OrderUpdate, 
                        current_customer: dict = Depends(require_role('customer')), 
                        db: Session = Depends(get_db)):
@@ -69,7 +69,7 @@ async def cancel_order(order_id: int, current_user: dict = Depends(get_current_u
 # "Đã lấy đơn" => "delivering"
 # "Đã đến điểm giao" => "delivered"
 # "Giao hàng thành công" => "completed"
-@router.put("/change-status/{order_id}")
+@router.put("/change-status/{order_id}", response_model=OrderResponse)
 async def update_order(order_id: int, new_status: str, 
                        current_driver: dict = Depends(require_role('driver')), 
                        db: Session = Depends(get_db)):

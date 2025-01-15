@@ -60,7 +60,6 @@ def add_item(item_id: int, restaurant_id: int, customer_id: int, db: Session):
     else:
         order_item.quantity += 1
     db.commit()
-    
     return order_id
 
 def create_order(item_id: int, price: float, restaurant_id: int, customer_id: int, db: Session):

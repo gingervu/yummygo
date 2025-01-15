@@ -67,7 +67,7 @@ def delete_driver_service(driver_id: int, db: Session):
         delete_user(driver_id, db)
     db.commit()
     db.refresh(db_driver)
-    return db_driver
+    return {"message": "Đã xóa tài xế"}
 
 
 def get_current_driver_order(driver_id: int, db: Session):

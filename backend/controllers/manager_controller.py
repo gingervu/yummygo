@@ -9,7 +9,7 @@ from services.manager_service import (
     delete_manager_service,
 )
 
-router = APIRouter(prefix="/divers", tags=["Drivers"])
+router = APIRouter(prefix="/managers", tags=["Managers"])
 
 # Route POST để tạo mới Manager
 @router.post("/", response_model=schemas.ManagerSchema)
