@@ -1,5 +1,6 @@
-from fastapi import Request, Response, APIRouter, Depends, HTTPException
+from fastapi import Request, Response, Query, APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from sqlalchemy import or_
 from typing import List
 from models.schemas import *
 from models.models import *
@@ -36,5 +37,21 @@ async def delete_existing_customer(current_customer: dict = Depends(require_role
 async def create_an_order(order_id: int, current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
     return create_order(order_id, current_customer['user_id'], db)
 
+@router.get("/search", response_model=List[RestaurantResponse])
+async def search(query: str = Query(None, min_length=1, max_length=50), db: Session = Depends(get_db)):
+    restaurants = db.query(Restaurant).filter(
+        or_(Restaurant.name.ilike(f"%{query}%"), Restaurant.category.cast(String).ilike(f"%{query}%"))
+    ).all()
+            
+    items = db.query(MenuItem).filter(
+        or_(MenuItem.name.ilike(f"%{query}%"), MenuItem.description.ilike(f"%{query}%"))
+    ).all()
+    
+    if items:
+        db_restaurant = db.query(Restaurant).filter(Restaurant.restaurant_id.in_([item.restaurant_id for item in items])).all()
+        restaurants.extend(db_restaurant)
+    return restaurants
 
-
+@router.get("/filter", response_model=List[RestaurantResponse])
+async def filter(category: str, db: Session = Depends(get_db)):
+    return db.query(Restaurant).filter(Restaurant.category == category).all()
