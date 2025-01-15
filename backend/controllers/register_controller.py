@@ -7,7 +7,7 @@ from models.schemas import *
 from models.models import *
 from middlewares.auth_middleware import get_current_user
 
-router = APIRouter(prefix="/register", tags=["Register"])
+router = APIRouter(prefix="/register", tags=["Restaurants"])
 
 # Đăng ký với vai trò khách hàng
 @router.post("/customer")

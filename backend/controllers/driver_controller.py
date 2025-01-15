@@ -33,10 +33,12 @@ async def update_status(current_driver: dict = Depends(require_role('driver')), 
 
 # Xóa tài xế
 @router.delete("/delete", response_model=DriverSchema)
-async def delete_driver(driver_id: int, db: Session = Depends(get_db)):
-    return delete_driver_service(driver_id, db)
+async def delete_driver(current_driver: dict = Depends(require_role("driver")), db: Session = Depends(get_db)):
+    return delete_driver_service(current_driver['user_id'], db)
 
-
-# @router.get("/", response_model=List[DriverSchema])
-# async def list_drivers(db: Session = Depends(get_db)):
-#     return list_drivers_service(db)
+# Lấy ra danh sách mã đơn hàng hiện tại của tài xế
+# Dùng mã đơn để hiển thị thông tin của đơn hàng khi tài xế
+# chọn xem đơn
+@router.get("/order")
+async def driver_order(current_driver: dict = Depends(require_role('driver')), db: Session = Depends(get_db)):
+    return get_current_driver_order(current_driver['user_id'], db)

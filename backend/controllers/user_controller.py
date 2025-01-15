@@ -26,6 +26,9 @@ async def get_user_(current_user: dict = Depends(get_current_user), db: Session 
 async def update_user_info(user: UserUpdate, current_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     return update_user(user, current_user['user_id'], db)
 
+# @router.get("/", response_model=List[User])
+# async def list_users(db: Session = Depends(get_db)):
+#     return list_users(db)
 
 # xóa user
 @router.delete("/delete")

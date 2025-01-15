@@ -9,7 +9,13 @@ from utils.security import hash_password
 def become_customer(customer: CustomerCreate, user_id: int, db: Session):
     db_customer = db.query(Customer).filter(Customer.customer_id == user_id).first()
     if db_customer:
-        raise HTTPException(status_code=400, detail="Customer already exists")
+        if db_customer.is_deleted == False:
+            raise HTTPException(status_code=400, detail="Customer already exists")
+        else:
+            db_customer.is_deleted = False
+            db.commit()
+            db.refresh(db_customer)
+            return db_customer
     new_customer = Customer(
         customer_id = user_id,
         name=customer.name
@@ -60,7 +66,11 @@ def create_customer(user: UserCreate, customer: CustomerCreate, db: Session):
 def become_driver(driver: DriverCreate, user_id: int, db: Session):
     db_driver = db.query(Driver).filter(Driver.driver_id == user_id).first()
     if db_driver:
-        raise HTTPException(status_code=400, detail="Driver already exists")
+        if db_driver.is_deleted == False:
+            raise HTTPException(status_code=400, detail="Driver already exists")
+        else:
+            db_driver.is_deleted = False
+            return db_driver
     new_driver = Driver(
         driver_id = user_id,
         name=driver.name
@@ -110,7 +120,11 @@ def create_driver(user: UserCreate, driver: DriverCreate, db: Session):
 def become_restaurant(restaurant: RestaurantCreate, user_id: int, db: Session):
     db_restaurant = db.query(Restaurant).filter(Restaurant.restaurant_id == user_id).first()
     if db_restaurant:
-        raise HTTPException(status_code=400, detail="Nhà hàng đã tồn tại")
+        if db_restaurant.is_deleted == False:
+            raise HTTPException(status_code=400, detail="Nhà hàng đã tồn tại")
+        else:
+            db_restaurant.is_deleted = False
+            return db_restaurant
     new_restaurant = Restaurant(
         restaurant_id = user_id,
         name=restaurant.name,

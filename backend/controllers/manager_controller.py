@@ -2,7 +2,12 @@ from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from models import schemas
 from db.database import get_db
-from services.manager_service import *
+from services.manager_service import (
+    create_manager_service,
+    get_manager_service,
+    update_manager_service,
+    delete_manager_service,
+)
 
 router = APIRouter(prefix="/divers", tags=["Drivers"])
 
