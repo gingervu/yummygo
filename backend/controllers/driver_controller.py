@@ -42,3 +42,7 @@ async def delete_driver(current_driver: dict = Depends(require_role("driver")), 
 @router.get("/order")
 async def driver_order(current_driver: dict = Depends(require_role('driver')), db: Session = Depends(get_db)):
     return get_current_driver_order(current_driver['user_id'], db)
+
+@router.get("/all-orders")
+async def driver_orders(current_driver: dict = Depends(require_role('driver')), db: Session = Depends(get_db)):
+    return get_driver_orders(current_driver['user_id'], db)

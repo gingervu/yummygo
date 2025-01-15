@@ -54,6 +54,15 @@ async def update_order_info(order_id: int, order_update: OrderUpdate,
                        db: Session = Depends(get_db)):
     return order_service.update_order(order_id, order_update, current_customer['user_id'], db)
 
+# Hủy đơn
+@router.put("/cancel/{order_id}")
+async def cancel_order(order_id: int, current_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+    try:
+        order_service.cancel(order_id, current_user['user_id'], db)
+        return {"message": "order cancelled"}
+    except Exception as e:
+        raise e
+        
 # Cập nhật trạng thái đơn hàng cho tài xế
 # Đầu vào order_update được xác định cụ thể trong từng
 # trường hợp button tài xế bấm. Ví dụ: "Nhận đơn" => "preparing"
