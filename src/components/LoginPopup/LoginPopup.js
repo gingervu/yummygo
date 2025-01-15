@@ -18,7 +18,7 @@ const LoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginSuccess
       const loginData = {
         user_name: userName,
         password: password,
-        role: "restaurant",
+        role: "restaurant"
       };
       try {
         // Gửi yêu cầu đăng nhập đến API

@@ -68,6 +68,7 @@ const SignUpPopup = ({ setShowSignUp }) => {
         phone: formData.phoneNumber,
         email: formData.email,
         password: formData.password,
+        
       });
       setStep(2); // Chuyển sang bước điền thông tin nhà hàng
     }
@@ -82,12 +83,28 @@ const SignUpPopup = ({ setShowSignUp }) => {
     }
 
     const payload = {
-      user: accountData,
-      restaurant: restaurantData,
+      user: {
+        user_name: formData.username,
+        phone: formData.phoneNumber,
+        email: formData.email,
+        password: formData.password,
+      },
+      restaurant: {
+        name: restaurantData.name,
+        category: restaurantData.category,
+        address: restaurantData.address,
+      },
     };
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/register/restaurant", payload);
+      const response = await axios.post("http://127.0.0.1:8000/register/restaurant", payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+        
+      );
       if (response.status === 200 ) {
         alert("Đăng ký nhà hàng thành công!");
         setShowSignUp(false); // Đóng popup  
@@ -116,6 +133,11 @@ const SignUpPopup = ({ setShowSignUp }) => {
       confirmPassword: "",
       phoneNumber: "",
       email: "",
+    });
+    setRestaurantData({
+      name: "",
+      category: "",
+      address: "",
     });
     setErrors({});
     

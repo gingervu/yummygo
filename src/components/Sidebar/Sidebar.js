@@ -1,14 +1,22 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./Sidebar.css";
 
 const Sidebar = () => {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try{
+      await axios.post("http://127.0.0.1:8000/logout");
+      navigate("/");
+    }catch (error) {
+      console.error("Logout failed:", error);
+      alert("Đăng xuất thất bại! Vui lòng thử lại.");
+    }
     // Xử lý đăng xuất ở đây (ví dụ: xóa token, reset state)
-    navigate("/");  // Điều hướng tới trang chính
+     // Điều hướng tới trang chính
   };
 
   return (

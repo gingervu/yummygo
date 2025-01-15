@@ -9,7 +9,7 @@
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     position: fixed;
     font-family: "Poppins", sans-serif;
-    padding-top: 80px; /* Đảm bảo không bị chồng lên header */
+    padding-top: 76px; /* Đảm bảo không bị chồng lên header */
   z-index: 999;
     
   }
@@ -55,7 +55,7 @@
   }
   
   /* Icon */
-  svg {
+  .sidebar svg {
     width: 20px; /* Adjust size */
     height: 20px;
     margin-right: 10px; /* Space between icon and text */

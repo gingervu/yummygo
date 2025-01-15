@@ -55,7 +55,7 @@
     }
     
     /* Icon */
-    svg {
+    .staff-sidebar svg {
       width: 20px; /* Adjust size */
       height: 20px;
       margin-right: 10px; /* Space between icon and text */

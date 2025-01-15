@@ -48,11 +48,18 @@ margin-bottom: 30px;
         font-size: 18px;
     }
 
-    .admin-staff .edit-btn, .admin-staff .save-btn, .admin-staff .delete-btn  {
+    .admin-staff .edit-btn, .admin-staff .save-btn  {
         background-color: transparent;
         border: none;
         cursor: pointer;
         font-size: 18px;
+    }
+
+    .admin-staff .delete-btn{
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        font-size: 25px;
     }
     
     

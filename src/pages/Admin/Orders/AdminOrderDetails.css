@@ -13,7 +13,7 @@
 }
 
 .admin-order-details .back {
-    margin-top: 100px;
+    margin-top: 85px;
     display: flex;
     align-items: flex-start;
     margin-left: 20%;
@@ -45,7 +45,7 @@
     /* Đảm bảo padding không ảnh hưởng đến kích thước */
     font-weight: bold;
     font-size: 18px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .admin-order-details .driver-contact {
@@ -93,7 +93,7 @@
 
 }
 
-.action button {
+.admin-order-details .driver-contact .action  {
     display: flex;
     /* Kích hoạt flexbox */
     align-items: center;
@@ -109,7 +109,7 @@
     /* Đặt kích thước cố định cho nút */
 }
 
-.admin-order-details .chat-btn {
+.admin-order-details .driver-contact .chat-btn {
     margin-right: 10px;
     width: 75%;
     border: none;
@@ -118,15 +118,27 @@
     padding: 8px 16px;
     cursor: pointer;
 }
+.admin-order-details .driver-contact .chat-btn svg{
+    height: 20px;
+}
 
-.call-btn {
+.admin-order-details .driver-contact .action .call-btn button {
     background-color: transparent;
     /* Nền trong suốt */
     cursor: pointer;
     padding: 5px;
+    border: none;
+    border-radius: 8px;
+    
+    
+}
+.admin-order-details .driver-contact .action .call-btn svg{
+    margin: 0;
+    padding: 5px;
+    height: 26px;
 }
 
-.action button:hover {
+.admin-order-details .action .call-btn button:hover {
     background-color: #F5F5F5;
 }
 
@@ -144,7 +156,7 @@
     flex-direction: column;
     /* Xếp nội dung theo chiều dọc */
 
-    margin-top: 20px;
+    margin-top: 25px;
 }
 
 .admin-order-details .order-info-box h3 {
@@ -174,10 +186,11 @@
     /* Đảm bảo padding không ảnh hưởng đến kích thước */
     flex-direction: column;
     /* Xếp nội dung theo chiều dọc */
-    margin-top: 35px;
+    margin-top: 30px;
+    margin-bottom: 20px;
 }
 
-.contact-buttons button {
+.admin-order-details .contact-buttons button {
     background-color: #DBA718;
     border: none;
     border-radius: 5px;
@@ -187,6 +200,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.admin-order-details .contact-buttons svg{
+    margin: 0;
 }
 
 .admin-order-details .contact-section {
@@ -246,6 +262,7 @@
     justify-content: flex-start;
     /* Căn giữa theo chiều ngang */
     align-items: center;
+    align-content: center;
     width: 30%;
     /* Đặt chiều rộng của box */
     height: 50px;
@@ -263,7 +280,13 @@
     font-size: 18px;
     margin-bottom: 20px;
 }
-
+.admin-order-details .payment-box .icon svg{
+    align-content: center;
+    align-items: center;
+    margin-right: 15px;
+    height: 25px;
+    width: 25px;
+}
 .admin-order-details .note-box {
     display: flex;
     justify-content: flex-start;
@@ -284,12 +307,21 @@
     /* Đảm bảo padding không ảnh hưởng đến kích thước */
 
     font-size: 18px;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
+}
+
+.admin-order-details .note-box .icon svg{
+    align-content: center;
+    align-items: center;
+    margin-right: 15px;
+    height: 25px;
+    width: 25px;
+   
 }
 
 .admin-order-details .payment-box p,
 .admin-order-details .note-box p {
-    margin-left: 8%;
+    margin-left: 30px;
 }
 
 .admin-order-details .close-btn {
