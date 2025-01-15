@@ -26,7 +26,7 @@ async def login(user: UserLogin, response: Response, db: Session = Depends(get_d
         secure=False,  
         max_age=timedelta(days=3),
         expires=timedelta(days=3),
-        samesite="Lax" 
+        samesite="None" 
     )
     
     return {"message": "Login successful"}

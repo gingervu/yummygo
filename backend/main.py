@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI(title="FastAPI Application")
 
 origins = [
-    "http://localhost:3000",  # Thêm domain frontend của bạn
+    "http://localhost:3000"  # Thêm domain frontend của bạn
 ]
 
 app.add_middleware(
