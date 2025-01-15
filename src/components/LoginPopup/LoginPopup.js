@@ -33,7 +33,7 @@ const LoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginSuccess
       
         // Kiểm tra lỗi trả về từ phía server
         if (error.response) {
-          alert(`Lỗi: ${error.response.data.message || "Đăng ký thất bại, vui lòng kiểm tra lại dữ liệu!"}`);
+          alert(`Lỗi: ${error.response.data.message || "Đăng nhập thất bại, vui lòng kiểm tra lại dữ liệu!"}`);
         } else if (error.request) {
           alert("Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối mạng của bạn.");
         } else {

@@ -15,6 +15,7 @@ import StaffMenu from './pages/Employed/Menu/StaffMenu.js';
 import StaffProfile from './pages/Employed/Profile/StaffProfile.js';
 import StaffOrders from './pages/Employed/Orders/StaffOrders.js';
 import StaffOrderDetails from './pages/Employed/Orders/StaffOrderDetails.js';
+import RestaurantInfo from './RestaurantInfo.js';
 
 
 const App = () => {
@@ -42,6 +43,7 @@ const App = () => {
         <Route path="/staff-orders" element={<StaffOrders />} />
         <Route path="/staff-order-details" element={<StaffOrderDetails />} />
         <Route path="/staff-profile" element={<StaffProfile />} />
+        <Route path="/me" element={<RestaurantInfo/>} />
       </Routes>
     </Router>
     
