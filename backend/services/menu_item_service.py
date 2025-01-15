@@ -54,6 +54,21 @@ def get_menu_item(item_id: int, db: Session) -> MenuItem:
         raise HTTPException(status_code=404, detail="Món ăn không tồn tại")
     return menu_item
 
+def change_status_menu_item(item_id: int, restaurant_id: int, db: Session):
+    db_menu_item = db.query(MenuItem).filter(MenuItem.item_id == item_id,
+                                            MenuItem.is_deleted == False,
+                                            MenuItem.restaurant_id == restaurant_id).first()
+    if not db_menu_item:
+        raise HTTPException(status_code=404, detail="Món ăn không tồn tại")
+    
+    if db_menu_item.status == ItemStatusEnum.available:
+        db_menu_item.status = ItemStatusEnum.unavailable
+    elif db_menu_item.status == ItemStatusEnum.unavailable:
+        db_menu_item.status = ItemStatusEnum.available
+    
+    db.commit()
+    db.refresh(db_menu_item)
+    return db_menu_item
 
 def update_menu_item_info(item_id: int, menu_item: MenuItemUpdate, restaurant_id: int, db: Session) -> MenuItem:
     """

@@ -3,14 +3,15 @@ from models.models import *
 from models.schemas import *
 from fastapi import HTTPException
 from typing import List
-
+from services.user_service import delete_user
 # ------------------------------
 # Quản lý Logic Nghiệp Vụ Tài Xế
 # ------------------------------
 
 def get_driver_service(driver_id: int, db: Session):
     """Lấy thông tin tài xế theo ID"""
-    driver = db.query(Driver).filter(Driver.driver_id == driver_id).first()
+    driver = db.query(Driver).filter(Driver.driver_id == driver_id,
+                                     Driver.is_deleted == False).first()
     if not driver:
         raise HTTPException(status_code=404, detail="Tài xế không tồn tại")
     return driver
@@ -51,11 +52,19 @@ def update_driver_status(driver_id: int, db: Session):
 
 def delete_driver_service(driver_id: int, db: Session):
     """Xóa tài xế (đánh dấu is_deleted là True)"""
-    db_driver = db.query(Driver).filter(Driver.driver_id == driver_id).first()
+    db_driver = db.query(Driver).filter(Driver.driver_id == driver_id,
+                                        Driver.is_deleted == False).first()
     if not db_driver:
         raise HTTPException(status_code=404, detail="Tài xế không tồn tại")
     
     db_driver.is_deleted = True
+
+    customer = db.query(Customer).filter(Customer.customer_id == driver_id,
+                                            Customer.is_deleted == False).first()
+    restaurant = db.query(Restaurant).filter(Restaurant.restaurant_id == driver_id,
+                                             Restaurant.is_deleted == False).first()
+    if not customer and not restaurant:
+        delete_user(driver_id, db)
     db.commit()
     db.refresh(db_driver)
     return db_driver

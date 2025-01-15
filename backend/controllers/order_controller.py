@@ -7,6 +7,7 @@ from models.schemas import *
 from db.database import get_db
 from middlewares.auth_middleware import get_current_user, require_role
 import random, json
+from services.customer_service import get_food_fee, get_delivery_fee
 
 router = APIRouter(prefix="/orders", tags=["Orders"])
 
@@ -22,7 +23,7 @@ async def subtract_on_cart(item_id: int, order_id: int, current_customer: dict =
     return order_service.subtract_item(item_id, order_id, current_customer['user_id'], db)
 
 # Lấy danh sách đơn hàng trong giỏ của user
-# ---> trả về danh sách gồm order_id và restaurant_id, có thể dùng order_id để 
+# ---> trả về danh sách thông tin các order, có thể dùng order_id để 
 # xem thông tin chi tiết của order, dùng api /restaurant/get/{restaurant_id}
 # để lấy thông tin nhà hàng
 @router.get("/cart")
@@ -64,3 +65,11 @@ async def update_order(order_id: int, new_status: str,
                        current_driver: dict = Depends(require_role('driver')), 
                        db: Session = Depends(get_db)):
     return order_service.update_order_status(order_id, new_status, current_driver['user_id'], db)
+
+@router.get("/food-fee/{order_id}")
+async def food_fee(order_id: int, db: Session = Depends(get_db)):
+    return get_food_fee(order_id, db)
+
+@router.get("/delivery-fee/{order_id}")
+async def delivery_fee(order_id: int, db: Session = Depends(get_db)):
+    return get_delivery_fee(order_id, db)

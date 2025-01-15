@@ -100,7 +100,7 @@ def get_current_order(restaurant_id: int, customer_id: int, db: Session):
     return db_order.order_id
 
 def get_orders_in_cart(customer_id: int, db: Session):
-    db_orders = db.query(Order.order_id, Order.restaurant_id).filter(Order.order_status == OrderStatusEnum.cart,
+    db_orders = db.query(Order).filter(Order.order_status == OrderStatusEnum.cart,
                                                                 Order.customer_id == customer_id).all()
     
     return db_orders
@@ -136,6 +136,8 @@ def update_order_status(order_id: int, new_status: str, driver_id: int, db: Sess
     
     # Cập nhật trạng thái
     db_order.order_status = new_status
+    if new_status == OrderStatusEnum.delivered:
+        db_order.delivered_at = datetime.now()
     db.commit()
     db.refresh(db_order)
     return db_order

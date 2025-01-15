@@ -10,7 +10,8 @@ from services.menu_item_service import (
     get_menu_item,
     update_menu_item_info,
     delete_menu_item,
-    available_items
+    available_items,
+    change_status_menu_item
 )
 from middlewares.auth_middleware import get_current_user, require_role
 
@@ -42,10 +43,15 @@ async def get_single_menu_item(item_id: int, db: Session = Depends(get_db)):
 async def update_menu(item_id: int, menu_item: MenuItemUpdate, current_restaurant: dict = Depends(require_role("restaurant")), db: Session = Depends(get_db)):
     return update_menu_item_info(item_id, menu_item, current_restaurant["user_id"], db)
 
+@router.put("/change-status/{item_id}")
+async def change_status(item_id: int, current_restaurant: dict = Depends(require_role("restaurant")), db: Session = Depends(get_db)):
+    db_menu_item = change_status_menu_item(item_id, current_restaurant["user_id"], db)
+    return {"message" : "Status changed", "status" : db_menu_item.status}
+
 # Xóa món
-@router.delete("/delete")
-async def remove_menu_item(item_id: int, restaurant_id = Depends(require_role("restaurant")),db: Session = Depends(get_db)):
-    return delete_menu_item(item_id, restaurant_id, db)
+@router.delete("/delete/{item_id}")
+async def remove_menu_item(item_id: int, restaurant = Depends(require_role("restaurant")),db: Session = Depends(get_db)):
+    return delete_menu_item(item_id, restaurant['user_id'], db)
 
 # Lấy ra danh sách món available của nhà hàng ---> khách hàng duyệt món
 @router.get('/menu/{restaurant_id}', response_model=List[MenuItemShchema])

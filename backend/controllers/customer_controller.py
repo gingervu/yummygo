@@ -5,12 +5,7 @@ from models.schemas import *
 from models.models import *
 from db.database import get_db
 from middlewares.auth_middleware import get_current_user, require_role
-from services.customer_service import (
-    get_customer_by_id,
-    create_order,
-    update_customer,
-    delete_customer,
-)
+from services.customer_service import *
 
 router = APIRouter(prefix="/customers", tags=["Customers"])
 
@@ -26,12 +21,12 @@ async def get_customer(current_customer: dict = Depends(require_role('customer')
 # sử dụng kết hợp với /user/update
 @router.put("/update", response_model=CustomerSchema)
 async def update_existing_customer(customer: CustomerCreate, current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
-    return update_customer(current_customer, customer, db)
+    return update_customer(current_customer['user_id'], customer, db)
 
 # Xóa customer ---> is_deleted = True
 @router.delete("/delete")
 async def delete_existing_customer(current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
-    return delete_customer(current_customer, db)
+    return delete_customer(current_customer['user_id'], db)
 
 # @router.get("/", response_model=List[CustomerSchema])
 # async def list_customers(db: Session = Depends(get_db)):
@@ -40,3 +35,6 @@ async def delete_existing_customer(current_customer: dict = Depends(require_role
 @router.put("/send-order/{order_id}")
 async def create_an_order(order_id: int, current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
     return create_order(order_id, current_customer['user_id'], db)
+
+
+
