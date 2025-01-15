@@ -7,7 +7,7 @@ from models.schemas import *
 from db.database import get_db
 from middlewares.auth_middleware import get_current_user, require_role
 import random, json
-from services.customer_service import get_food_fee, get_delivery_fee
+from services.customer_service import get_food_fee
 
 router = APIRouter(prefix="/orders", tags=["Orders"])
 
@@ -48,7 +48,7 @@ async def current_cart(restaurant_id: int, current_customer: dict = Depends(requ
 # Khách hàng cập nhật thông tin đơn hàng
 # Khách hàng có thể thay đổi địa chỉ và note
 
-@router.put("/update/{order_id}", response_model=OrderResponse)
+@router.put("/update/{order_id}")
 async def update_order_info(order_id: int, order_update: OrderUpdate, 
                        current_customer: dict = Depends(require_role('customer')), 
                        db: Session = Depends(get_db)):
@@ -69,7 +69,7 @@ async def cancel_order(order_id: int, current_user: dict = Depends(get_current_u
 # "Đã lấy đơn" => "delivering"
 # "Đã đến điểm giao" => "delivered"
 # "Giao hàng thành công" => "completed"
-@router.put("/change-status/{order_id}", response_model=OrderResponse)
+@router.put("/change-status/{order_id}")
 async def update_order(order_id: int, new_status: str, 
                        current_driver: dict = Depends(require_role('driver')), 
                        db: Session = Depends(get_db)):
@@ -79,6 +79,3 @@ async def update_order(order_id: int, new_status: str,
 async def food_fee(order_id: int, db: Session = Depends(get_db)):
     return get_food_fee(order_id, db)
 
-@router.get("/delivery-fee/{order_id}")
-async def delivery_fee(order_id: int, db: Session = Depends(get_db)):
-    return get_delivery_fee(order_id, db)

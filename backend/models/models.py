@@ -94,7 +94,7 @@ class Restaurant(Base):
              values_callable=lambda x: [e.value for e in x]),  # Lấy giá trị thay vì tên
         nullable=False
     )
-    address = Column(Text, nullable=False)
+    address = Column(Text)
     x = Column(DECIMAL(10,7))
     y = Column(DECIMAL(10,7))    
     status = Column(Enum(RestaurantStatusEnum), default=RestaurantStatusEnum.inactive)  # Trạng thái
@@ -166,6 +166,7 @@ class Order(Base):
     order_status = Column(Enum(OrderStatusEnum), default=OrderStatusEnum.cart)
     created_at = Column(DateTime)
     delivered_at = Column(DateTime)
+    distance = Column(DECIMAL(10,1))
     note = Column(Text)
     x = Column(DECIMAL(10,7))
     y = Column(DECIMAL(10,7))  

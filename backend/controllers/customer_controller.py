@@ -33,11 +33,11 @@ async def delete_existing_customer(current_customer: dict = Depends(require_role
 # async def list_customers(db: Session = Depends(get_db)):
 #     return list_all_customers(db)
 
-@router.put("/send-order/{order_id}", response_model=OrderResponse)
+@router.put("/send-order/{order_id}")
 async def create_an_order(order_id: int, current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
     return create_order(order_id, current_customer['user_id'], db)
 
-@router.get("/search", response_model=List[RestaurantResponse])
+@router.get("/search")
 async def search(query: str = Query(None, min_length=1, max_length=50), db: Session = Depends(get_db)):
     restaurants = db.query(Restaurant).filter(
         or_(Restaurant.name.ilike(f"%{query}%"), Restaurant.category.cast(String).ilike(f"%{query}%"))
@@ -52,6 +52,19 @@ async def search(query: str = Query(None, min_length=1, max_length=50), db: Sess
         restaurants.extend(db_restaurant)
     return restaurants
 
-@router.get("/filter", response_model=List[RestaurantResponse])
+@router.get("/filter")
 async def filter(category: str, db: Session = Depends(get_db)):
     return db.query(Restaurant).filter(Restaurant.category == category).all()
+
+
+@router.get("/restaurants", response_model=PaginatedRestaurantsResponse)
+async def get_restaurants(skip: int = Query(0, ge=0), limit: int = Query(10, le=100), db: Session = Depends(get_db)):
+    total = db.query(Restaurant).count()
+    restaurants = db.query(Restaurant).offset(skip).limit(limit).all()
+    
+    return {
+        "total": total,
+        "skip": skip,
+        "limit": limit,
+        "restaurants": restaurants,
+    }

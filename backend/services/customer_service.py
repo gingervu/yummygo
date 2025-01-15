@@ -85,7 +85,6 @@ def create_order(order_id: int, customer_id: int, db: Session):
     db_order.driver_id = driver.driver_id
     db_order.created_at = datetime.now()
     db_order.food_fee = get_food_fee(order_id, db)
-    db_order.delivery_fee = get_delivery_fee(order_id, db)
     db.commit()
     db.refresh(db_order)
     return db_order
@@ -97,9 +96,4 @@ def get_food_fee(order_id: int, db: Session):
         item_id = item.item_id
         price = db.query(MenuItem).filter(MenuItem.item_id == item_id).first().price
         fee += price * item.quantity
-    return fee
-
-def get_delivery_fee(order_id: int, db: Session):
-    db_order_items = db.query(OrderItem).filter(OrderItem.order_id == order_id).all()
-    fee = 20000
     return fee

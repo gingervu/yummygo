@@ -10,12 +10,12 @@ from middlewares.auth_middleware import get_current_user, require_role
 router = APIRouter(prefix="/restaurants", tags=["Restaurants"])
     
 #Lấy thông tin nhà hàng --> cho tài khoản nhà hàng xem
-@router.get("/me", response_model=RestaurantResponse)
+@router.get("/me")
 async def get_restaurant_me(current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
     return get_restaurant_info(current_restaurant['user_id'], db)
 
 # Cập nhật thông tin nhà hàng
-@router.put("/update", response_model=RestaurantResponse)
+@router.put("/update")
 async def update_restaurant_(restaurant: RestaurantUpdate, current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
     return update_restaurant(restaurant, current_restaurant['user_id'], db)
 
@@ -38,11 +38,11 @@ async def restaurant_orders(current_restaurant: dict = Depends(require_role('res
     return get_current_restaurant_order(current_restaurant['user_id'], db)
 
 # Lấy danh sách các nhà hàng đang active --> customer duyệt
-@router.get("/active", response_model=List[RestaurantResponse])
+@router.get("/active")
 async def list_restaurants_(db: Session = Depends(get_db)):
     return list_restaurants(db)
 
 # Lấy thông tin nhà hàng theo ID ---> hiện trên giao diện customer
-@router.get("/{restaurant_id}", response_model=RestaurantResponse)
+@router.get("/{restaurant_id}")
 async def get_restaurant_by_id(restaurant_id: int, db: Session = Depends(get_db)):
     return get_restaurant(restaurant_id, db)

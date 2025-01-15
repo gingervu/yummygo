@@ -4,7 +4,7 @@ from models.models import *
 from models.schemas import OrderCreate, OrderUpdate
 from datetime import datetime
 from sqlalchemy import or_
-
+from services.address_service import NominatimService
 
 # Giảm số lượng của item trong giỏ
 def subtract_item(item_id: int, order_id: int, customer_id: int, db: Session):
@@ -108,7 +108,7 @@ def get_orders_in_cart(customer_id: int, db: Session):
 def get_order(order_id: int, db: Session):
     return db.query(OrderItem).filter(OrderItem.order_id == order_id).all()
 
-# khách hàng cập nhật thông tin order (có thể là address, note)
+# khách hàng cập nhật thông tin order (note)
 def update_order(order_id: int, order: OrderUpdate, customer_id: int, db: Session):
     db_order = db.query(Order).filter(Order.order_id == order_id,
                                       Order.customer_id == customer_id).first()
@@ -121,7 +121,11 @@ def update_order(order_id: int, order: OrderUpdate, customer_id: int, db: Sessio
     # Cập nhật thông tin
     for key, value in update_info.items():
         if value is not None:
+            if isinstance(value, str):
+                if value == "":
+                    continue
             setattr(db_order, key, value)
+            
 
     db.commit()
     db.refresh(db_order)
@@ -168,3 +172,5 @@ def cancel(order_id: int, user_id: int, db:Session):
     db.commit()
     db.refresh(db_order)
     return db_order
+
+

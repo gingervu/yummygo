@@ -3,8 +3,7 @@ from typing import Optional
 from enum import Enum
 from decimal import Decimal
 from datetime import datetime, time
-# from object_enums import *
-
+from typing import List
 from enum import Enum
 # -------------------------
 # Định nghĩa các ENUM
@@ -73,6 +72,7 @@ class CategoryEnum(str, Enum):
                 return item
         return None
     
+
 
 
 # ------------------------------
@@ -190,6 +190,12 @@ class RestaurantResponse(BaseModel):
     
     class Config:
         from_attributes = True  
+
+class PaginatedRestaurantsResponse(BaseModel):
+    total: int
+    skip: int
+    limit: int
+    restaurants: List[RestaurantResponse]
 
 # ------------------------------
 # Mô hình Thời gian hoạt động của nhà hàng
@@ -325,28 +331,31 @@ class OrderSchema(OrderBase):
         from_attributes = True  # Chuyển đổi từ SQLAlchemy models sang Pydantic models
         
 class OrderUpdate(BaseModel):
-    address: Optional[str] = None  # Địa chỉ giao hàng, có thể rỗng
-    x: Optional[float] = None  # Tọa độ giao hàng
-    y: Optional[float] = None
     note: Optional[str] = None  # Ghi chú
     
     class Config:
         from_attribute = True
         
-class OrderResponse(BaseModel):
-    order_id: int
-    restaurant_id: int
-    driver_id: Optional[int]
-    address: Optional[str]
-    food_fee: Optional[float]
-    delivery_fee: Optional[float]
-    order_status: str
-    note: Optional[str]
-    created_at: Optional[datetime]
-    delivered_at: Optional[datetime]
-        
+      
+  
+  
+# ------------------------------
+# Mô hình Cho Address
+# ------------------------------
+
+class ObjectUpdateAddress(BaseModel):
+    object_id: int
+    address: Optional[str]  
+    
     class Config:
-        from_attribute = True       
+        from_attribute = True
+
+class AddressSuggestion(BaseModel):
+    address: str
+    x: float
+    y: float
+    class Config:
+        from_attribute = True  
 # ------------------------------
 # Mô hình Order Item (Món trong đơn hàng)
 # ------------------------------
