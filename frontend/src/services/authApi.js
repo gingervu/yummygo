@@ -46,3 +46,26 @@ const authApi = {
 };
 
 export default authApi;
+
+const axiosInstance = axios.create({
+    baseURL: "http://localhost:8000/items", // Địa chỉ API từ FastAPI
+    timeout: 5000,
+    headers: { "Content-Type": "application/json" },
+});
+
+// Lấy danh sách tất cả món ăn
+export const fetchMenuItems = async () => {
+    const response = await axiosInstance.get("/all");
+    return response.data;
+};
+
+// Xóa món ăn
+export const deleteMenuItem = async (itemId) => {
+    await axiosInstance.delete(`/delete/${itemId}`);
+};
+
+// Cập nhật món ăn
+export const updateMenuItem = async (itemId, updatedData) => {
+    const response = await axiosInstance.put(`/update/${itemId}`, updatedData);
+    return response.data;
+};

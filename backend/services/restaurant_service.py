@@ -77,7 +77,7 @@ def delete_restaurant(restaurant_id: int, db: Session):
         delete_user(restaurant_id, db)
     db.commit()
     db.refresh(restaurant)
-    return {"detail": "Nhà hàng đã bị xóa"}
+    return {"message": "Nhà hàng đã bị xóa"}
 
 # Lấy ra danh sách đơn hàng hiện tại của nhà hàng
 def get_current_restaurant_order(restaurant_id: int, db: Session):

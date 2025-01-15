@@ -3,6 +3,7 @@ from fastapi import HTTPException
 from models.models import *
 from models.schemas import OrderCreate, OrderUpdate
 from datetime import datetime
+from sqlalchemy import or_
 
 
 # Giảm số lượng của item trong giỏ
@@ -59,7 +60,6 @@ def add_item(item_id: int, restaurant_id: int, customer_id: int, db: Session):
     else:
         order_item.quantity += 1
     db.commit()
-    
     return order_id
 
 def create_order(item_id: int, price: float, restaurant_id: int, customer_id: int, db: Session):
@@ -157,3 +157,14 @@ def delete_order(order_id: int, customer_id: int, db: Session):
     
     db.commit()
     return {"detail": "Đơn hàng đã bị xóa."}
+
+def cancel(order_id: int, user_id: int, db:Session):
+    db_order = db.query(Order).filter(Order.order_status == OrderStatusEnum.cart,
+                                      or_(Order.customer_id == user_id,
+                                          Order.driver_id == user_id)).first()
+    if not db_order:
+        raise HTTPException(status_code=404, detail="Order not found")    
+    db_order.order_status = OrderStatusEnum.cancelled
+    db.commit()
+    db.refresh(db_order)
+    return db_order

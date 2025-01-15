@@ -13,13 +13,13 @@ router = APIRouter(prefix="/customers", tags=["Customers"])
 # Lấy thông tin customer
 # api này sẽ dùng để hiện thông tin của customer cùng
 # với /user/me
-@router.get("/me", response_model=CustomerSchema)
+@router.get("/me", response_model=CustomerResponse)
 async def get_customer(current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
     return get_customer_by_id(current_customer['user_id'], db)
 
 # Sửa thông tin customer
 # sử dụng kết hợp với /user/update
-@router.put("/update", response_model=CustomerSchema)
+@router.put("/update", response_model=CustomerResponse)
 async def update_existing_customer(customer: CustomerCreate, current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
     return update_customer(current_customer['user_id'], customer, db)
 
@@ -32,7 +32,7 @@ async def delete_existing_customer(current_customer: dict = Depends(require_role
 # async def list_customers(db: Session = Depends(get_db)):
 #     return list_all_customers(db)
 
-@router.put("/send-order/{order_id}")
+@router.put("/send-order/{order_id}", response_model=OrderResponse)
 async def create_an_order(order_id: int, current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
     return create_order(order_id, current_customer['user_id'], db)
 

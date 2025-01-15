@@ -67,7 +67,7 @@ def delete_driver_service(driver_id: int, db: Session):
         delete_user(driver_id, db)
     db.commit()
     db.refresh(db_driver)
-    return db_driver
+    return {"message": "Đã xóa tài xế"}
 
 
 def get_current_driver_order(driver_id: int, db: Session):
@@ -82,6 +82,7 @@ def get_driver_orders(driver_id: int, db: Session):
     if not db_order:
         return []
     return db_order
+
 # def list_drivers_service(db: Session) -> List[Driver]:
 #     """Lấy danh sách tất cả tài xế chưa bị xóa"""
 #     return db.query(Driver).filter(Driver.is_deleted == False).all()

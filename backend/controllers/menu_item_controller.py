@@ -19,29 +19,30 @@ router = APIRouter(prefix="/items", tags=["Menu Items"])
 
 # Tạo menu_item mới, chỉ chủ nhà hàng có quyền này
 # đầu vào là name, description, img_url, price 
-@router.post("/create", response_model=MenuItemShchema)
+@router.post("/create", response_model=MenuItemResponse)
 async def add_item(menu_item: MenuItemCreate, current_restaurant: dict = Depends(require_role('restaurant')),db: Session = Depends(get_db)):
     return create_menu_item(menu_item, current_restaurant['user_id'], db)
 
 # Lấy ra danh sách món ---> nhà hàng xem
-@router.get("/all", response_model=List[MenuItemShchema])
+@router.get("/all", response_model=List[MenuItemResponse])
 async def get_all_menu_items(current_restaurant: dict = Depends(require_role('restaurant')),db: Session = Depends(get_db)):
     return list_menu_items(current_restaurant['user_id'], db)
 
 # Lấy ra danh sách món available của nhà hàng ---> khách hàng duyệt món
-@router.get("/available/{restaurant_id}", response_model=List[MenuItemShchema])
+@router.get("/available/{restaurant_id}", response_model=List[MenuItemResponse])
 async def get_available_menu_items(restaurant_id: int, db: Session = Depends(get_db)):
     return available_items(restaurant_id, db)
 
 # Lấy ra thông tin của một món dựa trên id
-@router.get("/{item_id}", response_model=MenuItemShchema)
+@router.get("/{item_id}", response_model=MenuItemResponse)
 async def get_single_menu_item(item_id: int, db: Session = Depends(get_db)):
     return get_menu_item(item_id, db)
 
 # Chỉnh sửa thông tin món
-@router.put("/update/{item_id}", response_model=MenuItemShchema)
+@router.put("/update/{item_id}", response_model=MenuItemResponse)
 async def update_menu(item_id: int, menu_item: MenuItemUpdate, current_restaurant: dict = Depends(require_role("restaurant")), db: Session = Depends(get_db)):
     return update_menu_item_info(item_id, menu_item, current_restaurant["user_id"], db)
+
 
 @router.put("/change-status/{item_id}")
 async def change_status(item_id: int, current_restaurant: dict = Depends(require_role("restaurant")), db: Session = Depends(get_db)):
@@ -54,7 +55,7 @@ async def remove_menu_item(item_id: int, restaurant = Depends(require_role("rest
     return delete_menu_item(item_id, restaurant['user_id'], db)
 
 # Lấy ra danh sách món available của nhà hàng ---> khách hàng duyệt món
-@router.get('/menu/{restaurant_id}', response_model=List[MenuItemShchema])
+@router.get('/menu/{restaurant_id}', response_model=List[MenuItemResponse])
 async def get_menu_by_res_id(restaurant_id: int, db: Session = Depends(get_db)):
     return db.query(MenuItem).filter(MenuItem.restaurant_id == restaurant_id,
                               MenuItem.is_deleted == False,
