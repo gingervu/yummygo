@@ -4,14 +4,7 @@ from typing import List
 from db.database import get_db
 from models.models import *
 from models.schemas import *
-from services.menu_item_service import (
-    create_menu_item,
-    list_menu_items,
-    get_menu_item,
-    update_menu_item_info,
-    delete_menu_item,
-    available_items
-)
+from services.menu_item_service import *
 from middlewares.auth_middleware import get_current_user, require_role
 
 router = APIRouter(prefix="/items", tags=["Menu Items"])

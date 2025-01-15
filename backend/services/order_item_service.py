@@ -3,25 +3,6 @@ from models.models import *
 from models.schemas import *
 from fastapi import HTTPException
 
-# def create_order_item(order_item: OrderItemCreate, db: Session) -> OrderItem:
-#     db_order_item = db.query(OrderItem).filter(
-#         OrderItem.item_id == order_item.item_id,
-#     ).first()
-
-#     if db_order_item:
-#         raise HTTPException(status_code=400, detail="Mục đơn hàng đã tồn tại")
-
-#     new_order_item = OrderItem(
-#         item_id=order_item.item_id,
-#         order_id=order_item.order_id,
-#         price=order_item.price,
-#         quantity=order_item.quantity
-#     )
-#     db.add(new_order_item)
-#     db.commit()
-#     db.refresh(new_order_item)
-#     return new_order_item
-
 
 def get_order_items(order_id: int, db: Session) -> list[OrderItem]:
     order_items = db.query(OrderItem).filter(OrderItem.order_id == order_id).all()
