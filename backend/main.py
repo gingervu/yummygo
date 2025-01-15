@@ -1,14 +1,15 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from routes.api_router import api_router
 import sys
-sys.path.append("d:/yummygo/backend")
+# sys.path.append("d:/yummygo/backend")
+sys.path.append("C:/Users/7420/Desktop/yummygo/backend")
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="FastAPI Application")
 
 origins = [
-    "http://localhost:3000",  # Thêm domain frontend của bạn
-    "http://localhost",  # Nếu frontend và backend cùng chạy trên localhost
+    "http://localhost:5173",  # Thêm domain frontend của bạn
+    "http://localhost:",  # Nếu frontend và backend cùng chạy trên localhost
 ]
 
 app.add_middleware(
