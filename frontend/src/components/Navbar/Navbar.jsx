@@ -61,11 +61,11 @@ const Navbar = ({ setShowLogin, setShowSignUp, currentUser, handleLogout }) => {
       {/* Phần phải */}
       <div className="navbar-right">
         {/* Ảnh giỏ hàng */}
-        <img
+        <Link to='/cart'><img
           className="navbar-icon"
           src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png"
           alt="Giỏ hàng"
-        />
+        /></Link>
 
         {/* Ảnh thông báo */}
         <img

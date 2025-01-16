@@ -12,6 +12,8 @@ from services.customer_service import get_food_fee
 router = APIRouter(prefix="/orders", tags=["Orders"])
 
 
+############################
+# MK: DONE, xem trong pages/MenuRestaurant
 # Thêm món vào đơn, áp dụng cho cả nút thêm món và nút tăng số lượng, trả về order_id
 @router.post("/add-item")
 async def add_to_cart(item_id: int, restaurant_id: int, current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
@@ -21,15 +23,17 @@ async def add_to_cart(item_id: int, restaurant_id: int, current_customer: dict =
 @router.post("/subtract-item")
 async def subtract_on_cart(item_id: int, order_id: int, current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
     return order_service.subtract_item(item_id, order_id, current_customer['user_id'], db)
+############################
 
+# DONE, xem trong pages/cart
 # Lấy danh sách đơn hàng trong giỏ của user
+# ở đây tạo thêm 1 cái page khác (sau khi bấm vào icon giỏ hàng)
 # ---> trả về danh sách thông tin các order, có thể dùng order_id để 
 # xem thông tin chi tiết của order, dùng api /restaurant/get/{restaurant_id}
 # để lấy thông tin nhà hàng
-@router.get("/cart", response_model=List[OrderItemResponse])
+@router.get("/cart")
 async def get_cart(current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
     return order_service.get_orders_in_cart(current_customer['user_id'], db)
-
 
 # Lấy đơn hàng theo ID
 # -> trả về danh sách order_items, phương thức này
@@ -38,12 +42,14 @@ async def get_cart(current_customer: dict = Depends(require_role('customer')), d
 async def get_order(order_id: int, db: Session = Depends(get_db)):
     return order_service.get_order(order_id, db)
 
+############################
+# MK: DONE - nằm trong pages/MenuRestaurant
 # Lấy ra danh sách các order_item có trong giỏ hàng ở nhà hàng hiện tại
 # Nếu không có thì giỏ hàng đang trống
 @router.get("/current-cart/{restaurant_id}")
 async def current_cart(restaurant_id: int, current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
     return order_service.get_current_cart(restaurant_id, current_customer['user_id'], db)
-
+################################
 
 # Khách hàng cập nhật thông tin đơn hàng
 # Khách hàng có thể thay đổi địa chỉ và note
@@ -75,6 +81,9 @@ async def update_order(order_id: int, new_status: str,
                        db: Session = Depends(get_db)):
     return order_service.update_order_status(order_id, new_status, current_driver['user_id'], db)
 
+
+###############
+# MK: DONE, xem trong pages/Cart
 @router.get("/food-fee/{order_id}")
 async def food_fee(order_id: int, db: Session = Depends(get_db)):
     return get_food_fee(order_id, db)

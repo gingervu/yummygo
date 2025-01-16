@@ -177,10 +177,12 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/order" element={<PlaceOrder />} />
+          {/* <Route path="/order" element={<PlaceOrder />} /> */}
+          <Route path="/placeorder/:orderId" element={<PlaceOrder />} />
           <Route path="/customer" element={<Customer />} /> {/* Route cho trang khách hàng */}
           <Route path="/food-display" element={<FoodDisplay />} /> {/* Route cho danh sách nhà hàng */}
           <Route path="/menu/:restaurant_id" element={<MenuRestaurant />} /> {/* Route cho thực đơn nhà hàng */}
+        
         </Routes>
       </div>
       <Footer />

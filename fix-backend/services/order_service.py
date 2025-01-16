@@ -131,6 +131,8 @@ def update_order(order_id: int, order: OrderUpdate, customer_id: int, db: Sessio
     db.refresh(db_order)
     return db_order
 
+
+
 # hàm cập nhật trạng thái đơn hàng bởi tài xế
 def update_order_status(order_id: int, new_status: str, driver_id: int, db: Session):
     db_order = db.query(Order).filter(Order.order_id == order_id,
