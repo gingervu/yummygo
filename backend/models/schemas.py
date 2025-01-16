@@ -255,6 +255,7 @@ class MenuItemResponse(BaseModel):
     img_url: Optional[str]
     description: Optional[str]
     price: Decimal
+    status: str
     
     class Config:
         from_attribute = True    
@@ -378,11 +379,14 @@ class OrderItemSchema(OrderItemBase):
 class OrderItemResponse(BaseModel):
     item_id: int
     order_id: int
+    name: str
     price: Decimal
     quantity: int
 
     class Config:
         from_attribute = True   
+        
+
 # ------------------------------
 # Mô hình Manager (Quản lý nhà hàng)
 # ------------------------------

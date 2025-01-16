@@ -38,6 +38,31 @@ async def get_cart(current_customer: dict = Depends(require_role('customer')), d
 async def get_order(order_id: int, db: Session = Depends(get_db)):
     return order_service.get_order(order_id, db)
 
+# lấy thông tin tường minh của đơn hàng
+@router.get("/info/{order_id}")
+async def get_order(order_id: int, db: Session = Depends(get_db)):
+    order = {}
+    db_order = db.query(Order).filter(Order.order_id == order_id).first()
+    customer_id = db_order.customer_id
+    restaurant_id = db_order.restaurant_id
+    driver_id = db_order.driver_id
+    customer_name = db.query(Customer).filter(Customer.customer_id == customer_id).first().name
+    # customer_phone = db.query(User).filter(User.user_id == customer_id).first().phone
+    restaurant_name = db.query(Restaurant).filter(Restaurant.restaurant_id == restaurant_id).first().name
+    # restaurant_phone = db.query(User).filter(User.user_id == restaurant_id).first().phone
+    driver_name = db.query(Driver).filter(Driver.driver_id == driver_id).first().name
+    # driver_phone = db.query(User).filter(User.user_id == driver_id).first().phone
+    food_fee = db_order.food_fee
+    delivery_fee = db_order.delivery_fee
+    distance = db_order.distance
+    address = db_order.address
+    order["customer_name"] = customer_name
+    order["restaurant_name"] = restaurant_name
+    order["driver_name"] = driver_name
+    order["food_fee"] = food_fee
+    order["delivery_fee"] = delivery_fee
+    order["distance"] = distance
+
 # Lấy ra danh sách các order_item có trong giỏ hàng ở nhà hàng hiện tại
 # Nếu không có thì giỏ hàng đang trống
 @router.get("/current-cart/{restaurant_id}")

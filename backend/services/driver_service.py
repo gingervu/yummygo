@@ -83,6 +83,10 @@ def get_driver_orders(driver_id: int, db: Session):
         return []
     return db_order
 
+
+
+
+
 # def list_drivers_service(db: Session) -> List[Driver]:
 #     """Lấy danh sách tất cả tài xế chưa bị xóa"""
 #     return db.query(Driver).filter(Driver.is_deleted == False).all()
