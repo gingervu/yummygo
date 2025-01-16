@@ -356,16 +356,16 @@ class OrderResponse(BaseModel):
 # ------------------------------
 
 class ObjectUpdateAddress(BaseModel):
-    object_id: int
+    object_id: Optional[int] = None
     address: Optional[str]  
     
     class Config:
         from_attribute = True
 
 class AddressSuggestion(BaseModel):
-    address: str
-    x: float
-    y: float
+    address: Optional[str]
+    x: Optional[float]
+    y: Optional[float]
     class Config:
         from_attribute = True  
 # ------------------------------

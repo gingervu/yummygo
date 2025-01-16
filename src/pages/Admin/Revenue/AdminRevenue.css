@@ -1,0 +1,26 @@
+.admin-revenue main {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+  }
+  
+.admin-revenue  h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+.admin-revenue  p {
+    font-size: 20px;
+    color: #555;
+    background-color: #f9f9f9; /* Nền nhẹ cho phần doanh thu */
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+  }
+  

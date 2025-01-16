@@ -32,7 +32,7 @@ const App = () => {
         {/* Các route */}
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/admin-orders" element={<AdminOrders />} />
-        <Route path="/admin-order-details" element={<AdminOrderDetails />} />
+        <Route path="/admin-order-details/:order_id" element={<AdminOrderDetails />} />
         <Route path="/admin-menu" element={<AdminMenu />} />
         <Route path="/admin-edit-menu" element={<EditMenu />} />
         <Route path="/admin-staff" element={<AdminStaff />} />

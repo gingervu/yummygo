@@ -20,11 +20,11 @@ const OrderList = ({ orders, basePath }) => {
       </thead>
       <tbody>
         {orders.map((order) => (
-          <tr key={order.id}>
-            <td>{order.id}</td>
-            <td>{order.total} đ</td>
+          <tr key={order.order_id}>
+            <td>{order.order_id}</td>
+            <td>{order.food_fee}</td>
             <td>
-              <button className="detail-btn" onClick={handleButtonClick}>Chi tiết đơn hàng</button>
+              <button className="detail-btn" onClick={() => handleButtonClick(order.order_id)}>Chi tiết đơn hàng</button>
             </td>
           </tr>
         ))}

@@ -9,8 +9,9 @@ const Sidebar = () => {
 
   const handleLogout = async () => {
     try{
-      await axios.post("http://127.0.0.1:8000/logout");
-      navigate("/");
+      localStorage.clear();
+      navigate("/")
+      alert("Bạn đã đăng xuất!");
     }catch (error) {
       console.error("Logout failed:", error);
       alert("Đăng xuất thất bại! Vui lòng thử lại.");
@@ -18,6 +19,13 @@ const Sidebar = () => {
     // Xử lý đăng xuất ở đây (ví dụ: xóa token, reset state)
      // Điều hướng tới trang chính
   };
+
+  const token = localStorage.getItem('access_token');
+  if (token !== null) {
+    console.log('access_token còn trong localStorage:', token);
+  } else {
+    console.log('Không tìm thấy access_token trong localStorage');
+  }
 
   return (
     <div className="sidebar">

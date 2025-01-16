@@ -4,14 +4,15 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import MenuItem from "../../../components/MenuItem/MenuItem";
 import "./AdminMenu.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; // Thêm axios để gọi API
+import axios from "axios";
 
 const AdminMenu = () => {
-    const navigate = useNavigate(); // Khởi tạo hook navigate
+    const navigate = useNavigate();
 
     const [items, setItems] = useState([]); // State lưu danh sách món ăn
     const [loading, setLoading] = useState(true); // State để theo dõi trạng thái tải dữ liệu
     const [error, setError] = useState(null); // State để lưu lỗi nếu có
+
     const token = localStorage.getItem("access_token");
 
     const handleButtonClick = () => {
@@ -20,49 +21,53 @@ const AdminMenu = () => {
 
     useEffect(() => {
         // Gọi API để lấy dữ liệu menu
-        const fetchItems = async () => {
-            try {
-                const token = localStorage.getItem("access_token"); // Lấy token từ localStorage
-                const response = await axios.get("/items/all", {
-                    headers: {
-                        Authorization: `Bearer ${token}` // Thêm Authorization vào header
-                    }
-                }); // Gọi API
-                setItems(response.data); // Cập nhật state với dữ liệu từ API
-            } catch (err) {
-                console.error("Lỗi khi tải dữ liệu: ", err);
-                setError("Không thể tải dữ liệu từ API");
-            } finally {
-                setLoading(false); // Tắt trạng thái loading
-            }
-        };
-
-        fetchItems();
+    axios
+        .get("/items/all", {
+          headers: {
+            Authorization: `Bearer ${token}`, // Đảm bảo gửi token trong header
+          },
+        })
+        .then((response) => {
+          console.log("Dữ liệu thực đơn trả về từ API:", response.data);
+          setItems(response.data); // Lưu danh sách món ăn vào state
+        })
+        .catch((error) => {
+          console.error("Có lỗi xảy ra khi lấy dữ liệu thực đơn:", error);
+          setError("Không thể tải dữ liệu từ API");
+        })
+        .finally(() => {
+          setLoading(false); // Tắt trạng thái loading
+        });
     }, []);
 
-    const handleToggle = (id) => {
-        setItems(items.map(item => 
-            item.id === id ? { ...item, isToggled: !item.isToggled } : item
-        ));
-
+    const handleToggle = async (id) => {
         axios
         .put(
-          "/items/change-status", {
+          `/items/change-status/${id}`,
+          {}, // Body request rỗng
+          {
             headers: {
-            Authorization: `Bearer ${token}`, // Thêm token vào header
-          }},
+              Authorization: `Bearer ${token}`, // Thêm token vào header
+            },
+          }
         )
         .then((response) => {
           console.log("Cập nhật trạng thái món ăn thành công:", response.data);
+          setItems((prevItems) =>
+            prevItems.map((item) =>
+              item.item_id === id
+                ? {
+                    ...item,
+                    status: item.status === "available" ? "unavailable" : "available",
+                  }
+                : item
+            )
+          ); // Cập nhật trạng thái trong state items
         })
         .catch((error) => {
           console.error("Có lỗi xảy ra khi cập nhật trạng thái:", error);
         });
     };
-
-    if (loading) return <div>Đang tải dữ liệu...</div>;
-
-    if (error) return <div>{error}</div>;
 
     return (
         <div className="admin-menu">
@@ -74,17 +79,15 @@ const AdminMenu = () => {
                     Chỉnh sửa thực đơn
                 </button>
                 <div className="items-container">
-                    {items.map(item => (
-                        <MenuItem 
-                            key={item.item_id} 
-                            name={item.name} 
-                            description={item.description} 
-                            price={item.price} 
-                            isToggled={item.isToggled} 
-                            
-                            onToggle={() => handleToggle(item.id)} 
+                    {items.map((item) => (
+                        <MenuItem
+                            key={item.item_id}
+                            name={item.name}
+                            description={item.description}
+                            price={item.price}
+                            checked={item.status === "available"}
+                            onChange={() => handleToggle(item.item_id)} // Truyền callback thay vì gọi trực tiếp
                         />
-                    
                     ))}
                 </div>
             </main>

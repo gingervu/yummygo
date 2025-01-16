@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState} from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 import Header from "../../../components/Header/Header";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import OrderItems from "../../../components/OrderItems/OrderItems";
@@ -8,26 +10,139 @@ import BackPage from "../../../components/BackPage/BackPage";
 
 
 const AdminOrderDetails = () => {
-
+  const { order_id } = useParams(); 
   const [isOpen, setIsOpen] = useState(false); // state to track if the popup is open
-
   const toggleChat = () => {
     setIsOpen(!isOpen); // Toggle the popup visibility
   };
+  const [order, setOrder] = useState(null); // Lưu thông tin chi tiết đơn hàng
+  const [orderInfo, setOrderInfo] = useState(null); // Lưu thông tin chi tiết đơn hàng
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const token = localStorage.getItem("access_token");
+  // const orderItems = [
+  //   { name: "Tên món 1", price: "40.000 đ", quantity: "x1" },
+  //   { name: "Tên món 2", price: "30.000 đ", quantity: "x2" },
+  //   // Thêm các món khác nếu cần
+  // ];
 
-  const orderItems = [
-    { name: "Tên món 1", price: "40.000 đ", quantity: "x1" },
-    { name: "Tên món 2", price: "30.000 đ", quantity: "x2" },
-    // Thêm các món khác nếu cần
-  ];
+  useEffect(() => {
+    axios
+    .get(`http://localhost:8000/orders/${order_id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => {
+      console.log("Thông tin chi tiết đơn hàng:", response.data);
+      setOrder(response.data);
+    })
+    .catch((error) => {
+      console.error("Có lỗi khi lấy chi tiết đơn hàng:", error);
+      setError("Không thể lấy thông tin chi tiết đơn hàng.");
+    })
+    .finally(() => {
+      setLoading(false);
+    });
+    axios
+    .get(`http://localhost:8000/orders/info/${order_id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => {
+      console.log("Thông tin chi tiết đơn hàng:", response.data);
+      setOrderInfo(response.data);
+    })
+    .catch((error) => {
+      console.error("Có lỗi khi lấy chi tiết đơn hàng:", error);
+      setError("Không thể lấy thông tin chi tiết đơn hàng.");
+    })
+    .finally(() => {
+      setLoading(false);
+    });
+  }, [order_id]);
 
+
+
+if (loading) return <div>Đang tải chi tiết đơn hàng...</div>;
+
+if (error) return <div>{error}</div>;
+
+const total = 0;
   return (
 
     <div className="admin-order-details">
       <Header />
       <Sidebar />
-
+      
       <main>
+        <h2>Chi tiết đơn hàng {order_id}</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Mã món</th>
+              <th>Tên món</th>
+              <th>Đơn giá</th>
+              <th>Số lượng</th>
+            </tr>
+          </thead>
+          <tbody>
+            {order.map((item) => (
+              <tr key={item.item_id}>
+                <td>{item.item_id}</td>
+                <td>{item.name}</td> 
+                <td>{item.price} VND</td>
+                <td>{item.quantity}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <h3>Tổng tiền: {order.reduce((total, item) => total + item.price * item.quantity, 0)} VND</h3>
+
+        <div className="driver-contact">
+          <div className="driver-info">
+            <span className="icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+                <g opacity="0.7">
+                  <rect width="40" height="40" rx="20" fill="#EADDFF" />
+                  <path fillRule="evenodd" clipRule="evenodd" d="M26.0002 16C26.0002 19.3137 23.314 22 20.0002 22C16.6865 22 14.0002 19.3137 14.0002 16C14.0002 12.6863 16.6865 10 20.0002 10C23.314 10 26.0002 12.6863 26.0002 16ZM24.0002 16C24.0002 18.2091 22.2094 20 20.0002 20C17.7911 20 16.0002 18.2091 16.0002 16C16.0002 13.7909 17.7911 12 20.0002 12C22.2094 12 24.0002 13.7909 24.0002 16Z" fill="#4F378A" />
+                  <path d="M20.0002 25C13.5259 25 8.00952 28.8284 5.9082 34.192C6.4201 34.7004 6.95934 35.1812 7.52353 35.6321C9.08827 30.7077 13.997 27 20.0002 27C26.0035 27 30.9122 30.7077 32.477 35.6321C33.0412 35.1812 33.5804 34.7004 34.0923 34.1921C31.991 28.8284 26.4746 25 20.0002 25Z" fill="#4F378A" />
+                </g>
+              </svg>
+            </span>
+            <p className="name">{orderInfo.driver_name}</p>
+          </div>
+          <div className="action">
+            <button className="chat-btn" onClick={toggleChat}>
+              <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
+                  <path d="M23.75 13.125V7.5C23.75 6.11929 22.6307 5 21.25 5H6.25C4.86929 5 3.75 6.11929 3.75 7.5V17.2826C3.75 18.6633 4.86929 19.7826 6.25 19.7826H8.20652V25L13.4239 19.7826H13.75M20.2038 22.9891L23.4647 26.25V22.9891H23.75C25.1307 22.9891 26.25 21.8698 26.25 20.4891V16.25C26.25 14.8693 25.1307 13.75 23.75 13.75H16.25C14.8693 13.75 13.75 14.8693 13.75 16.25V20.4891C13.75 21.8698 14.8693 22.9891 16.25 22.9891H20.2038Z" stroke="#686562" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                Chat với tài xế</span></button>
+                <ChatPopup isOpen={isOpen} toggleChat={toggleChat} />
+            <div className="call-btn">
+              <button>
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+                  <g clipPath="url(#clip0_97_609)">
+                    <path d="M1.95256 13.2929C0.889786 11.6458 0.42667 9.68302 0.641129 7.7346C0.855328 5.78617 1.73399 3.97095 3.12924 2.59418L4.30618 1.39057C4.84593 0.862896 5.57081 0.567444 6.32553 0.567444C7.0805 0.567444 7.80539 0.862896 8.34513 1.39057L13.4002 6.49923C13.9262 7.03445 14.2209 7.75483 14.2209 8.50525C14.2209 9.25567 13.9262 9.97606 13.4002 10.5113C12.8725 11.051 12.5771 11.7759 12.5771 12.5307C12.5771 13.2855 12.8725 14.0103 13.4002 14.5501L21.4243 22.5741C21.688 22.8418 22.0024 23.0544 22.3491 23.1995C22.6958 23.3446 23.0678 23.4193 23.4437 23.4193C23.8195 23.4193 24.1915 23.3446 24.5382 23.1995C24.8849 23.0544 25.1992 22.8418 25.463 22.5741C25.9983 22.0481 26.7187 21.7534 27.4691 21.7534C28.2195 21.7534 28.9399 22.0481 29.4751 22.5741L34.557 27.656C35.0847 28.1957 35.3801 28.9206 35.3801 29.6756C35.3801 30.4303 35.0847 31.1552 34.557 31.6949L33.3534 32.8716C31.9766 34.2669 30.1614 35.1455 28.213 35.36C26.2646 35.5742 24.3018 35.1113 22.6546 34.0485C14.4949 28.5117 7.46827 21.467 1.95256 13.2929Z" fill="#686562" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_97_609">
+                      <rect width="36" height="36" fill="white" transform="matrix(0 1 -1 0 36 0)" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+
+
+      {/* <main>
        <div className="back">
       <BackPage to="/admin-orders" />
       </div>
@@ -145,7 +260,7 @@ const AdminOrderDetails = () => {
         </div>
 
         
-      </main>
+      </main> */}
     </div>
   );
 };

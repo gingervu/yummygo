@@ -1,15 +1,9 @@
 .admin-order-details main {
-
+    font-family: Arial, sans-serif;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-
-    min-height: 100vh;
-    /* Đảm bảo chiều cao đầy đủ */
-    padding: 20px;
-    font-family: "Poppins", sans-serif;
-    flex-grow: 1;
-    /* Chiếm hết phần còn lại của màn hình */
-    text-align: center;
+    align-items: center;
 }
 
 .admin-order-details .back {
@@ -20,11 +14,48 @@
 }
 
 .admin-order-details h2 {
-    margin-top: 0px;
-
-    margin-bottom: 28px;
+    margin-top: 100px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
+
+.admin-order-details  table {
+    width: 80%; /* Thu gọn bảng */
+    max-width: 600px; /* Giới hạn chiều rộng tối đa */
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+.admin-order-details  thead th {
+    background-color: #f4f4f4;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+  
+.admin-order-details  tbody td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+.admin-order-details  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+.admin-order-details  tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+.admin-order-details  h3 {
+    color: #d9534f;
+    font-size: 1rem;
+  }
+  
 .admin-order-details .order-id {
     display: flex;
     justify-content: center;
@@ -332,3 +363,7 @@
     border-radius: 10px;
     margin-bottom: 20px;
 }
+
+
+
+  

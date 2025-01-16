@@ -14,7 +14,6 @@ const AdminHome = () => {
 
   useEffect(() => {
     // Gửi yêu cầu GET để lấy thông tin nhà hàng
-    const token = localStorage.getItem("access_token");
     axios
       .get("/restaurants/me",       
         {headers: {
@@ -73,6 +72,7 @@ const AdminHome = () => {
             onChange={handleStatusChange} // Hàm xử lý thay đổi trạng thái
              />
         </div>
+        
       </main>
     </div>
   );

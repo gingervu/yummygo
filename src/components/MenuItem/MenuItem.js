@@ -2,7 +2,7 @@ import React from 'react';
 import Toggle from '../Toggle/Toggle';
 import "./MenuItem.css"
 
-const MenuItem = ({ name, description, price, isToggled, onToggle }) => {
+const MenuItem = ({ name, description, price, checked, onChange }) => {
     
     return (
         <div className="menu-item">
@@ -13,7 +13,7 @@ const MenuItem = ({ name, description, price, isToggled, onToggle }) => {
                 <span>{price} VNĐ</span>
             </div>
             <div className='item-toggle'>
-            <Toggle toggled={isToggled} onToggle={onToggle} /> {/* Sử dụng Toggle */}
+            <Toggle checked={checked} onChange={onChange} /> {/* Sử dụng Toggle */}
             </div>
         </div>
     );
