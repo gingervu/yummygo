@@ -38,6 +38,7 @@
   font-weight: bold;
   color: #555;
   align-items: center; /* Căn giữa theo trục dọc */
+  text-align: center; /* Căn giữa theo trục ngang */
   justify-content: center; /* Căn giữa theo trục ngang */
   gap: 20px; /* Khoảng cách giữa các thành phần */
   position: relative;
