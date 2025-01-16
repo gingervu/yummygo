@@ -35,8 +35,10 @@ const LoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginSuccess
           alert("Đăng nhập thành công!");
           setShowLogin(false); // Đóng popup
           navigate("/admin");
+
           const token = response.data["access_token"]
           localStorage.setItem("access_token", token);
+          
           console.log("Token:", token);
         }
       } catch (error) {
