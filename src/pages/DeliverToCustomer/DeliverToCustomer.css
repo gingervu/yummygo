@@ -1,6 +1,11 @@
 .deliver-to-customer main {
   font-family: "Poppins", sans-serif;
-  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Đảm bảo chiều cao đầy đủ */
+  padding: 20px;
+  flex-grow: 1;
+  text-align: center;
 }
 
 .deliver-to-customer main h2 {
@@ -12,6 +17,7 @@
   -webkit-background-clip: text; /* Tương thích với các trình duyệt dựa trên WebKit */
   -webkit-text-fill-color: transparent; /* Đặt màu văn bản là trong suốt để chỉ nhìn thấy gradient */
   font-size: 24px;
+  margin-top: 100px;
 }
 
 
@@ -21,15 +27,15 @@
 }
 
 .deliver-to-customer .order-info-box {
-  width: 500px; /* Đặt chiều rộng của box */
+  width: 28%; /* Đặt chiều rộng của box */
   background: #ffffff;
   display: flex; /* Để căn chỉnh nội dung nếu cần */
   text-align: left;
-  margin: 5px auto; /* Canh giữa box trong trang */
+  margin: auto; /* Canh giữa box trong trang */
   box-sizing: border-box; /* Đảm bảo padding không ảnh hưởng đến kích thước */
   flex-direction: column; /* Xếp nội dung theo chiều dọc */
   gap: 0px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .deliver-to-customer .order-info-box h3{
@@ -47,7 +53,7 @@
 }
 
 .deliver-to-customer .payment-box {
-  width: 500px; /* Đặt chiều rộng của box */
+  width: 28%; /* Đặt chiều rộng của box */
   border-radius: 10px;
   background: #F5F5F5;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -70,7 +76,7 @@
 }
 
 .deliver-to-customer .contact-box {
-  width: 500px; /* Đặt chiều rộng của box */
+  width: 28%; /* Đặt chiều rộng của box */
   background: #ffffff;
   display: flex; /* Để căn chỉnh nội dung nếu cần */
   text-align: left;
@@ -98,7 +104,7 @@
   gap: 8px; /* Khoảng cách giữa các nút */
 }
 
-.contact-buttons button {
+.deliver-to-customer .contact-buttons button {
   background-color: #DBA718;
   border: none;
   border-radius: 5px;
@@ -112,7 +118,7 @@
 .deliver-to-customer .action-btn-container {
   display: flex;
   justify-content: center; /* Căn giữa */
-  margin-top: 55px;
+  margin-top: 40px;
   gap: 90px; /* Thêm khoảng cách giữa các nút */
   flex-direction: row; /* Đảm bảo các button nằm ngang */
 }
@@ -125,8 +131,9 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
+
 
 .deliver-to-customer .sucess-btn {
   background-color: #E97522;

@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../../components/Header/Header";
 import { useNavigate } from "react-router-dom";
 import "./PickupSuccess.css";
+import Sidebar from "../../components/Sidebar/Sidebar";
 
 const PickupSuccess = () => {
   const navigate = useNavigate(); // Khởi tạo hook navigate
@@ -14,7 +15,7 @@ const PickupSuccess = () => {
     <div className="pickup-sucess">
       {/* Header */}
       <Header />
-
+      <Sidebar />
       {/* Nội dung chính */}
       <main >
         <h2>Bạn đã lấy đơn! Giao đến cho khách hàng thôi!</h2>
@@ -36,7 +37,7 @@ const PickupSuccess = () => {
         </div>
 
         <div className="action-btn-container">
-          <button className="action-btn sucess-btn" onClick={handleButtonClick}>Lấy đơn thành công</button>
+          <button className="action-btn sucess-btn" onClick={handleButtonClick}>Đã đến nơi</button>
         </div>
 
       </main>

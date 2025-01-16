@@ -1,23 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import { useNavigate } from "react-router-dom";
 import "./OrderDetails.css";
+import Sidebar from "../../components/Sidebar/Sidebar";
 
 const OrderDetails = () => {
-  const navigate = useNavigate(); // Khởi tạo hook navigate
+  const [orderDetails, setOrderDetails] = useState([]); // Lưu chi tiết đơn hàng
+  const [isLoading, setIsLoading] = useState(true); // Trạng thái loading
+  const navigate = useNavigate(); // Hook điều hướng
+  const token = localStorage.getItem("access_token"); // Lấy token từ localStorage
+
+  
 
   const handleReject = () => {
-    navigate("/"); // Điều hướng đến trang /orderwaiting
+    navigate("/home"); // Điều hướng đến trang /orderwaiting
   };
 
   const handleAccept = () => {
+    // Thay đổi trạng thái tài xế
+    // Thay đổi trạng thái đơn hàng
     navigate("/orderaccept"); // Điều hướng đến trang /
   };
+
+  if (isLoading) {
+    return <p>Đang tải thông tin đơn hàng...</p>;
+  }
 
   return (
     <div className="order-details">
       <Header />
-
+      <Sidebar />
       <main >
         <h2>Tóm tắt thông tin đơn hàng</h2>
         <div className="order-summary-box">

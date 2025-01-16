@@ -3,6 +3,7 @@ import Header from "../../components/Header/Header";
 import OrderItems from "../../components/OrderItems/OrderItems";
 import { useNavigate } from "react-router-dom";
 import "./DeliverToCustomer.css";
+import Sidebar from "../../components/Sidebar/Sidebar";
 
 const DeliverToCustomer = () => {
   const navigate = useNavigate(); // Khởi tạo hook navigate
@@ -21,7 +22,7 @@ const DeliverToCustomer = () => {
     <div className="deliver-to-customer">
       {/* Header */}
       <Header />
-
+      <Sidebar />
       {/* Nội dung chính */}
       <main >
         <h2>Bạn hãy giao đơn cho khách hàng thôi!</h2>

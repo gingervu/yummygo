@@ -1,6 +1,10 @@
 .pickup-sucess main {
   font-family: "Poppins", sans-serif;
-  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Đảm bảo chiều cao đầy đủ */
+  padding: 20px;
+  flex-grow: 1;
 }
 
 .pickup-sucess main h2 {
@@ -12,6 +16,7 @@
   -webkit-background-clip: text; /* Tương thích với các trình duyệt dựa trên WebKit */
   -webkit-text-fill-color: transparent; /* Đặt màu văn bản là trong suốt để chỉ nhìn thấy gradient */
   font-size: 24px;
+  margin-top: 110px;
 }
 
 .pickup-sucess .delivery-box {

@@ -1,26 +1,52 @@
 import React, { useState } from "react";
 import "./LoginPopup.css";
 import { assets } from "../../assets/assets";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 const LoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginSuccess }) => {
-  const [email, setEmail] = useState(""); // Trường email
+  const [userName, setUserName] = useState(""); // Tên đăng nhập
   const [password, setPassword] = useState(""); // Trường mật khẩu
   const [error, setError] = useState(""); // Thông báo lỗi
-
+  const navigate = useNavigate(); 
   // Hàm xử lý đăng nhập
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault(); // Ngăn chặn reload trang
-    const user = existingUsers.find(
-      (u) => u.email === email && u.password === password
-    );
+    
+    const loginData = {
+      user_name: userName,
+      password: password,
+      role: "driver"
+    };
+    try {
+      // Gửi yêu cầu đăng nhập đến API
+      const response = await axios.post("http://127.0.0.1:8000/token", loginData);    
+      if (response.status === 200 ) {
+        alert("Đăng nhập thành công!");
+        setShowLogin(false); // Đóng popup
+        // Lấy token từ phản hồi API
+        const token = response.data["access_token"];
+        // Lưu token vào localStorage
+        localStorage.setItem("access_token", token);
+        console.log("Token:", token)
+        // Chuyển hướng
+        navigate("/home");
+      }
+    } catch (error) {
+      console.error(error);
+    
+      // Kiểm tra lỗi trả về từ phía server
+      if (error.response) {
+        alert(`Lỗi: ${error.response.data.message || "Đăng ký thất bại, vui lòng kiểm tra lại dữ liệu!"}`);
+      } else if (error.request) {
+        alert("Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối mạng của bạn.");
+      } else {
+        alert(`Đã xảy ra lỗi: ${error.message}`);
+      }  
+    } 
 
-    if (user) {
-      onLoginSuccess(user); // Đăng nhập thành công, kèm theo vai trò
-    } else {
-      setError("Email hoặc mật khẩu không đúng."); // Đăng nhập thất bại
-    }
-  };
+};
 
   return (
     <div className="login-popup">
@@ -38,10 +64,10 @@ const LoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginSuccess
         {/* Input form */}
         <div className="login-popup-inputs">
           <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            placeholder="Tên đăng nhập"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
             required
           />
           <input

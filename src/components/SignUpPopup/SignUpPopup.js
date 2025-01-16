@@ -55,8 +55,8 @@ const SignUpPopup = ({ setShowSignUp }) => {
             const requestData = {
               user: {
                 user_name: formData.username,
-                email: formData.email,
                 phone: formData.phoneNumber,
+                email: formData.email,
                 password: formData.password,
               },
               driver: {

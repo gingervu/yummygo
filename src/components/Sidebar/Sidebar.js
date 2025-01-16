@@ -8,6 +8,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     // Xử lý đăng xuất ở đây (ví dụ: xóa token, reset state)
+    localStorage.removeItem("access_token");
     navigate("/");  // Điều hướng tới trang chính
   };
 
@@ -18,7 +19,7 @@ const Sidebar = () => {
       <ul className="sidebar-links">
         <li className="sidebar-item">
           <NavLink
-            to="/admin"
+            to="/home"
             className="sidebar-link"
             activeclassname="active" // Dùng activeclassname thay vì xử lý thủ công
           >
@@ -38,7 +39,7 @@ const Sidebar = () => {
           </NavLink>
         </li>
         <li className="sidebar-item">
-          <NavLink to="/admin-orders" className="sidebar-link"
+          <NavLink to="/orderdetails" className="sidebar-link"
             activeclassname="active">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M2 2H3.74001C4.82001 2 5.67 2.93 5.58 4L4.75 13.96C4.61 15.59 5.89999 16.99 7.53999 16.99H18.19C19.63 16.99 20.89 15.81 21 14.38L21.54 6.88C21.66 5.22 20.4 3.87 18.73 3.87H5.82001M9 8H21M17.5 20.75C17.5 21.4404 16.9404 22 16.25 22C15.5596 22 15 21.4404 15 20.75C15 20.0596 15.5596 19.5 16.25 19.5C16.9404 19.5 17.5 20.0596 17.5 20.75ZM9.5 20.75C9.5 21.4404 8.94036 22 8.25 22C7.55964 22 7 21.4404 7 20.75C7 20.0596 7.55964 19.5 8.25 19.5C8.94036 19.5 9.5 20.0596 9.5 20.75Z" stroke="#292D32" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
@@ -49,7 +50,7 @@ const Sidebar = () => {
         
         
         <li className="sidebar-item">
-          <NavLink to="/admin-profile" className="sidebar-link"
+          <NavLink to="/profile" className="sidebar-link"
             activeclassname="active">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M12 12L12 16.5M12 8.66455V8.625M3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

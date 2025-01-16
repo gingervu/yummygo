@@ -3,6 +3,7 @@ import Header from "../../components/Header/Header";
 import OrderItems from "../../components/OrderItems/OrderItems";
 import { useNavigate } from "react-router-dom";
 import "./AcceptOrder.css";
+import Sidebar from "../../components/Sidebar/Sidebar";
 
 const AcceptOrder = () => {
   const navigate = useNavigate(); // Khởi tạo hook navigate
@@ -21,7 +22,7 @@ const AcceptOrder = () => {
     <div className="order-accept">
       {/* Header */}
       <Header />
-
+      <Sidebar />
       {/* Nội dung chính */}
       <main >
         <h2>Bạn đã nhận đơn! Hãy di chuyển đến nhà hàng nào!</h2>
