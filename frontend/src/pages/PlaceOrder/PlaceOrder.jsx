@@ -171,6 +171,8 @@ const PlaceOrder = () => {
   const [orderDetails, setOrderDetails] = useState(null);
   const [orderFee, setOrderFee] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [formData, setFormData] = useState({ address: '', note: '' });
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (orderId) {
@@ -217,10 +219,56 @@ const PlaceOrder = () => {
     }
   };
 
+  // Cập nhật thông tin đơn hàng
+  const updateOrder = async () => {
+    try {
+      const response = await axiosInstance.put(
+        `orders/update/${orderId}`,
+        formData,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      );
+
+      if (response.status === 200) {
+        alert('Cập nhật đơn hàng thành công!');
+        fetchOrderDetails(orderId); // Làm mới thông tin đơn hàng sau khi cập nhật
+      } else {
+        console.error('Cập nhật đơn hàng thất bại:', response.status);
+      }
+    } catch (error) {
+      console.error('Lỗi khi cập nhật đơn hàng:', error);
+    }
+  };
+
+  // Huỷ đơn hàng
+  const cancelOrder = async () => {
+    try {
+      const response = await axiosInstance.put(
+        `orders/cancel/${orderId}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      );
+
+      if (response.status === 200) {
+        alert('Đơn hàng đã được hủy thành công.');
+        navigate('/cart'); // Điều hướng về trang giỏ hàng
+      } else {
+        console.error('Không thể hủy đơn hàng:', response.status);
+      }
+    } catch (error) {
+      console.error('Lỗi khi hủy đơn hàng:', error);
+    }
+  };
+
   // Gửi đơn hàng
   const sendOrder = async () => {
     try {
-      const response = await axiosInstance.post(
+      const response = await axiosInstance.put(
         `customers/send-order/${orderId}`,
         {},
         {
@@ -240,50 +288,10 @@ const PlaceOrder = () => {
     }
   };
 
-  // Hủy đơn hàng
-  const cancelOrder = async (orderId) => {
-    try {
-      const response = await axiosInstance.put(`/orders/cancel/${orderId}`, null, {
-        headers: { Authorization: `Bearer ${token}` },
-        withCredentials: true,
-      });
-  
-      if (response.status === 200) {
-        alert("Đơn hàng đã được hủy thành công.");
-        navigate('/cart'); // Điều hướng tới danh sách giỏ hàng sau khi hủy
-      } else {
-        console.error("Không thể hủy đơn hàng:", response.status);
-      }
-    } catch (error) {
-      console.error("Lỗi khi hủy đơn hàng:", error);
-    }
-  };
-  
-
-  // Cập nhật thông tin đơn hàng
-  const updateOrder = async () => {
-    try {
-      const response = await axiosInstance.patch(
-        `orders/update`,
-        {
-          order_id: orderId,
-          // Dữ liệu cập nhật tùy ý (ví dụ: thêm thông tin địa chỉ)
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-          withCredentials: true,
-        }
-      );
-
-      if (response.status === 200) {
-        alert('Cập nhật đơn hàng thành công!');
-        fetchOrderDetails(orderId); // Làm mới thông tin đơn hàng sau khi cập nhật
-      } else {
-        console.error('Cập nhật đơn hàng thất bại:', response.status);
-      }
-    } catch (error) {
-      console.error('Lỗi khi cập nhật đơn hàng:', error);
-    }
+  // Cập nhật giá trị trong form
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   if (isLoading) {
@@ -310,11 +318,44 @@ const PlaceOrder = () => {
         </li>
       </ul>
       <h3>{`Tổng giá: ${orderDetails.reduce((acc, item) => acc + item.price * item.quantity, 0) + orderFee} VND`}</h3>
+
       <div>
-        <button onClick={updateOrder}>Cập nhật đơn hàng</button>
-        <button onClick={() => cancelOrder(orderId)}>Hủy đơn hàng</button>
+        <h3>Cập nhật thông tin đơn hàng</h3>
+        <form onSubmit={(e) => { e.preventDefault(); updateOrder(); }}>
+          <div>
+            <label htmlFor="address">Địa chỉ mới:</label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              value={formData.address}
+              onChange={handleInputChange}
+              placeholder="Nhập địa chỉ mới"
+            />
+          </div>
+          <div>
+            <label htmlFor="note">Ghi chú:</label>
+            <input
+              type="text"
+              id="note"
+              name="note"
+              value={formData.note}
+              onChange={handleInputChange}
+              placeholder="Nhập ghi chú"
+            />
+          </div>
+          <div>
+            <button type="submit">Cập nhật đơn hàng</button>
+          </div>
+        </form>
+      </div>
+
+      <div>
+        <button onClick={cancelOrder}>Hủy đơn hàng</button>
         <button onClick={sendOrder}>Gửi đơn hàng</button>
       </div>
+
+      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
     </div>
   );
 };
