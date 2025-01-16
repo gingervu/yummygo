@@ -1,65 +1,39 @@
 import axios from "axios";
 
-// Cấu hình Axios
-// const axiosInstance = axios.create({
-//   baseURL: "http://localhost:8000", // URL gốc của API
-//   timeout: 10000, // Thời gian chờ tối đa (ms)
-//   headers: {
-//     "Content-Type": "application/json", // Kiểu dữ liệu
-//     Accept: "application/json",
-//   },
-// });
-
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8000", // URL gốc của API
-  timeout: 10000, // Thời gian chờ tối đa (ms)
-  headers: {
-    "Content-Type": "application/json", // Kiểu dữ liệu
-    Accept: "application/json",
-  },
-  withCredentials: true, // Thêm dòng này để gửi cookie đi cùng yêu cầu
+  baseURL: "http://localhost:8000", // URL của API backend
+  withCredentials: true, // Cho phép gửi cookie
 });
-// axiosInstance.defaults.withCredentials = true;
 
-// // Interceptor: Thêm token vào mỗi request (nếu có)
-// axiosInstance.interceptors.request.use(
-//   (config) => {
-//     // Lấy token từ cookie
-//     const token = document.cookie
-//       .split("; ")
-//       .find((row) => row.startsWith("access_token="))
-//       ?.split("=")[1];  // Lấy giá trị token từ cookie
+// Thêm interceptor để tự động thêm token vào header Authorization
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("access_token"); // Lấy token từ localStorage
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
-//     if (token) {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     }
-
-//     return config;
-//   },
-//   (error) => {
-//     console.error("Request error:", error);
-//     return Promise.reject(error);
-//   }
-// );
-
-// // Interceptor: Xử lý lỗi từ response
-// axiosInstance.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     // Log thông tin chi tiết về lỗi
-//     if (error.response) {
-//       console.error("API Error:", error.response.data);
-//       console.error("API Error Status:", error.response.status);
-//       console.error("API Error Headers:", error.response.headers);
-//     } else if (error.request) {
-//       // Lỗi không nhận được phản hồi từ server
-//       console.error("No response received:", error.request);
-//     } else {
-//       // Các lỗi khác
-//       console.error("Error setting up request:", error.message);
-//     }
-//     return Promise.reject(error);
-//   }
-// );
+// Thêm interceptor để lưu token mới từ response nếu có
+axiosInstance.interceptors.response.use(
+  (response) => {
+    // Kiểm tra nếu response có header chứa token mới
+    const newToken = response.headers["authorization"];
+    if (newToken) {
+      // Lưu token mới vào localStorage (bỏ tiền tố Bearer nếu có)
+      const tokenValue = newToken.startsWith("Bearer ") ? newToken.slice(7) : newToken;
+      localStorage.setItem("access_token", tokenValue);
+    }
+    return response;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export default axiosInstance;

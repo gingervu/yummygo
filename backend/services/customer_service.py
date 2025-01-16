@@ -96,6 +96,7 @@ def create_order(order_id: int, customer_id: int, db: Session):
     db_order.food_fee = get_food_fee(order_id, db)
     db_order.delivery_fee = get_delivery_fee(order_id, db)
     
+
     db.commit()
     db.refresh(db_order)
     return db_order
@@ -118,3 +119,4 @@ def get_delivery_fee(order_id: int, db: Session):
     """
     # Phí vận chuyển mặc định
     return 20000
+

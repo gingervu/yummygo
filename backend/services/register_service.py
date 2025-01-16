@@ -153,7 +153,7 @@ def create_restaurant(user: UserCreate, restaurant: RestaurantCreate, db: Sessio
     )
     
     db.add(db_user)
-    
+
     db.commit()
     db.refresh(db_user)  
     user_id = db_user.user_id

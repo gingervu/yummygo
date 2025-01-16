@@ -15,7 +15,7 @@ async def get_current_user(request: Request):
     try:
         # Giải mã token và lấy user_id
         token = request.cookies.get("access_token")  
-        print(token)  
+        # print(token)  
         user_info = decode_access_token(token)
         user_id = user_info["user_id"]
         role = user_info["role"]  

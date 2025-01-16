@@ -8,6 +8,7 @@ from fastapi.responses import JSONResponse
 app = FastAPI(title="FastAPI Application")
 
 origins = [
+
     "http://localhost:5173"  # Thêm domain frontend của bạn
 ]
 
