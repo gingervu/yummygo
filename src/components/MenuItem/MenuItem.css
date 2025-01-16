@@ -1,16 +1,79 @@
 .menu-item {
     display: flex;
-    justify-content: space-between; /* Space between menu details and toggle */
-  align-items: center;
-    margin-bottom: 10px;
-}
-
-.menu-item h3{
-    font-size: 22px;
-    margin-bottom: 0;
-}
-
-.menu-item p, .menu-item span {
-    font-size: 18px;
-    margin-bottom: 3px;
-}
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    margin: 12px 0;
+    border: 1px solid #ddd; /* Đường viền nhẹ */
+    border-radius: 8px; /* Góc bo tròn */
+    background-color: #f9f9f9; /* Màu nền nhẹ */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 150px; /* Đặt chiều cao cố định cho các khung */
+    box-sizing: border-box; /* Đảm bảo padding không làm thay đổi kích thước */
+  }
+  
+  .menu-item:hover {
+    transform: translateY(-3px); /* Nâng phần tử khi hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Tăng bóng khi hover */
+  }
+  
+  .menu-image {
+    width: 120px; /* Đặt chiều rộng cho ảnh */
+    height: 120px; /* Đặt chiều cao cho ảnh */
+    object-fit: cover; /* Đảm bảo ảnh không bị méo */
+    border-radius: 8px; /* Góc bo tròn */
+    margin-right: 16px; /* Khoảng cách giữa ảnh và chi tiết món ăn */
+  }
+  
+  .menu-details {
+    flex: 1; /* Chiếm khoảng trống còn lại */
+    overflow: hidden; /* Đảm bảo nội dung không bị tràn */
+  }
+  
+  .menu-details h3 {
+    font-size: 1.2rem; /* Kích thước tiêu đề */
+    font-weight: 600;
+    margin: 0;
+    color: #333; /* Màu chữ đậm */
+    text-overflow: ellipsis; /* Thêm dấu ... nếu tiêu đề quá dài */
+    white-space: nowrap; /* Giữ nội dung trong một dòng */
+    overflow: hidden;
+  }
+  
+  .menu-details p {
+    margin: 8px 0;
+    font-size: 0.9rem;
+    color: #666; /* Màu chữ nhẹ */
+    text-overflow: ellipsis; /* Thêm dấu ... nếu mô tả quá dài */
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  
+  .menu-details span {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ff4500; /* Màu nổi bật cho giá */
+  }
+  
+  .item-toggle {
+    margin-left: 20px; /* Khoảng cách giữa nội dung và toggle */
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .menu-item {
+      flex-direction: column; /* Thay đổi hướng hiển thị */
+      align-items: flex-start;
+      height: auto; /* Cho phép chiều cao tự động khi hiển thị dọc */
+    }
+  
+    .item-toggle {
+      margin-left: 0;
+      margin-top: 12px;
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  
