@@ -339,8 +339,18 @@ class OrderUpdate(BaseModel):
         from_attribute = True
         
       
-  
-  
+class OrderResponse(BaseModel):
+    customer_name: Optional[str]  = None# ID khách hàng
+    restaurant_name: Optional[str]  = None # ID nhà hàng
+    driver_name: Optional[str]  = None # ID tài xế, có thể rỗng
+    address: Optional[str] = None # Địa chỉ giao hàng, có thể rỗng
+    distance: Optional[Decimal]  = None
+    food_fee: Optional[Decimal]  = None
+    delivery_fee: Optional[Decimal]  = None
+    order_status: Optional[str]  = None
+    note: Optional[str]  = None
+    class Config:
+        from_attribute = True
 # ------------------------------
 # Mô hình Cho Address
 # ------------------------------
