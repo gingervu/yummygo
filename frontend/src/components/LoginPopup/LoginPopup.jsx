@@ -26,17 +26,18 @@ const LoginPopup = ({ setShowLogin, setShowSignUp, onLoginSuccess }) => {
 
       // Xử lý phản hồi từ BE
       if (response.status === 200) {
-        const { access_token, token_type } = response.data;
+        alert(response.data.message || "Đăng nhập thành công!");
 
-        // Lưu token vào localStorage hoặc sessionStorage (tuỳ chọn)
-        localStorage.setItem("token", access_token);
-        alert("Đăng nhập thành công!");
-        onLoginSuccess(role); // Gọi hàm callback khi đăng nhập thành công
-        setShowLogin(false); // Đóng popup đăng nhập
+        // Gọi hàm callback khi đăng nhập thành công
+        onLoginSuccess(role);
+
+        // Đóng popup đăng nhập
+        setShowLogin(false);
       }
     } catch (err) {
       console.error(err);
-      // Xử lý lỗi từ BE
+
+      // Xử lý lỗi từ backend
       if (err.response) {
         setError(err.response.data.detail || "Đăng nhập thất bại.");
       } else {

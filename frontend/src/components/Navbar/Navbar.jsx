@@ -60,9 +60,20 @@ const Navbar = ({ setShowLogin, setShowSignUp, currentUser, handleLogout }) => {
 
       {/* Phần phải */}
       <div className="navbar-right">
-        <span className="material-symbols-outlined navbar-icon">shopping_cart</span> {/* Giỏ hàng */}
-        <span className="material-symbols-outlined navbar-icon">notifications</span> {/* Thông báo */}
-        
+        {/* Ảnh giỏ hàng */}
+        <img
+          className="navbar-icon"
+          src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png"
+          alt="Giỏ hàng"
+        />
+
+        {/* Ảnh thông báo */}
+        <img
+          className="navbar-icon"
+          src="https://cdn-icons-png.flaticon.com/512/3602/3602123.png"
+          alt="Thông báo"
+        />
+
         {!currentUser ? (
           <>
             <button onClick={() => setShowLogin(true)}>Đăng nhập</button>
@@ -70,12 +81,12 @@ const Navbar = ({ setShowLogin, setShowSignUp, currentUser, handleLogout }) => {
           </>
         ) : (
           <div className="user-menu">
-            <span 
-              className="material-symbols-outlined navbar-icon"
+            <img
+              className="navbar-icon"
+              src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png"
+              alt="Người dùng"
               onClick={toggleUserMenu}
-            >
-              person
-            </span> {/* Người dùng */}
+            />
             {isUserMenuOpen && (
               <div className="user-dropdown">
                 <button onClick={handleLogout}>Đăng xuất</button>
@@ -84,6 +95,7 @@ const Navbar = ({ setShowLogin, setShowSignUp, currentUser, handleLogout }) => {
           </div>
         )}
       </div>
+
     </div>
   );
 };

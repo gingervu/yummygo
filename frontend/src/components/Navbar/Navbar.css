@@ -23,39 +23,76 @@
     margin: 0;
   }
   
-  .navbar-center {
-    flex-grow: 1;
-    text-align: center;
-  }
-  
-  .search-bar input {
-    padding: 5px 10px;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    width: 250px;
-  }
-  
-  .search-results {
-    list-style-type: none;
-    padding: 0;
-    margin-top: 5px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    position: absolute;
-    width: 250px;
-    z-index: 1;
-  }
-  
-  .search-results li {
-    padding: 5px;
-    cursor: pointer;
-  }
-  
-  .search-results li:hover {
-    background-color: #f1f1f1;
-  }
-  
+  /* Đặt kiểu dáng chung cho phần giữa */
+.navbar-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+}
+
+.navbar-center p {
+  font-size: 16px;
+  font-weight: bold;
+  color: #555;
+  align-items: center; /* Căn giữa theo trục dọc */
+  justify-content: center; /* Căn giữa theo trục ngang */
+  gap: 20px; /* Khoảng cách giữa các thành phần */
+  position: relative;
+}
+
+/* Phần thanh tìm kiếm */
+.search-bar {
+  width: 100%;
+  max-width: 400px; /* Giới hạn chiều rộng thanh tìm kiếm */
+  position: relative;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 25px; /* Bo góc */
+  outline: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.search-bar input:focus {
+  border-color: #f39c12; /* Màu cam khi focus */
+  box-shadow: 0 4px 6px rgba(243, 156, 18, 0.2);
+}
+
+/* Kết quả tìm kiếm */
+.search-results {
+  position: absolute;
+  top: 45px; /* Dịch xuống dưới thanh tìm kiếm */
+  width: 100%;
+  max-height: 200px; /* Giới hạn chiều cao danh sách */
+  overflow-y: auto; /* Cuộn dọc nếu danh sách quá dài */
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10; /* Đảm bảo luôn nằm trên */
+  padding: 10px 0;
+}
+
+.search-results li {
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.search-results li:hover {
+  background-color: #f9f9f9; /* Màu nền khi hover */
+}
+
   .navbar-right {
     display: flex;
     align-items: center;
@@ -95,3 +132,17 @@
   .user-dropdown button:hover {
     background-color: #f1f1f1;
   }
+
+  .navbar-icon {
+    width: 24px; /* Đặt kích thước ảnh phù hợp */
+    height: 24px;
+    cursor: pointer;
+    margin: 0 10px; /* Căn chỉnh khoảng cách giữa các icon */
+    object-fit: contain; /* Đảm bảo ảnh không bị méo */
+    transition: transform 0.2s ease; /* Hiệu ứng khi hover */
+  }
+  
+  .navbar-icon:hover {
+    transform: scale(1.1); /* Phóng to nhẹ khi hover */
+  }
+  
