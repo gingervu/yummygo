@@ -7,9 +7,11 @@ import axios from "axios";
 
 
 const AdminHome = () => {
-  const [restaurantName, setRestaurantName] = useState(""); // Khởi tạo state cho tên nhà hàng
-  const [restaurantStatus, setRestaurantStatus] = useState(false); // Khởi tạo state cho trạng thái nhà hàng
+  const [restaurant, setRestaurant] = useState(""); // Khởi tạo state cho tên nhà hàng
+  const [restaurantStatus, setRestaurantStatus] = useState(true); // Khởi tạo state cho trạng thái nhà hàng
   const [loading, setLoading] = useState(true); // Trạng thái loading
+  const token = localStorage.getItem("access_token"); // Lấy token từ localStorage
+
   useEffect(() => {
     // Gửi yêu cầu GET để lấy thông tin nhà hàng
     const token = localStorage.getItem("access_token");
@@ -20,9 +22,12 @@ const AdminHome = () => {
       }},) // Đảm bảo gửi cookie nếu cần
       .then((response) => {
         console.log("Dữ liệu trả về từ API:", response.data);
-        // Lưu tên nhà hàng vào state
-        setRestaurantName(response.name); // Giả sử tên nhà hàng nằm trong trường `name`
+        // Lưu nhà hàng vào state
+        setRestaurant(response.data); 
+        setRestaurantStatus(response.data.status === "active")
+        console.log(restaurantStatus)
       })
+      
       .catch((error) => {
         console.error("Có lỗi xảy ra khi lấy dữ liệu nhà hàng:", error);
       })
@@ -32,16 +37,16 @@ const AdminHome = () => {
   }, []); 
 
   // Hàm để xử lý khi toggle thay đổi trạng thái
-  const handleStatusChange = (newStatus) => {
-    setRestaurantStatus(newStatus); // Cập nhật trạng thái trong state
-
+  const handleStatusChange = () => {
+    setRestaurantStatus(!restaurantStatus)
     // Gửi yêu cầu cập nhật trạng thái vào API
+    console.log(restaurantStatus)
     axios
       .put(
-        "/restaurants/change-status", 
-        { status: newStatus }, 
-        { withCredentials: true } // Đảm bảo gửi cookie nếu cần
-      )
+        "/restaurants/change-status",       
+        {headers: {
+        Authorization: `Bearer ${token}`, // Thêm token vào header
+      }},)
       .then((response) => {
         console.log("Cập nhật trạng thái nhà hàng thành công:", response.data);
       })
@@ -62,7 +67,7 @@ const AdminHome = () => {
         {loading ? (
             <span>Loading...</span>
           ) : (
-            <span className="restaurant-name">{restaurantName || "Tên nhà hàng chưa có"}</span>
+            <span className="restaurant-name">{restaurant.name || "Tên nhà hàng chưa có"}</span>
           )}
         <Toggle checked={restaurantStatus} // Trạng thái hiện tại của toggle
             onChange={handleStatusChange} // Hàm xử lý thay đổi trạng thái

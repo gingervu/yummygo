@@ -12,6 +12,7 @@ const AdminMenu = () => {
     const [items, setItems] = useState([]); // State lưu danh sách món ăn
     const [loading, setLoading] = useState(true); // State để theo dõi trạng thái tải dữ liệu
     const [error, setError] = useState(null); // State để lưu lỗi nếu có
+    const token = localStorage.getItem("access_token");
 
     const handleButtonClick = () => {
         navigate("/admin-edit-menu"); // Điều hướng đến trang /admin-edit-menu
@@ -43,6 +44,20 @@ const AdminMenu = () => {
         setItems(items.map(item => 
             item.id === id ? { ...item, isToggled: !item.isToggled } : item
         ));
+
+        axios
+        .put(
+          "/items/change-status", {
+            headers: {
+            Authorization: `Bearer ${token}`, // Thêm token vào header
+          }},
+        )
+        .then((response) => {
+          console.log("Cập nhật trạng thái món ăn thành công:", response.data);
+        })
+        .catch((error) => {
+          console.error("Có lỗi xảy ra khi cập nhật trạng thái:", error);
+        });
     };
 
     if (loading) return <div>Đang tải dữ liệu...</div>;
@@ -66,8 +81,10 @@ const AdminMenu = () => {
                             description={item.description} 
                             price={item.price} 
                             isToggled={item.isToggled} 
+                            
                             onToggle={() => handleToggle(item.id)} 
                         />
+                    
                     ))}
                 </div>
             </main>

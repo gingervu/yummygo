@@ -187,6 +187,7 @@ class RestaurantResponse(BaseModel):
     name: str
     category: str
     address: str
+    status: str
     
     class Config:
         from_attributes = True  
@@ -377,7 +378,7 @@ class OrderItemSchema(OrderItemBase):
 class OrderItemResponse(BaseModel):
     item_id: int
     order_id: int
-    price: float
+    price: Decimal
     quantity: int
 
     class Config:

@@ -26,7 +26,7 @@ async def subtract_on_cart(item_id: int, order_id: int, current_customer: dict =
 # ---> trả về danh sách thông tin các order, có thể dùng order_id để 
 # xem thông tin chi tiết của order, dùng api /restaurant/get/{restaurant_id}
 # để lấy thông tin nhà hàng
-@router.get("/cart", response_model=List[OrderItemResponse])
+@router.get("/cart")
 async def get_cart(current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
     return order_service.get_orders_in_cart(current_customer['user_id'], db)
 
