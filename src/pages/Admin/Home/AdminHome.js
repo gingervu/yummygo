@@ -12,8 +12,12 @@ const AdminHome = () => {
   const [loading, setLoading] = useState(true); // Trạng thái loading
   useEffect(() => {
     // Gửi yêu cầu GET để lấy thông tin nhà hàng
+    const token = localStorage.getItem("access_token");
     axios
-      .get("http://127.0.0.1:8000/restaurants/me", { withCredentials: true }) // Đảm bảo gửi cookie nếu cần
+      .get("/restaurants/me",       
+        {headers: {
+        Authorization: `Bearer ${token}`, // Thêm token vào header
+      }},) // Đảm bảo gửi cookie nếu cần
       .then((response) => {
         console.log("Dữ liệu trả về từ API:", response.data);
         // Lưu tên nhà hàng vào state
@@ -34,7 +38,7 @@ const AdminHome = () => {
     // Gửi yêu cầu cập nhật trạng thái vào API
     axios
       .put(
-        "http://127.0.0.1:8000/restaurants/change-status", 
+        "/restaurants/change-status", 
         { status: newStatus }, 
         { withCredentials: true } // Đảm bảo gửi cookie nếu cần
       )

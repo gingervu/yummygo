@@ -20,13 +20,24 @@ const LoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginSuccess
         password: password,
         role: "restaurant"
       };
+      // try {
+      //   // Gửi yêu cầu đăng nhập đến API
+      //   const response = await axios.post("http://localhost:8000/token", loginData, {
+      //     withCredentials: true,  // Đảm bảo cookie sẽ được gửi
+      //   });        
       try {
         // Gửi yêu cầu đăng nhập đến API
-        const response = await axios.post("http://127.0.0.1:8000/token", loginData);
+        const response = await axios.post("/token", loginData, {
+          withCredentials: true,  // Đảm bảo cookie sẽ được gửi
+        }); 
+
         if (response.status === 200 ) {
           alert("Đăng nhập thành công!");
           setShowLogin(false); // Đóng popup
           navigate("/admin");
+          const token = response.data["access_token"]
+          localStorage.setItem("access_token", token);
+          console.log("Token:", token);
         }
       } catch (error) {
         console.error(error);

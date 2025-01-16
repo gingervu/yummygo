@@ -9,7 +9,14 @@ const RestaurantInfo = () => {
     // Hàm gọi API
     const fetchRestaurantInfo = async () => {
       try {
-        const response = await axios.get("/restaurant/me");
+        const token = localStorage.getItem("access_token"); // Lấy token từ localStorage
+
+        const response = await axios.get("/restaurants/me",       
+          {headers: {
+          Authorization: `Bearer ${token}`, // Thêm token vào header
+        }},);
+  
+          
         setRestaurant(response.data); // Lưu thông tin nhà hàng
       } catch (err) {
         setError(err.response?.data?.detail || "Lỗi khi gọi API");
