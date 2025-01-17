@@ -11,5 +11,10 @@
     "start:customer": "npm run dev --workspace=customer",
     "start:restaurant": "npm run dev --workspace=restaurant",
     "start:driver": "npm run start --workspace=driver"
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "leaflet": "^1.9.4",
+    "react-router-dom": "^7.1.2"
   }
 }

@@ -1,10 +1,7 @@
-import cross_icon from './cross_icon.png'
+import cross_icon from "./cross_icon.png";
 
 export const assets = {
-   
-    cross_icon,
-    
-}
+  cross_icon,
+};
 
-
-
+export const food_list = [];

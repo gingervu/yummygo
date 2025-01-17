@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { login, getCustomer } from './services/api'; // Hàm login và getCustomer đã định nghĩa trong api.js
+import { login, getCustomer } from './services/api_customer'; // Hàm login và getCustomer đã định nghĩa trong api.js
 
 function App() {
   const [customer, setCustomer] = useState(null);
