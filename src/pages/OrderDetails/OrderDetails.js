@@ -3,35 +3,81 @@ import Header from "../../components/Header/Header";
 import { useNavigate } from "react-router-dom";
 import "./OrderDetails.css";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import axios from "axios";
 
 const OrderDetails = () => {
-  const [orderDetails, setOrderDetails] = useState([]); // Lưu chi tiết đơn hàng
-  const [isLoading, setIsLoading] = useState(true); // Trạng thái loading
-  const navigate = useNavigate(); // Hook điều hướng
-  const token = localStorage.getItem("access_token"); // Lấy token từ localStorage
-
   
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("access_token"); // Token từ localStorage
+
+  const [orderDetails, setOrderDetails] = useState({
+    restaurant_address: "332 Nguyễn Trãi",
+    address: null,
+    distance: null,
+    food_fee: null,
+    delivery_fee: "20000.00",
+  }); 
+
+  useEffect(() => {
+    const fetchOrderData = async () => {
+      try {
+        // Gọi API drivers/order để lấy orderId
+        const orderResponse = await axios .get("http://127.0.0.1:8000/drivers/order", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const orderId = orderResponse.data;
+        console.log("Order", orderId);
+        if (orderId) {
+          // Gọi API orders/info/${orderId} để lấy thông tin chi tiết
+          const orderInfoResponse = await axios
+          .get(`http://127.0.0.1:8000/orders/info/${orderId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setOrderDetails(orderInfoResponse.data);
+          console.log(orderDetails);
+        } else {
+          setError("Không tìm thấy orderId");
+        }
+      } catch (err) {
+        console.error(err);
+        setError("Lỗi khi lấy dữ liệu");
+      }
+    };
+
+    fetchOrderData();
+  }, [orderDetails]);
+
+
+  const formatCurrency = (number) => {
+    return parseFloat(number)
+      .toFixed(2)
+      .replace(/\d(?=(\d{3})+\.)/g, "$&,")
+      + "đ";
+  };
 
   const handleReject = () => {
-    navigate("/home"); // Điều hướng đến trang /orderwaiting
+    navigate("/home"); // Điều hướng đến trang /home
   };
 
   const handleAccept = () => {
-    // Thay đổi trạng thái tài xế
-    // Thay đổi trạng thái đơn hàng
+    
+    
+    
     navigate("/orderaccept"); // Điều hướng đến trang /
   };
 
-  if (isLoading) {
-    return <p>Đang tải thông tin đơn hàng...</p>;
-  }
 
   return (
     <div className="order-details">
       <Header />
       <Sidebar />
       <main >
-        <h2>Tóm tắt thông tin đơn hàng</h2>
+      <h2>Tóm tắt thông tin đơn hàng</h2>
         <div className="order-summary-box">
           <div className="order-from">
             <p>
@@ -40,7 +86,7 @@ const OrderDetails = () => {
                   <path d="M1.86013 8.44082V12.0644C1.86013 15.688 4.11013 17.1406 9.72263 17.1406H16.4601C22.0726 17.1406 24.3226 15.688 24.3226 12.0644V8.44082M13.0976 9.07031C15.3851 9.07031 17.0726 7.86783 16.8476 6.39097L16.0226 1H10.1851L9.34763 6.39097C9.12263 7.86783 10.8101 9.07031 13.0976 9.07031ZM20.9851 9.07031C23.5101 9.07031 25.3601 7.74678 25.1101 6.12465L24.7601 3.90531C24.3101 1.80703 23.0601 1 19.7851 1H15.9726L16.8476 6.65729C17.0601 7.98889 18.9226 9.07031 20.9851 9.07031ZM5.14763 9.07031C7.21013 9.07031 9.07263 7.98889 9.27263 6.65729L10.1476 1H6.33513C3.06013 1 1.81013 1.80703 1.36013 3.90531L1.02263 6.12465C0.772631 7.74678 2.62263 9.07031 5.14763 9.07031ZM13.0976 13.1055C11.0101 13.1055 9.97263 13.7753 9.97263 15.123V17.1406H16.2226V15.123C16.2226 13.7753 15.1851 13.1055 13.0976 13.1055Z" stroke="#E97522" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </span>
-              Từ: <strong>25 ngõ 57 Láng Hạ, Thành Công, Ba Đình, Hà Nội</strong>
+              Từ: <strong>{orderDetails.restaurant_address}</strong>
             </p>
           </div>
           <hr />
@@ -51,26 +97,28 @@ const OrderDetails = () => {
                   <path d="M10.3181 20.8757C1.61539 12.1105 0 11.211 0 7.9896C0 3.57705 5.14871 0 11.5 0C17.8513 0 23 3.57705 23 7.9896C23 11.211 21.3846 12.1105 12.6819 20.8757C12.1108 21.4489 10.8892 21.4489 10.3181 20.8757ZM11.5 11.3186C14.1464 11.3186 16.2917 9.82817 16.2917 7.9896C16.2917 6.15104 14.1464 4.6606 11.5 4.6606C8.85362 4.6606 6.70833 6.15104 6.70833 7.9896C6.70833 9.82817 8.85362 11.3186 11.5 11.3186Z" fill="#E97522" />
                 </svg>
               </span> {" "}
-              Giao đến: <strong>334 Nguyễn Trãi, Thanh Xuân Trung, Thanh Xuân, Hà Nội</strong>
+              Giao đến: <strong>{orderDetails.address}</strong>
             </p>
             <div className="order-distance">
               <p>
-                <strong>4,2 km  -  24.000 đ</strong>
+                <strong>{orderDetails.distance} km - {parseFloat(orderDetails.food_fee)*0.8}đ</strong>
               </p>
             </div>
           </div>
           <hr />
           <div className="cost-info">
             <p>Tổng tạm tính: </p>
-            <p>100.000 đ</p>
+            <p>{orderDetails.food_fee}đ</p>
           </div>
           <div className="cost-info">
             <p>Chi phí vận chuyển: </p>
-            <p>30.000 đ</p>
+            <p>{orderDetails.delivery_fee}đ</p>
           </div>
           <div className="cost-info">
             <p><strong>Tổng: </strong></p>
-            <p>130.000 đ</p>
+            <p>{formatCurrency(
+              parseFloat(orderDetails.food_fee) + parseFloat(orderDetails.delivery_fee)
+            )}</p>
           </div>
           <hr />
           <div className="payment-method">

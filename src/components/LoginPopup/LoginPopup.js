@@ -5,7 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 
-const LoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginSuccess }) => {
+const DriverLoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginSuccess }) => {
   const [userName, setUserName] = useState(""); // Tên đăng nhập
   const [password, setPassword] = useState(""); // Trường mật khẩu
   const [error, setError] = useState(""); // Thông báo lỗi
@@ -104,4 +104,4 @@ const LoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginSuccess
   );
 };
 
-export default LoginPopup;
+export default DriverLoginPopup;

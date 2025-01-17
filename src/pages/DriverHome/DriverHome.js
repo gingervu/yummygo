@@ -55,7 +55,9 @@ const DriverHome = () => {
           })
           .then((response) => {
             console.log("Dữ liệu đơn hàng:", response.data);
-            if (response.data !== null) {
+            const orderId = parseInt(response.data, 10);
+            console.log(orderId)
+            if (!isNaN(orderId)) {
               setOrder(response.data); // Lưu đơn hàng mới
               setPopupVisible(true); // Hiển thị popup
               clearInterval(intervalId); // Dừng việc kiểm tra
@@ -131,8 +133,10 @@ const DriverHome = () => {
           <div className="popup">
             <div className="popup-content">
               <h2>Bạn có đơn hàng mới!</h2>
-              <button onClick={handleOrderDetails}>Xem đơn</button>
-              <button onClick={() => setPopupVisible(false)}>Đóng</button>
+              <div className="btn">
+              <button className="order-btn" onClick={handleOrderDetails}>Xem đơn</button>
+              <button className="close-btn" onClick={() => setPopupVisible(false)}>Đóng</button>
+              </div>
             </div>
           </div>
         )}

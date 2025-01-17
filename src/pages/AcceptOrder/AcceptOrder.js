@@ -1,23 +1,145 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../components/Header/Header";
 import OrderItems from "../../components/OrderItems/OrderItems";
 import { useNavigate } from "react-router-dom";
 import "./AcceptOrder.css";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import axios from "axios";
 
 const AcceptOrder = () => {
-  const navigate = useNavigate(); // Khởi tạo hook navigate
+  const [orderDetails, setOrderDetails] = useState({
+    customer_name: "",
+    restaurant_name: "",
+    driver_name: "",
+    restaurant_address: "",
+    restaurant_category: "",
+    address: "",
+    distance: null,
+    food_fee: null,
+    delivery_fee: null,
+    order_status: "",
+    note: "",
+  });
+  const [orderItems, setOrderItems] = useState([]);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("access_token"); // Token từ localStorage
+  
+  useEffect(() => {
+    const fetchOrderData = async () => {
+      try {
+        // Kiểm tra nếu order_id chưa được lưu trong localStorage
+        const storedOrderId = localStorage.getItem("order_id");
+        if (!storedOrderId) {
+          // Lấy order_id từ API nếu chưa có trong localStorage
+          const orderResponse = await axios.get("http://127.0.0.1:8000/drivers/order", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          
+          const orderId = orderResponse.data;
+          console.log("id", orderId);
+  
+          if (orderId) {
+            // Lưu order_id vào localStorage
+            localStorage.setItem("order_id", orderId);
+  
+            // Cập nhật trạng thái đơn hàng
+            const updateStatusResponse = await axios.put(
+              `http://127.0.0.1:8000/orders/change-status/${orderId}?new_status=preparing`,
+              {},
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+  
+            console.log("Cập nhật trạng thái thành công:", updateStatusResponse.data);
+            const orderInfoResponse = await axios.get(`http://127.0.0.1:8000/orders/info/${orderId}`, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+            // Cập nhật thông tin chi tiết đơn hàng
+            
+            const orderData = orderInfoResponse.data;
+
+            setOrderDetails({
+              customer_name: orderData.customer_name,
+              restaurant_name: orderData.restaurant_name,
+              driver_name: orderData.driver_name,
+              restaurant_address: orderData.restaurant_address,
+              restaurant_category: orderData.restaurant_category,
+              address: orderData.address,
+              distance: orderData.distance,
+              food_fee: orderData.food_fee,
+              delivery_fee: orderData.delivery_fee,
+              order_status: orderData.order_status,
+              note: orderData.note,
+            });
+            console.log("Thông tin chi tiết đơn hàng:", orderInfoResponse.data);
+          } else {
+            setError("Không tìm thấy orderId");
+          }
+        }
+      } catch (err) {
+        console.error(err);
+        setError("Lỗi khi lấy dữ liệu");
+      }
+    };
+  
+    fetchOrderData();
+  }, [token]); // Chạy lại khi token thay đổi
+
+  useEffect(() => {
+    const fetchOrderItems = async () => {
+      try {
+        
+        const orderId = orderDetails.order_id;
+
+        if (orderId) {
+          const orderItemsResponse = await axios.get(`http://127.0.0.1:8000/orders/${orderId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          console.log("Dữ liệu món ăn:", orderItemsResponse.data);
+          
+          // Chuyển đổi dữ liệu từ API thành định dạng mới
+          const formattedItems = orderItemsResponse.data.map(item => ({
+            name: item.name, // Tên món
+            price: `${parseFloat(item.price).toLocaleString()} đ`, // Định dạng giá tiền
+            quantity: `x${item.quantity}` // Định dạng số lượng
+          }));
+
+          // Cập nhật trạng thái orderItems
+          setOrderItems(formattedItems);
+        }
+      } catch (err) {
+        console.error("Có lỗi xảy ra khi lấy dữ liệu đơn hàng:", err);
+      }
+    };
+
+    fetchOrderItems();
+  }, [orderDetails.order_id, token]); // Chạy lại khi order_id hoặc token thay đổi
 
   const handleButtonClick = () => {
     navigate("/pickupsuccess"); // Điều hướng đến trang /
   };
 
-  const orderItems = [
-    { name: "Tên món 1", price: "40.000 đ", quantity: "x1" },
-    { name: "Tên món 2", price: "30.000 đ", quantity: "x2" },
-    // Thêm các món khác nếu cần
-  ];
+  
 
+  const formatCurrency = (number) => {
+    return parseFloat(number)
+      .toFixed(2)
+      .replace(/\d(?=(\d{3})+\.)/g, "$&,")
+      + "đ";
+  };
+
+  const orderId = localStorage.getItem("order_id"); // Token từ localStorage
   return (
     <div className="order-accept">
       {/* Header */}
@@ -35,7 +157,7 @@ const AcceptOrder = () => {
                   <path d="M10.3181 20.8757C1.61539 12.1105 0 11.211 0 7.9896C0 3.57705 5.14871 0 11.5 0C17.8513 0 23 3.57705 23 7.9896C23 11.211 21.3846 12.1105 12.6819 20.8757C12.1108 21.4489 10.8892 21.4489 10.3181 20.8757ZM11.5 11.3186C14.1464 11.3186 16.2917 9.82817 16.2917 7.9896C16.2917 6.15104 14.1464 4.6606 11.5 4.6606C8.85362 4.6606 6.70833 6.15104 6.70833 7.9896C6.70833 9.82817 8.85362 11.3186 11.5 11.3186Z" fill="#E97522" />
                 </svg>
               </span>
-              Di chuyển đến: <strong>25 ngõ 57 Láng Hạ, Thành Công, Ba Đình, Hà Nội</strong>
+              Di chuyển đến: <strong>{orderDetails.restaurant_address}</strong>
             </p>
           </div>
 
@@ -46,21 +168,23 @@ const AcceptOrder = () => {
         {/* Thông tin đơn hàng */}
         <div className="order-box">
           <div className="restaurant-info">
-            <h3><strong>Restaurant Name | Mã đơn hàng: 1234</strong></h3>
+            <h3><strong>{}| Mã đơn hàng: {orderId}</strong></h3>
             <OrderItems items={orderItems} />
           </div>
           <hr />
           <div className="cost-if">
             <p>Tổng tạm tính: </p>
-            <p>100.000 đ</p>
+            <p>{orderDetails.food_fee}đ</p>
           </div>
           <div className="cost-if">
             <p>Chi phí vận chuyển: </p>
-            <p>30.000 đ</p>
+            <p>{orderDetails.delivery_fee}đ</p>
           </div>
           <div className="cost-if">
             <p><strong>Tổng: </strong></p>
-            <p>130.000 đ</p>
+            <p>{formatCurrency(
+              parseFloat(orderDetails.food_fee) + parseFloat(orderDetails.delivery_fee)
+            )}</p>
           </div>
         </div>
 
@@ -79,7 +203,7 @@ const AcceptOrder = () => {
                 </defs>
               </svg>
             </span>
-            Bạn cần trả cho nhà hàng: <strong>100.000 đ</strong>
+            Bạn cần trả cho nhà hàng: <strong>{orderDetails.food_fee}đ</strong>
           </p>
         </div>
 

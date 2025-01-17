@@ -1,3 +1,17 @@
+.loading main {
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Đảm bảo chiều cao đầy đủ */
+  padding: 20px;
+  flex-grow: 1;
+}
+.loading main p {
+  margin-top: 130px;
+  margin-left: 20%;
+}
+
+
 .order-details main {
   font-family: "Poppins", sans-serif;
   display: flex;

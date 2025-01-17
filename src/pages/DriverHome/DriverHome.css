@@ -68,13 +68,20 @@
 .driver-home .popup-content button {
   margin: 20px;
   padding: 10px 20px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
+  
+  background-color: white;
+  border-color: rgb(131, 131, 131);
+  border-style: solid;
+  border-radius: 8px;
   cursor: pointer;
 }
 
-.driver-home .popup-content button:hover {
-  background-color: #45a049;
+.driver-home .popup-content .order-btn:hover {
+  background-color: #eeeeee;
+  
+}
+
+.driver-home .popup-content .close-btn:hover {
+  background-color: #eeeeee;
+  
 }

@@ -9,6 +9,7 @@ const Sidebar = () => {
   const handleLogout = () => {
     // Xử lý đăng xuất ở đây (ví dụ: xóa token, reset state)
     localStorage.removeItem("access_token");
+    localStorage.removeItem("order_id");
     navigate("/");  // Điều hướng tới trang chính
   };
 
