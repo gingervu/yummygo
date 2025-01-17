@@ -44,7 +44,7 @@ const AdminOrderDetails = () => {
     .finally(() => {
       setLoading(false);
     });
-    axios
+        axios
     .get(`http://localhost:8000/orders/info/${order_id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -65,7 +65,9 @@ const AdminOrderDetails = () => {
 
 
 
+if (loading) return <div>Đang tải chi tiết đơn hàng...</div>;
 
+if (error) return <div>{error}</div>;
 
 const total = 0;
   return (

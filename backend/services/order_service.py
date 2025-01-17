@@ -95,7 +95,7 @@ def get_current_order(restaurant_id: int, customer_id: int, db: Session):
                            Order.restaurant_id == restaurant_id,
                            Order.order_status == OrderStatusEnum.cart).first()
     if not db_order:
-        return None
+        return []
     
     return db_order.order_id
 
@@ -103,7 +103,7 @@ def get_orders_in_cart(customer_id: int, db: Session):
     db_orders = db.query(Order).filter(Order.order_status == OrderStatusEnum.cart,
                                                                 Order.customer_id == customer_id).all()
     
-    return [order.order_id for order in db_orders]
+    return db_orders
 
 def get_order(order_id: int, db: Session):
     db_items = db.query(
