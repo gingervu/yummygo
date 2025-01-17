@@ -340,9 +340,11 @@ class OrderUpdate(BaseModel):
         
       
 class OrderResponse(BaseModel):
-    customer_name: Optional[str]  = None# ID khách hàng
-    restaurant_name: Optional[str]  = None # ID nhà hàng
-    driver_name: Optional[str]  = None # ID tài xế, có thể rỗng
+    customer_name: Optional[str]  = None# khách hàng
+    restaurant_name: Optional[str]  = None # nhà hàng
+    driver_name: Optional[str]  = None # tài xế, có thể rỗng
+    restaurant_address: Optional[str] = None
+    restaurant_category: Optional[str] = None
     address: Optional[str] = None # Địa chỉ giao hàng, có thể rỗng
     distance: Optional[Decimal]  = None
     food_fee: Optional[Decimal]  = None
