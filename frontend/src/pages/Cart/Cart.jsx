@@ -423,7 +423,7 @@ const Cart = ({ customerId }) => {
   };
 
   return (
-    <div>
+    <div className="cart">
       <h2>Giỏ Hàng</h2>
       <div>
         <h3>Danh sách các món trong giỏ hàng:</h3>

@@ -17,7 +17,7 @@
 }
 
 /* Container của popup */
-.login-popup-container {
+.login-popup .login-popup-container {
     background: white;
     width: 400px;
     padding: 25px;
@@ -43,34 +43,34 @@
 }
 
 /* Tiêu đề */
-.login-popup-title {
+.login-popup .login-popup-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
 }
 
-.login-popup-title h2 {
+.login-popup .login-popup-title h2 {
     font-size: 24px;
     font-weight: 700;
     color: #333;
     margin: 0;
 }
 
-.login-popup-title img {
+.login-popup .login-popup-title img {
     width: 24px;
     height: 24px;
     cursor: pointer;
     transition: transform 0.3s ease;
 }
 
-.login-popup-title img:hover {
+.login-popup .login-popup-title img:hover {
     transform: rotate(90deg);
 }
 
 /* Các input */
-.login-popup-inputs input,
-.login-popup-inputs select {
+.login-popup .login-popup-inputs input,
+.login-popup .login-popup-inputs select {
     width: 100%;
     padding: 12px;
     font-size: 16px;
@@ -82,14 +82,14 @@
     margin-bottom: 10px;
 }
 
-.login-popup-inputs input:focus,
-.login-popup-inputs select:focus {
+.login-popup .login-popup-inputs input:focus,
+.login-popup .login-popup-inputs select:focus {
     border-color: #a77905;
     box-shadow: 0px 0px 5px rgba(167, 121, 5, 0.5);
 }
 
 /* Nút hành động */
-button {
+.login-popup button {
     background: linear-gradient(to right, #ff9800, #ffc107);
     color: white;
     font-size: 16px;
@@ -101,25 +101,25 @@ button {
     transition: background 0.3s ease, transform 0.2s ease;
 }
 
-button:hover {
+.login-popup button:hover {
     background: linear-gradient(to right, #ff8c00, #ffa000);
     transform: scale(1.05);
 }
 
 /* Điều khoản */
-.login-popup-condition {
+.login-popup .login-popup-condition {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.login-popup-condition input {
+.login-popup .login-popup-condition input {
     width: 20px;
     height: 20px;
     cursor: pointer;
 }
 
-.login-popup-condition p {
+.login-popup .login-popup-condition p {
     margin: 0;
     font-size: 14px;
     color: #555;
@@ -130,6 +130,7 @@ button:hover {
     font-size: 14px;
     color: #555;
     text-align: center;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .login-popup p span {
@@ -145,22 +146,22 @@ button:hover {
 
 /* Responsive */
 @media (max-width: 480px) {
-    .login-popup-container {
+    .login-popup .login-popup-container {
         width: 90%;
         padding: 20px;
     }
 
-    .login-popup-title h2 {
+    .login-popup .login-popup-title h2 {
         font-size: 20px;
     }
 
-    .login-popup-inputs input,
-    .login-popup-inputs select {
+    .login-popup .login-popup-inputs input,
+    .login-popup .login-popup-inputs select {
         font-size: 14px;
         padding: 10px;
     }
 
-    button {
+    .login-popup button {
         font-size: 14px;
         padding: 10px;
     }
@@ -171,54 +172,34 @@ button:hover {
 }
 
 /* Style cho các ô input có lỗi */
-input.error {
+.login-popup input.error {
     border: 2px solid #e74c3c;
 }
 
-select.error {
+.login-popup select.error {
     border: 2px solid #e74c3c;
 }
 
 /* Style cho thông báo lỗi */
-.error {
+.login-popup .error {
     color: #e74c3c;
     font-size: 0.9rem;
     margin-top: 5px;
 }
 
-.login-popup p {
-    font-size: 14px;
-    color: #555;
-    text-align: center;
-    font-family: 'Open Sans', sans-serif;
-  }
-  
-  .login-popup p span {
-    color: #a77905;
-    font-weight: 600;
-    cursor: pointer;
-    transition: color 0.3s ease;
-  }
-  
-  .login-popup p span:hover {
-    color: #894306;
-  }
-
-  .switch-to-signup {
+.login-popup .switch-to-signup {
     margin-top: 10px;
     font-size: 14px;
     color: #555;
-  }
-  
-  .switch-to-signup span {
+}
+
+.login-popup .switch-to-signup span {
     color: #007bff;
     cursor: pointer;
     font-weight: bold;
     text-decoration: underline;
-  }
-  
-  .switch-to-signup span:hover {
+}
+
+.login-popup .switch-to-signup span:hover {
     color: #0056b3;
-  }
-  
-  
+}
