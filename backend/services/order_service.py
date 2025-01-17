@@ -103,7 +103,7 @@ def get_orders_in_cart(customer_id: int, db: Session):
     db_orders = db.query(Order).filter(Order.order_status == OrderStatusEnum.cart,
                                                                 Order.customer_id == customer_id).all()
     
-    return db_orders
+    return [order.order_id for order in db_orders]
 
 def get_order(order_id: int, db: Session):
     db_items = db.query(
