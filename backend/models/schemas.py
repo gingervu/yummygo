@@ -255,7 +255,7 @@ class MenuItemResponse(BaseModel):
     img_url: Optional[str]
     description: Optional[str]
     price: Decimal
-    status: str
+    status: Optional[str]
     
     class Config:
         from_attribute = True    

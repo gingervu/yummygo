@@ -6,7 +6,7 @@ const MenuItem = ({ name, description, price, checked, onChange }) => {
     
     return (
         <div className="menu-item">
-            <img src="/assets/item/bun.jpg" alt={name} className="menu-image" /> {/* Thêm ảnh */}
+            <img src="/assets/menu/bun.jpg" alt={name} className="menu-image" /> {/* Thêm ảnh */}
             <div className="menu-details">
                 <h3>{name}</h3>
                 <p>{description}</p>

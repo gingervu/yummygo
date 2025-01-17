@@ -1,39 +1,110 @@
 .edit-item {
-    display: flex;
-    justify-content: space-between; /* Space between edit details and toggle */
-  align-items: center;
-    margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between; /* Space between edit details and toggle */
+align-items: center;
+  margin-bottom: 10px;
 }
 
 .edit-item h3{
-    font-size: 20px;
-    margin-bottom: 0;
+  font-size: 20px;
+  margin-bottom: 0;
 }
 
 .edit-item p, .edit-item span {
-    font-size: 18px;
-    margin-bottom: 3px;
+  font-size: 18px;
+  margin-bottom: 3px;
 }
 
 .edit-item .edit-button {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
 }
 
 .edit-item .edit-btn {
-    background-color: transparent; /* Transparent background */
-    border: none; /* Remove border */
-    cursor: pointer;
-    
-    
-    transition: all 0.3s ease; /* Smooth transition for hover effects */
-  }
+  background-color: transparent; /* Transparent background */
+  border: none; /* Remove border */
+  cursor: pointer;
+  
+  
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
 
-  .edit-item .delete-btn {
-    background-color: transparent; /* Transparent background */
-    border: none; /* Remove border */
-    cursor: pointer;
-    
-    transition: all 0.3s ease; /* Smooth transition for hover effects */
-  }
+.edit-item .delete-btn {
+  background-color: transparent; /* Transparent background */
+  border: none; /* Remove border */
+  cursor: pointer;
+  
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+.edit-item .popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.edit-item .popup-overlay h3{
+  margin-bottom: 20px;
+}
+
+.edit-item .popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 32%;
+}
+
+.edit-item .form-group {
+  margin-bottom: 10px;
+}
+
+.edit-item .popup-content label {
+  margin-right: 15px;
+}
+.edit-item .popup-content input {
+ border-color: #dfdfdf;
+border-radius: 5px;
+ border-style:solid;
+ background-color: #ffffff;
+}
+.edit-item .popup-content input .file-upload-buton {
+  border-color: #dfdfdf;
+ border-radius: 5px;
+  border-style:solid;
+  background-color: #ffffff;
+ }
+.edit-item .form-actions {
+  margin-top: 20px;
+  text-align: right;
+  
+}
+.edit-item .form-actions {
+  margin-top: 20px;
+  text-align: right;
+  
+}
+.edit-item .form-actions button {
+  background-color: #ffffff;
+ border-radius: 10px;
+  border-color: #dfdfdf;
+  padding: 5px;
+  border-style: solid;
+}
+.edit-item .form-actions button:hover {
+  background-color: #eeeeee;
+ 
+}
+
+.edit-item .popup-content .popup-actions button{
+  background-color: #ffffff;
+  border-color: #dfdfdf;
+  border-style: solid;
+  border-radius: 10px;
+}

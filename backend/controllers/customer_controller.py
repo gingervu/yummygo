@@ -60,7 +60,6 @@ async def filter(category: str, db: Session = Depends(get_db)):
     return db.query(Restaurant).filter(Restaurant.category == category).all()
 
 
-
 @router.get("/restaurants", response_model=PaginatedRestaurantsResponse)
 async def get_restaurants(skip: int = Query(0, ge=0), limit: int = Query(10, le=100), db: Session = Depends(get_db)):
     total = db.query(Restaurant).count()

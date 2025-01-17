@@ -84,7 +84,7 @@ const AdminMenu = () => {
                             key={item.item_id}
                             name={item.name}
                             description={item.description}
-                            price={item.price}
+                            price={Number(item.price)}
                             checked={item.status === "available"}
                             onChange={() => handleToggle(item.item_id)} // Truyền callback thay vì gọi trực tiếp
                         />

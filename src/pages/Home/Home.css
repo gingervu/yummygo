@@ -1,37 +1,46 @@
 .home {
-    
     text-align: center;
-  
- /* Căn giữa theo chiều dọc */
-  /* Đảm bảo chiều cao đầy đủ */
-  
     font-family: "Poppins", sans-serif;
-     /* Chiếm hết phần còn lại của màn hình */
-}
-
-
-.home .tille{
-    margin-top: 190px;
-    
-}
-
-.home .tille .button-container{
-    margin-top: 80px;
-}
-
-.home .button-container button {
-    background: linear-gradient(to right, #ff9800, #ffc107);
+    min-height: 100vh; /* Đảm bảo chiều cao đầy đủ */
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, #f4f9f4 0%, #e8f5e9 100%); /* Nền nhẹ nhàng với tông xanh nhạt */
+    color: #333; /* Màu chữ dễ đọc */
+  }
+  
+  .home .title {
+    margin-top: 0;
+    font-size: 36px;
+    font-weight: 700;
+    color: #4CAF50; /* Tông màu xanh nổi bật */
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1); /* Bóng nhẹ cho chữ */
+  }
+  
+  .home .title .button-container {
+    margin-top: 40px;
+  }
+  
+  .home .button-container button {
+    background: linear-gradient(90deg, #4CAF50 0%, #66BB6A 50%, #62AA66 100%);
     color: white;
     font-size: 16px;
     font-weight: 600;
     border: none;
     border-radius: 8px;
-    padding: 12px;
+    padding: 12px 24px; /* Tăng kích thước nút */
     cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.home .button-container button:hover {
-    background: linear-gradient(to right, #ff8c00, #ffa000);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Thêm bóng nút */
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .home .button-container button:hover {
+    background: linear-gradient(90deg, #45A049 0%, #55BB6A 50%, #5CAA66 100%);
     transform: scale(1.05);
-}
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Thêm hiệu ứng bóng khi hover */
+  }
+  
+  .home .button-container button:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Hiệu ứng nhấn nút */
+  }
+  

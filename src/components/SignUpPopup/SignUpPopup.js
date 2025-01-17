@@ -154,15 +154,6 @@ const SignUpPopup = ({ setShowSignUp }) => {
         </div>
                   <form onSubmit={handleSubmit}>
             <div className="sign-up-popup-inputs">
-              <input
-                type="text"
-                name="name"
-                placeholder="Họ và tên"
-                value={formData.name}
-                onChange={handleChange}
-                className={errors.name ? "error" : ""}
-              />
-              {errors.name && <p className="error">{errors.name}</p>}
 
               <input
                 type="text"

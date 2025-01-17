@@ -8,7 +8,6 @@ import AddressEditor from "./AddressEditor";
 const AdminProfile = () => {
   const [restaurantInfo, setRestaurantInfo] = useState(null); // Thông tin nhà hàng
   const [userInfo, setUserInfo] = useState(null); // Thông tin tài khoản nhà hàng
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const token = localStorage.getItem("access_token"); // Lấy token từ localStorage
 
@@ -38,7 +37,6 @@ const AdminProfile = () => {
         console.error("Lỗi khi tải dữ liệu: ", err);
         setError("Không thể tải dữ liệu từ API");
       } finally {
-        setLoading(false);
       }
     };
 
@@ -91,8 +89,6 @@ const AdminProfile = () => {
     return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
   };
 
-  if (loading) return <div>Đang tải dữ liệu...</div>;
-  if (error) return <div>{error}</div>;
 
   const profileItems = [
     { label: "Tên quán", value: restaurantInfo?.name, key: "name" },

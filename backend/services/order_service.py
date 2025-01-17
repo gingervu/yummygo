@@ -152,6 +152,9 @@ def update_order_status(order_id: int, new_status: str, driver_id: int, db: Sess
     db_order.order_status = new_status
     if new_status == OrderStatusEnum.delivered:
         db_order.delivered_at = datetime.now()
+        
+    # restaurant_name = db.query(Restaurant).filter(Restaurant.restaurant_id == db_order.restaurant_id).first().name
+    # order = OrderResponse(order_id=order_id, )
     db.commit()
     db.refresh(db_order)
     return db_order

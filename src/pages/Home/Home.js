@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import Header from '../../components/Header/Header'
+import Sidebar from "../../components/Sidebar/Sidebar";
 import LoginPopup from '../../components/LoginPopup/LoginPopup';
 import SignUpPopup from '../../components/SignUpPopup/SignUpPopup';
 import "./Home.css"
@@ -39,6 +40,7 @@ const Home = () => {
     return (
         <div className="home">
             <Header />
+            <Sidebar/>
             <div className="tille">
                 <h2>Đăng nhập để tiếp tục!</h2>
                 <div className="button-container">

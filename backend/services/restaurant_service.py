@@ -86,8 +86,14 @@ def delete_restaurant(restaurant_id: int, db: Session):
 def get_current_restaurant_order(restaurant_id: int, db: Session):
     db_order = db.query(Order).filter(Order.restaurant_id == restaurant_id,
                                       Order.order_status == OrderStatusEnum.preparing).all()
-    if not db_order:
-        return None
+
+    return db_order
+
+# Lấy ra danh sách lịch sử đơn hàng của nhà hàng
+def get_restaurant_order_history(restaurant_id: int, db: Session):
+    db_order = db.query(Order).filter(Order.restaurant_id == restaurant_id,
+                                      Order.order_status == OrderStatusEnum.completed).all()
+
     return db_order
 
 

@@ -1,26 +1,51 @@
-.admin-revenue main {
-    font-family: Arial, sans-serif;
-    padding: 20px;
+/* Tổng quan toàn bộ trang */
+.admin-revenue {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
+    height: 100vh;
+    background: linear-gradient(180deg, #f4f9f4 0%, #e8f5e9 100%); /* Nền nhẹ nhàng với tông xanh nhạt */
   }
   
-.admin-revenue  h2 {
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 10px;
+  /* Nội dung chính */
+  .daily-revenue {
+    margin: auto;
     text-align: center;
-  }
-  
-.admin-revenue  p {
-    font-size: 20px;
-    color: #555;
-    background-color: #f9f9f9; /* Nền nhẹ cho phần doanh thu */
-    padding: 10px 20px;
+    background: #fff;
     border-radius: 8px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 500px;
+    width: 90%;
+  }
+  
+  /* Tiêu đề */
+  .daily-revenue h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  /* Doanh thu */
+  .daily-revenue p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #28a745; /* Xanh lá cho doanh thu */
+    margin: 0;
+  }
+  
+  /* Lỗi */
+  .daily-revenue .error {
+    color: #dc3545; /* Đỏ cho thông báo lỗi */
+  }
+  
+  /* Đáp ứng màn hình nhỏ */
+  @media (max-width: 768px) {
+    .daily-revenue h2 {
+      font-size: 1.75rem;
+    }
+  
+    .daily-revenue p {
+      font-size: 1.25rem;
+    }
   }
   

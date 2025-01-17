@@ -15,8 +15,8 @@ const AdminOrderDetails = () => {
   const toggleChat = () => {
     setIsOpen(!isOpen); // Toggle the popup visibility
   };
-  const [order, setOrder] = useState(null); // Lưu thông tin chi tiết đơn hàng
-  const [orderInfo, setOrderInfo] = useState(null); // Lưu thông tin chi tiết đơn hàng
+  const [order, setOrder] = useState([]); // Lưu thông tin chi tiết đơn hàng
+  const [orderInfo, setOrderInfo] = useState([]); // Lưu thông tin chi tiết đơn hàng
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const token = localStorage.getItem("access_token");
@@ -27,6 +27,7 @@ const AdminOrderDetails = () => {
   // ];
 
   useEffect(() => {
+    const token = localStorage.getItem("access_token");
     axios
     .get(`http://localhost:8000/orders/${order_id}`, {
       headers: {

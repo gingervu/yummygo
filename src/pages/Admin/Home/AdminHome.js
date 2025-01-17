@@ -71,8 +71,7 @@ const AdminHome = () => {
         <Toggle checked={restaurantStatus} // Trạng thái hiện tại của toggle
             onChange={handleStatusChange} // Hàm xử lý thay đổi trạng thái
              />
-        </div>
-        
+        </div>        
       </main>
     </div>
   );

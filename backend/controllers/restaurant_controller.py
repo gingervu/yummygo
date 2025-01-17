@@ -30,12 +30,16 @@ async def change_status(current_restaurant: dict = Depends(require_role('restaur
     restaurant = update_restaurant_status(current_restaurant['user_id'], db)
     return {"message" : "status changed", "status": restaurant.status}
 
-# Lấy ra danh sách mã đơn hàng hiện tại của nhà hàng
+# Lấy ra danh sách đơn hàng hiện tại của nhà hàng
 # Dùng mã đơn để hiển thị các món trong đơn hàng khi nhà hàng
 # chọn xem đơn ---> get '/orders/{order_id}'
 @router.get("/orders")
 async def restaurant_orders(current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
     return get_current_restaurant_order(current_restaurant['user_id'], db)
+
+@router.get("/order-history")
+async def restaurant_orders(current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
+    return get_restaurant_order_history(current_restaurant['user_id'], db)
 
 # Lấy danh sách các nhà hàng đang active --> customer duyệt
 @router.get("/active")

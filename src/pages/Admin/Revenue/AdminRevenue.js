@@ -66,9 +66,10 @@ const AdminRevenue = () => {
     <div className="admin-revenue">
       <Header />
       <Sidebar />
-      <main>
+      
+      <main className="daily-revenue">
         <h2>Doanh thu hôm nay</h2>
-        <p>{revenue ? `${revenue} VND` : "Không có dữ liệu"}</p>
+        <p>{revenue ? `${revenue.toLocaleString("vi-VN")} VND` : "Không có dữ liệu"}</p>
       </main>
     </div>
   );

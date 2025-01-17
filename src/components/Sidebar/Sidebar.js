@@ -20,13 +20,6 @@ const Sidebar = () => {
      // Điều hướng tới trang chính
   };
 
-  const token = localStorage.getItem('access_token');
-  if (token !== null) {
-    console.log('access_token còn trong localStorage:', token);
-  } else {
-    console.log('Không tìm thấy access_token trong localStorage');
-  }
-
   return (
     <div className="sidebar">
 
