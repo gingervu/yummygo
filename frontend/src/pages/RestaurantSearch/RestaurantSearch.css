@@ -3,8 +3,8 @@
 /* Toàn bộ trang */
 body {
     font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
+    margin-top: 120px;
+    /* padding: 0; */
     background-color: #f0f4f8;
     color: #333;
   }
@@ -12,7 +12,7 @@ body {
   /* Container chính */
   .restaurant-container {
     max-width: 900px;
-    margin: 40px auto;
+    margin-top: 140px auto;
     background-color: #ffffff;
     border-radius: 12px;
     overflow: hidden;

@@ -1,122 +1,97 @@
-/* Đặt font chữ và căn chỉnh tổng thể */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f9f9f9;
-  color: #333;
-}
-
-.container {
-  width: 90%;
-  max-width: 800px;
-  margin: 20px auto;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-}
-
-h2 {
-  text-align: center;
-  color: #2c3e50;
-  margin-bottom: 20px;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  border-bottom: 1px solid #e0e0e0;
-  padding: 10px 0;
-}
-
-li:last-child {
-  border-bottom: none;
-}
-
-li p {
-  margin: 5px 0;
-  line-height: 1.6;
-}
-
-h3 {
-  margin: 15px 0;
-  color: #16a085;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-form {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-form label {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-form input {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 100%;
-}
-
-button {
-  background-color: #3498db;
-  color: #fff;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #2980b9;
-}
-
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-button + button {
-  margin-left: 10px;
-}
-
-.error-message {
-  color: red;
-  margin-top: 10px;
-  font-size: 14px;
-}
-
-.action-buttons {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-  gap: 15px;
-}
-
-form button {
-  align-self: flex-start;
-}
-
-.order-summary {
-  margin: 20px 0;
-}
-
-.order-summary p {
-  font-size: 16px;
-}
-
-.order-summary h3 {
-  text-align: center;
-}
+.order-details-container {
+    padding: 20px;
+    max-width: 800px;
+    margin-top: 120px;
+    /* margin: 0 auto; */
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2, h3 {
+    font-size: 1.6em;
+    color: #333;
+  }
+  
+  .order-list {
+    margin-bottom: 20px;
+  }
+  
+  .order-item {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .item-name {
+    flex: 2;
+    text-align: left;
+  }
+  
+  .item-quantity, .item-price {
+    flex: 1;
+    text-align: right;
+  }
+  
+  .order-fee {
+    font-size: 18px;
+    font-weight: bold;
+    color: #f5ca9c; /* Màu đỏ để làm nổi bật */
+    background-color: #f2dede; /* Màu nền nhạt để làm nổi bật */
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+  }
+  
+  .order-update {
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 8px;
+    font-size: 1em;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .submit-btn, .cancel-btn, .send-btn {
+    padding: 10px 15px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .submit-btn {
+    background-color: #64e469;
+  }
+  
+  .cancel-btn {
+    background-color: #f4b536;
+  }
+  
+  .send-btn {
+    background-color: #f4b536;
+  }
+  
+  .submit-btn:hover, .cancel-btn:hover, .send-btn:hover {
+    opacity: 0.8;
+  }
+  
+  .order-actions button {
+    margin-top: 15px;
+    padding: 12px;
+  }
+  

@@ -1,8 +1,13 @@
+/* Đặt cấu trúc chính của giỏ hàng */
 .cart {
-  display: flex;
-  flex-direction: column;
+  display: flex; /* Dùng flexbox để bố trí các phần tử bên trong */
+  flex-direction: column; /* Các phần tử con sẽ được xếp theo chiều dọc */
   padding: 20px;
-  margin-top: 120px;
+  border: 2px solid #ddd; /* Thêm đường viền cho giỏ hàng */
+  border-radius: 10px; /* Bo góc cho giỏ hàng */
+  max-width: 2000px; /* Giới hạn chiều rộng tối đa của giỏ hàng */
+  margin-top: 120px; /* Canh giữa giỏ hàng trên trang */
+  background-color: #fff; /* Màu nền trắng cho giỏ hàng */
 }
 
 h2 {
@@ -16,95 +21,106 @@ h3 {
   margin-bottom: 10px;
 }
 
+/* Cấu trúc container chứa danh sách món và chi tiết đơn hàng */
 .cart-container {
-  display: flex;
-  gap: 20px;
+  display: flex; /* Dùng flexbox để bố trí 2 phần tử con là danh sách món và chi tiết đơn hàng */
+  gap: 0px; /* Khoảng cách giữa các phần tử con */
+  transition: transform 0.5s ease-in-out; /* Hiệu ứng chuyển động khi thay đổi trạng thái */
 }
 
-.item-list,
-.order-details {
-  flex: 1;
-  border: 1px solid #ddd;
-  padding: 20px;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-}
-
+/* Khung chứa danh sách các món trong giỏ hàng */
 .item-list {
-  transition: transform 0.3s ease-in-out;
+  flex: 1; /* Đảm bảo rằng khung này chiếm không gian còn lại */
+  border: 1px solid #ddd; /* Đường viền cho khung danh sách món */
+  padding: 20px;
+  border-radius: 8px; /* Bo góc cho khung danh sách món */
+  background-color: #f9f9f9; /* Màu nền cho khung danh sách món */
+  overflow-y: auto; /* Cho phép cuộn dọc nếu danh sách quá dài */
 }
 
+/* Khung chứa chi tiết đơn hàng */
 .order-details {
-  display: none;
-  transition: transform 0.3s ease-in-out;
+  flex: 1.5; /* Chiếm không gian lớn hơn khung danh sách món */
+  border: 1px solid #ddd; /* Đường viền cho khung chi tiết đơn hàng */
+  padding: 20px;
+  border-radius: 8px; /* Bo góc cho khung chi tiết đơn hàng */
+  background-color: #f9f9f9; /* Màu nền cho khung chi tiết đơn hàng */
+  display: none; /* Ẩn khung chi tiết đơn hàng ban đầu */
+  overflow-y: auto; /* Cho phép cuộn dọc nếu thông tin chi tiết quá dài */
 }
 
+/* Cập nhật khi bấm vào "Xem chi tiết" */
 .show-details .item-list {
-  transform: translateX(-100%); /* Dạt sang trái */
+  transform: translateX(-2%); /* Dạt sang trái 50% khi bấm "Xem chi tiết" */
 }
 
 .show-details .order-details {
-  display: block;
+  display: block; /* Hiển thị khung chi tiết đơn hàng */
 }
 
+/* Kiểu dáng cho danh sách các món */
 ul {
-  list-style-type: none;
-  padding: 0;
+  list-style-type: none; /* Loại bỏ dấu chấm cho danh sách */
+  padding: 0; /* Loại bỏ khoảng cách mặc định */
 }
 
 li {
-  margin-bottom: 15px;
+  margin-bottom: 15px; /* Khoảng cách giữa các mục trong danh sách */
 }
 
 button {
-  padding: 8px 16px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  padding: 8px 16px; /* Cải thiện kích thước nút */
+  background-color: #4CAF50; /* Màu nền xanh cho nút */
+  color: white; /* Màu chữ trắng */
+  border: none; /* Loại bỏ đường viền mặc định */
+  border-radius: 4px; /* Bo góc cho nút */
+  cursor: pointer; /* Hiển thị con trỏ tay khi hover */
+  transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu khi hover */
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #45a049; /* Màu nền thay đổi khi hover */
 }
 
+/* Phần tóm tắt đơn hàng */
 .order-summary {
   margin-top: 20px;
   font-size: 18px;
   font-weight: bold;
 }
 
-.cart-container {
-  display: flex;
-}
-
-.cart-container .item-list {
-  flex: 2;
-  margin-right: 20px;
-}
-
-.cart-container .order-details {
-  flex: 3;
-}
-
-.order-details ul {
-  list-style: none;
-  padding: 0;
-}
-
-.order-details li {
-  margin-bottom: 10px;
-}
-
+/* Cải tiến cho khung "Đặt hàng" */
 .order-details button {
-  background-color: #f39c12;
+  background-color: #f39c12; /* Màu vàng cho nút Đặt hàng */
   color: white;
   font-size: 16px;
-  border-radius: 5px;
+  border-radius: 5px; /* Bo góc cho nút */
 }
 
 .order-details button:hover {
-  background-color: #e67e22;
+  background-color: #e67e22; /* Màu nền thay đổi khi hover */
+}
+
+/* Giỏ hàng đang trống */
+.empty-cart {
+  text-align: center;
+  font-size: 18px;
+  color: #999;
+}
+
+/* Khung chứa chi tiết đơn hàng */
+.order-details {
+  flex: 1; /* Đặt flex của khung chi tiết nhỏ lại, tương đương với danh sách món */
+  border: 1px solid #ddd; /* Đường viền cho khung chi tiết đơn hàng */
+  padding: 20px;
+  border-radius: 8px; /* Bo góc cho khung chi tiết đơn hàng */
+  background-color: #f9f9f9; /* Màu nền cho khung chi tiết đơn hàng */
+  display: none; /* Ẩn khung chi tiết đơn hàng ban đầu */
+  overflow-y: auto; /* Cho phép cuộn dọc nếu thông tin chi tiết quá dài */
+}
+
+/* Giảm kích thước khi ẩn hiện khung chi tiết */
+.show-details .order-details {
+  display: block; /* Hiển thị khung chi tiết đơn hàng */
+  flex: 0.75; /* Giảm kích thước khung chi tiết xuống 75% của phần danh sách món */
 }

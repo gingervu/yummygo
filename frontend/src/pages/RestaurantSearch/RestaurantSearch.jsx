@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import axiosInstance from '../../services/axiosConfig';
-import './RestaurantSearch'
+import './RestaurantSearch.css'
 
 const RestaurantSearch = () => {
   const location = useLocation();
@@ -35,7 +35,7 @@ const RestaurantSearch = () => {
   return (
     <div>
       <h1>{restaurantDetails.name}</h1>
-      <p>Địa chỉ: {restaurantDetails.address}</p>
+      <p>Địa chỉ: {restaurantDetails.name}</p>
       <p>Loại hình: {restaurantDetails.category}</p>
       <p>Trạng thái: {restaurantDetails.status}</p>
     </div>
