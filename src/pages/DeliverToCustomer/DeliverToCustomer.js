@@ -116,7 +116,7 @@ useEffect(() => {
 
 
   const handleButtonClick = () => {
-    navigate("/deliverysuccess"); // Điều hướng đến trang /
+    navigate("/driver/deliverysuccess"); // Điều hướng đến trang /
   };
 
   const formatCurrency = (number) => {

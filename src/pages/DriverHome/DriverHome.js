@@ -61,6 +61,7 @@ const DriverHome = () => {
               setOrder(response.data); // Lưu đơn hàng mới
               setPopupVisible(true); // Hiển thị popup
               clearInterval(intervalId); // Dừng việc kiểm tra
+              localStorage.setItem("order_id", orderId);
             }
           })
           .catch((error) => {
@@ -77,7 +78,7 @@ const DriverHome = () => {
   // Hàm xử lý khi nhấn nút "Xem chi tiết đơn hàng"
   const handleOrderDetails = () => {
     setPopupVisible(false);
-    navigate("/orderdetails", { state: { order } }); // Điều hướng tới trang chi tiết đơn hàng
+    navigate("/driver/orderdetails", { state: { order } }); // Điều hướng tới trang chi tiết đơn hàng
   };
 
   // Hàm để xử lý khi toggle thay đổi trạng thái

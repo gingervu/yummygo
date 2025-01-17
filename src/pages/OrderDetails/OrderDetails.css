@@ -11,6 +11,18 @@
   margin-left: 20%;
 }
 
+.order-details-fail main{
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Đảm bảo chiều cao đầy đủ */
+  padding: 20px;
+  flex-grow: 1;
+}
+.order-details-fail main p{
+  margin-top: 120px;
+  margin-left: 24%;
+}
 
 .order-details main {
   font-family: "Poppins", sans-serif;

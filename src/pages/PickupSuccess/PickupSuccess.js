@@ -81,7 +81,7 @@ const PickupSuccess = () => {
   }, [token]); // Re-run when token changes
 
   const handleButtonClick = () => {
-    navigate("/delivertocustomer"); // Điều hướng đến trang /
+    navigate("/driver/delivertocustomer"); // Điều hướng đến trang /
   };
 
   return (

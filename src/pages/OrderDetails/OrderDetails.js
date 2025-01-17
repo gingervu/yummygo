@@ -6,7 +6,7 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import axios from "axios";
 
 const OrderDetails = () => {
-  
+  const [isOrderAvailable, setIsOrderAvailable] = useState(false); // Trạng thái kiểm tra có đơn hàng hay không
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("access_token"); // Token từ localStorage
@@ -22,15 +22,12 @@ const OrderDetails = () => {
   useEffect(() => {
     const fetchOrderData = async () => {
       try {
-        // Gọi API drivers/order để lấy orderId
-        const orderResponse = await axios .get("http://127.0.0.1:8000/drivers/order", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const orderId = orderResponse.data;
-        console.log("Order", orderId);
+        const orderId = localStorage.getItem("order_id")
+        if(orderId != null){
+          setIsOrderAvailable(true)
+        }
         if (orderId) {
+          
           // Gọi API orders/info/${orderId} để lấy thông tin chi tiết
           const orderInfoResponse = await axios
           .get(`http://127.0.0.1:8000/orders/info/${orderId}`, {
@@ -40,8 +37,10 @@ const OrderDetails = () => {
           });
           setOrderDetails(orderInfoResponse.data);
           console.log(orderDetails);
+          
         } else {
           setError("Không tìm thấy orderId");
+          
         }
       } catch (err) {
         console.error(err);
@@ -61,21 +60,35 @@ const OrderDetails = () => {
   };
 
   const handleReject = () => {
-    navigate("/home"); // Điều hướng đến trang /home
+    navigate("/driver/home"); // Điều hướng đến trang /home
   };
 
   const handleAccept = () => {
     
     
     
-    navigate("/orderaccept"); // Điều hướng đến trang /
+    navigate("/driver/orderaccept"); // Điều hướng đến trang /
   };
 
+  if (!isOrderAvailable) {
+    return (
+      <div className="order-details-fail">
+        
+        <Header />
+        <Sidebar />
+        <main>
+        <p className="no-order-message">Hiện chưa có đơn hàng nào.</p>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="order-details">
       <Header />
       <Sidebar />
+
+      
       <main >
       <h2>Tóm tắt thông tin đơn hàng</h2>
         <div className="order-summary-box">
@@ -101,7 +114,7 @@ const OrderDetails = () => {
             </p>
             <div className="order-distance">
               <p>
-                <strong>{orderDetails.distance} km - {parseFloat(orderDetails.food_fee)*0.8}đ</strong>
+                <strong>{orderDetails.distance} km - {parseFloat(orderDetails.delivery_fee)*0.8}đ</strong>
               </p>
             </div>
           </div>

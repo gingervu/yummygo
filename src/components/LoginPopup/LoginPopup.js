@@ -31,7 +31,7 @@ const DriverLoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginS
         localStorage.setItem("access_token", token);
         console.log("Token:", token)
         // Chuyển hướng
-        navigate("/home");
+        navigate("/driver/home");
       }
     } catch (error) {
       console.error(error);
