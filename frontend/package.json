@@ -1,0 +1,25 @@
+{
+  "name": "yummygo-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "merchant",
+    "driver"
+  ],
+  "scripts": {
+    "start:customer": "npm run start --workspace=customer",
+    "start:driver": "npm run start --workspace=driver",
+    "start:restaurant": "npm run start --workspace=restaurant",
+    "build:customer": "npm run build --workspace=customer",
+    "build:driver": "npm run build --workspace=driver",
+    "build:restaurant": "npm run build --workspace=restaurant",
+    "lint": "eslint . --ext .js,.jsx",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "eslint": "^8.53.0",
+    "eslint-config-react-app": "^7.0.1",
+    "prettier": "^3.0.0",
+    "typescript": "^5.2.2"
+  }
+}

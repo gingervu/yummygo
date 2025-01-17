@@ -1,0 +1,61 @@
+/* Main */
+.delivery-success main {
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Đảm bảo chiều cao đầy đủ */
+  padding: 20px;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.delivery-success main h2 {
+  display: flex;
+  text-align: center;
+  justify-content: center; 
+  background: linear-gradient(180deg, #000 0%, #7C6F56 100%); /* Gradient từ đen (#000) đến màu nâu (#7C6F56) */
+  background-clip: text; /* Chỉ áp dụng background vào vùng văn bản */
+  -webkit-background-clip: text; /* Tương thích với các trình duyệt dựa trên WebKit */
+  -webkit-text-fill-color: transparent; /* Đặt màu văn bản là trong suốt để chỉ nhìn thấy gradient */
+  font-size: 26px;
+  margin-top: 120px;
+  margin-bottom: 50px;
+}
+
+.delivery-success main span {
+  font-size: 30px;
+}
+
+.delivery-success img {
+  width: 40px;
+  height: 40px;
+  vertical-align: baseline;  /* Căn chỉnh ảnh ngang bằng với chữ */
+  margin-left: 10px;  /* Khoảng cách giữa chữ và ảnh */
+}
+
+.delivery-success .action-btn-container {
+  display: flex;
+  justify-content: center; /* Căn giữa */
+  margin-top: 50px;
+}
+
+.delivery-success .action-btn {
+  background-color: #74ea2f;
+  color: white;
+  font-size: 22px;
+  font-weight: 600;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.delivery-success .action-btn svg {
+  height: 1.1em; /* Điều chỉnh chiều cao của SVG nhỏ hơn chiều cao chữ */
+  width: auto;
+  margin-left: 16px; /* Thêm khoảng cách giữa logo và text */
+}
+
+.delivery-success .action-btn:hover {
+  background-color: #5cdc75;
+}
