@@ -26,7 +26,7 @@ async def subtract_on_cart(item_id: int, order_id: int, current_customer: dict =
 # ---> trả về danh sách thông tin các order, có thể dùng order_id để 
 # xem thông tin chi tiết của order, dùng api /restaurant/get/{restaurant_id}
 # để lấy thông tin nhà hàng
-@router.get("/cart")
+@router.get("/cart", response_model=List[OrderItemResponse])
 async def get_cart(current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
     return order_service.get_orders_in_cart(current_customer['user_id'], db)
 
@@ -38,39 +38,6 @@ async def get_cart(current_customer: dict = Depends(require_role('customer')), d
 async def get_order(order_id: int, db: Session = Depends(get_db)):
     return order_service.get_order(order_id, db)
 
-# lấy thông tin tường minh của đơn hàng
-@router.get("/info/{order_id}", response_model=OrderResponse)
-async def get_order(order_id: int, current_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
-    user_id = current_user['user_id']
-    db_order = db.query(Order).filter(Order.order_id == order_id).first()
-    customer_id = db_order.customer_id
-    restaurant_id = db_order.restaurant_id
-    driver_id = db_order.driver_id
-    if not (user_id == customer_id or user_id == restaurant_id or user_id == driver_id):
-        return {"message" : "Access Forbidden"}
-    db_restaurant = db.query(Restaurant).filter(Restaurant.restaurant_id == restaurant_id).first()
-    db_driver = db.query(Driver).filter(Driver.driver_id == driver_id).first()
-    
-    customer_name = db.query(Customer).filter(Customer.customer_id == customer_id).first().name
-    # customer_phone = db.query(User).filter(User.user_id == customer_id).first().phone
-    restaurant_name = db_restaurant.name
-    # restaurant_phone = db.query(User).filter(User.user_id == restaurant_id).first().phone
-    driver_name = db_driver.name
-    # driver_phone = db.query(User).filter(User.user_id == driver_id).first().phone
-    restaurant_address =  db_restaurant.address
-    restaurant_category =  db_restaurant.category
-    address = db_order.address
-    distance = db_order.distance
-    food_fee = db_order.food_fee
-    delivery_fee = db_order.delivery_fee
-    order_status = db_order.order_status
-    note = db_order.note
-
-    order = OrderResponse(customer_name=customer_name, restaurant_name=restaurant_name, driver_name=driver_name, 
-                          restaurant_address=restaurant_address, restaurant_category=restaurant_category,
-                          address=address, distance=distance, food_fee=food_fee, delivery_fee=delivery_fee, 
-                          order_status=order_status,note=note)
-    return order
 # Lấy ra danh sách các order_item có trong giỏ hàng ở nhà hàng hiện tại
 # Nếu không có thì giỏ hàng đang trống
 @router.get("/current-cart/{restaurant_id}")

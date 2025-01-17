@@ -46,8 +46,3 @@ async def list_restaurants_(db: Session = Depends(get_db)):
 @router.get("/{restaurant_id}")
 async def get_restaurant_by_id(restaurant_id: int, db: Session = Depends(get_db)):
     return get_restaurant(restaurant_id, db)
-
-# lấy ra doanh thu trong ngày của nhà hàng
-@router.get("/daily-revenue/")
-async def get_daily_revenue(current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
-    return revenue_today(current_restaurant['user_id'], db)

@@ -41,12 +41,13 @@ class NominatimService:
             return []
 
 
-def address_suggestion(address: str):
-    results = NominatimService.search(address)
+def address_suggestion(object: ObjectUpdateAddress):
+    results = NominatimService.search(object.address)
     suggestions = []
     if results:
         for result in results:
             suggestions.append(AddressSuggestion(
+                object_id = object.object_id,
                 address=result['address'],
                 x=result['latitude'],
                 y=result['longitude']

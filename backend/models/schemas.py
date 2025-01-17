@@ -187,7 +187,6 @@ class RestaurantResponse(BaseModel):
     name: str
     category: str
     address: str
-    status: str
     
     class Config:
         from_attributes = True  
@@ -255,7 +254,6 @@ class MenuItemResponse(BaseModel):
     img_url: Optional[str]
     description: Optional[str]
     price: Decimal
-    status: str
     
     class Config:
         from_attribute = True    
@@ -339,35 +337,23 @@ class OrderUpdate(BaseModel):
         from_attribute = True
         
       
-class OrderResponse(BaseModel):
-    customer_name: Optional[str]  = None# khách hàng
-    restaurant_name: Optional[str]  = None # nhà hàng
-    driver_name: Optional[str]  = None # tài xế, có thể rỗng
-    restaurant_address: Optional[str] = None
-    restaurant_category: Optional[str] = None
-    address: Optional[str] = None # Địa chỉ giao hàng, có thể rỗng
-    distance: Optional[Decimal]  = None
-    food_fee: Optional[Decimal]  = None
-    delivery_fee: Optional[Decimal]  = None
-    order_status: Optional[str]  = None
-    note: Optional[str]  = None
-    class Config:
-        from_attribute = True
+  
+  
 # ------------------------------
 # Mô hình Cho Address
 # ------------------------------
 
 class ObjectUpdateAddress(BaseModel):
-    object_id: Optional[int] = None
+    object_id: int
     address: Optional[str]  
     
     class Config:
         from_attribute = True
 
 class AddressSuggestion(BaseModel):
-    address: Optional[str]
-    x: Optional[float]
-    y: Optional[float]
+    address: str
+    x: float
+    y: float
     class Config:
         from_attribute = True  
 # ------------------------------
@@ -391,14 +377,11 @@ class OrderItemSchema(OrderItemBase):
 class OrderItemResponse(BaseModel):
     item_id: int
     order_id: int
-    name: str
-    price: Decimal
+    price: float
     quantity: int
 
     class Config:
         from_attribute = True   
-        
-
 # ------------------------------
 # Mô hình Manager (Quản lý nhà hàng)
 # ------------------------------
