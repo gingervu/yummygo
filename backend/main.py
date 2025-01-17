@@ -12,7 +12,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # Cho phép chia sẻ cookie giữa các domain
+    allow_origins=["*"], #origins,  # Cho phép chia sẻ cookie giữa các domain
     allow_credentials=True,  # Bật gửi cookies trong các yêu cầu
     allow_methods=["*"],
     allow_headers=["*"],
