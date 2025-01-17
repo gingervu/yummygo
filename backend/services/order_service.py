@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from models.models import *
-from models.schemas import OrderCreate, OrderUpdate
+from models.schemas import *
 from datetime import datetime
 from sqlalchemy import or_
 from services.address_service import NominatimService
@@ -95,7 +95,7 @@ def get_current_order(restaurant_id: int, customer_id: int, db: Session):
                            Order.restaurant_id == restaurant_id,
                            Order.order_status == OrderStatusEnum.cart).first()
     if not db_order:
-        return None
+        return []
     
     return db_order.order_id
 
@@ -106,8 +106,18 @@ def get_orders_in_cart(customer_id: int, db: Session):
     return db_orders
 
 def get_order(order_id: int, db: Session):
-    return db.query(OrderItem).filter(OrderItem.order_id == order_id).all()
+    db_items = db.query(
+            OrderItem.item_id,
+            OrderItem.order_id,
+            MenuItem.name,
+            OrderItem.price,
+            OrderItem.quantity).join(MenuItem, OrderItem.item_id == MenuItem.item_id).filter(OrderItem.order_id == order_id).all()
 
+    items = []
+    for item in db_items:
+        items.append(OrderItemResponse(item_id=item[0], order_id=item[1], name=item[2], price=item[3],quantity=item[4]))
+    return items
+    
 # khách hàng cập nhật thông tin order (note)
 def update_order(order_id: int, order: OrderUpdate, customer_id: int, db: Session):
     db_order = db.query(Order).filter(Order.order_id == order_id,

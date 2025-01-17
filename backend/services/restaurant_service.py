@@ -6,6 +6,9 @@ from models import models
 from services.menu_item_service import delete_menu_item
 from services.user_service import delete_user
 
+from sqlalchemy import func
+from datetime import datetime, timedelta
+
 # Lấy thông tin nhà hàng theo ID ---> khách xem
 def get_restaurant(restaurant_id: int, db: Session):
     restaurant = db.query(Restaurant).filter(Restaurant.restaurant_id == restaurant_id,
@@ -85,4 +88,18 @@ def get_current_restaurant_order(restaurant_id: int, db: Session):
                                       Order.order_status == OrderStatusEnum.preparing).all()
     if not db_order:
         return None
-    return [order.order_id for order in db_order]
+    return db_order
+
+
+def revenue_today(restaurant_id: int, db: Session):
+    today = datetime.today().date()  # Lấy ngày hiện tại
+    results = db.query(
+        func.sum(Order.food_fee).label('total_revenue')
+    ).filter(
+        Order.restaurant_id == restaurant_id,
+        Order.created_at >= today,
+        Order.created_at < today + timedelta(days=1),  # Đảm bảo lấy các đơn trong ngày hôm nay
+        Order.order_status == OrderStatusEnum.completed
+    ).scalar()  # Trả về một giá trị duy nhất thay vì list
+
+    return results if results else 0

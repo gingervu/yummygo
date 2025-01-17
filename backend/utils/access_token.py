@@ -17,4 +17,4 @@ def decode_access_token(token: str):
     except jwt.ExpiredSignatureError:
         raise Exception("Token has expired")
     except jwt.InvalidTokenError:
-        raise Exception("Invalid token")
+        raise Exception(f"Invalid token: {token}")
