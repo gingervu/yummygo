@@ -163,6 +163,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../services/axiosConfig';
 import AddressOrder from '../../components/AddressOrder/AddressOrder';
+import './PlaceOrder'
 
 const PlaceOrder = () => {
   const { orderId } = useParams(); // Lấy orderId từ URL
@@ -359,7 +360,7 @@ const PlaceOrder = () => {
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
 
 
-      <AddressOrder/>
+      {/* <AddressOrder/> */}
     </div>
   );
 };

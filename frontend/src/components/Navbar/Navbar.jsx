@@ -133,4 +133,4 @@ const Navbar = ({ setShowLogin, setShowSignUp, currentUser, handleLogout }) => {
   );
 };
 
-export default Navbar;
+export default Navbar

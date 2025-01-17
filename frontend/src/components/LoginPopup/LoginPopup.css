@@ -194,12 +194,12 @@
 }
 
 .login-popup .switch-to-signup span {
-    color: #007bff;
+    color: #ffd500;
     cursor: pointer;
     font-weight: bold;
     text-decoration: underline;
 }
 
 .login-popup .switch-to-signup span:hover {
-    color: #0056b3;
+    color: #b37a00;
 }

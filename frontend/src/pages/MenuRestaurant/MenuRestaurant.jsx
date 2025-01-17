@@ -156,48 +156,55 @@ const MenuRestaurant = () => {
   };
 
   return (
-    <div>
-      <h1>Thực đơn Nhà Hàng {restaurant_id}</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <div>
-        <h2>Danh sách Món Ăn</h2>
-        {menuItems.length > 0 ? (
-          <ul>
-            {menuItems.map((item) => (
-              <li key={item.item_id} style={{ marginBottom: "10px" }}>
-                <h3>{item.name}</h3>
-                <p>{item.description || "Không có mô tả."}</p>
-                <p>Giá: {item.price} VND</p>
-                <button onClick={() => handleAddToCart(item.item_id)}>
-                  Thêm vào giỏ
-                </button>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>Không có món ăn nào có sẵn.</p>
-        )}
-      </div>
+    <div className="container">
+  {/* Danh sách món ăn */}
+  <div className="menu">
+    <h2>Danh sách Món Ăn</h2>
+    {menuItems.length > 0 ? (
+      <ul>
+        {menuItems.map((item) => (
+          <li key={item.item_id}>
+            <h3>{item.name}</h3>
+            <p>{item.description || "Không có mô tả."}</p>
+            <p>Giá: {item.price} VND</p>
+            <button onClick={() => handleAddToCart(item.item_id)}>
+              Thêm vào giỏ
+            </button>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p>Không có món ăn nào có sẵn.</p>
+    )}
+  </div>
 
-      <div style={{ marginTop: "20px" }}>
-        <h2>Giỏ Hàng</h2>
-        {cartItems.length > 0 ? (
-          <ul>
-            {cartItems.map((item) => (
-              <li key={item.item_id}>
-                <h3>{item.name}</h3>
-                <p>Giá: {item.price} VND</p>
-                <p>Số lượng: {item.quantity}</p>
-                <button onClick={() => handleAddToCart(item.item_id)}>+</button>
-                <button onClick={() => handleSubtractFromCart(item.item_id)}>-</button>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>Giỏ hàng trống.</p>
-        )}
-      </div>
-    </div>
+  {/* Giỏ hàng */}
+  {/* Giỏ hàng */}
+<div className="cart">
+  <h2>Giỏ Hàng</h2>
+  {cartItems.length > 0 ? (
+    <ul>
+      {cartItems.map((item) => (
+        <li key={item.item_id}>
+          <div className="item-details">
+            <h3>{item.name}</h3>
+            <p>Giá: {item.price} VND</p>
+            <p>Số lượng: {item.quantity}</p>
+          </div>
+          <div className="quantity-buttons">
+            <button onClick={() => handleAddToCart(item.item_id)}>+</button>
+            <button onClick={() => handleSubtractFromCart(item.item_id)}>-</button>
+          </div>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p>Giỏ hàng trống.</p>
+  )}
+</div>
+
+</div>
+
   );
 };
 

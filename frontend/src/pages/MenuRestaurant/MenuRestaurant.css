@@ -1,178 +1,125 @@
-/* MenuRestaurant.css */
+/* Tổng thể container */
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  gap: 10px;
+  background-color: #fce5bd;
+  font-family: Arial, sans-serif;
+  margin-top: 120px;
+  border-radius: 10px;
+}
 
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
-    margin-top: 100px;
-  }
-  
-  h1, h2 {
-    color: #333;
-    text-align: center;
-  }
-  
-  .container {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    max-width: 1200px;
-    margin: auto;
-  }
-  
-  .restaurant-info {
-    width: 60%;
-  }
-  
-  .restaurant-info .header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-  
-  .restaurant-info img {
-    width: 100px;
-    height: 100px;
-    border-radius: 10px;
-  }
-  
-  .restaurant-info .details {
-    font-size: 16px;
-    color: #666;
-  }
-  
-  .menu {
-    margin-top: 20px;
-  }
-  
-  .menu-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: #fff;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .menu-item img {
-    width: 60px;
-    height: 60px;
-    border-radius: 8px;
-  }
-  
-  .menu-item .info {
-    flex: 1;
-    margin-left: 10px;
-  }
-  
-  .menu-item .info h3 {
-    font-size: 16px;
-    color: #333;
-    margin: 0;
-  }
-  
-  .menu-item .info p {
-    font-size: 14px;
-    color: #777;
-    margin: 5px 0 0;
-  }
-  
-  .menu-item .price {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .menu-item .add-btn {
-    background-color: #ff8c00;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-  
-  .menu-item .add-btn:hover {
-    background-color: #e67e00;
-  }
-  
-  .cart {
-    width: 35%;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .cart h2 {
-    font-size: 20px;
-    color: #333;
-    margin-bottom: 15px;
-  }
-  
-  .cart-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .cart-item h3 {
-    font-size: 16px;
-    margin: 0;
-    color: #333;
-  }
-  
-  .cart-item .quantity {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .cart-item button {
-    background-color: #ff8c00;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 5px;
-    cursor: pointer;
-  }
-  
-  .cart-item button:hover {
-    background-color: #e67e00;
-  }
-  
-  .cart-total {
-    font-size: 18px;
-    font-weight: bold;
-    text-align: right;
-    margin-top: 20px;
-  }
-  
-  .cart .checkout-btn {
-    width: 100%;
-    background-color: #ff8c00;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-  
-  .cart .checkout-btn:hover {
-    background-color: #e67e00;
-  }
-  
-  .error-message {
-    color: red;
-    text-align: center;
-    margin-top: 10px;
-  }
-  
+/* Phong cách chung cho phần menu và giỏ hàng */
+.menu,
+.cart {
+  flex: 1;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  overflow-y: auto;
+  max-height: 100vh;
+}
+
+h2 {
+  font-size: 24px;
+  color: #333;
+  border-bottom: 2px solid #af9e4c;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+/* Danh sách món ăn và giỏ hàng */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+  display: flex; /* Chuyển sang flex để bố trí nội dung */
+  justify-content: space-between; /* Đẩy các phần tử sang hai phía */
+  align-items: center;
+}
+
+li:last-child {
+  border-bottom: none;
+}
+
+h3 {
+  font-size: 18px;
+  margin: 0 0 5px 0;
+  color: #444;
+}
+
+p {
+  font-size: 14px;
+  color: #777;
+  margin: 0 0 5px 0;
+}
+
+/* Phần nội dung món ăn */
+.item-details {
+  flex: 1; /* Chiếm tối đa không gian bên trái */
+  margin-right: 20px; /* Tạo khoảng cách với nút bấm */
+}
+
+/* Nút thêm vào giỏ */
+button {
+  background-color: #af9d4c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #a06c45;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Phần chi tiết giỏ hàng */
+.cart li {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.cart li h3 {
+  margin-bottom: 5px;
+}
+
+.cart li p {
+  margin-bottom: 10px;
+}
+
+/* Tăng khoảng cách cho thanh lăn */
+.menu ul,
+.cart ul {
+  max-height: calc(70vh - 60px);
+  overflow-y: auto;
+  padding-right: 15px; /* Tạo khoảng cách giữa nội dung và thanh lăn */
+}
+
+/* Cuộn mượt */
+ul::-webkit-scrollbar {
+  width: 8px;
+}
+
+ul::-webkit-scrollbar-thumb {
+  background-color: #b99b8b;
+  border-radius: 4px;
+}
+
+ul::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+}
