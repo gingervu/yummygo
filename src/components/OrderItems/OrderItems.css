@@ -1,0 +1,26 @@
+.order-items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 5px;
+  }
+  
+  .order-items-table td {
+    padding: 5px 0;
+    font-size: 16px;
+    border-bottom: 1px solid #b8b8b8;
+  }
+  
+  .order-items-table .item-name {
+    text-align: left;
+  }
+  
+  .order-items-table .item-price {
+    text-align: right;
+    margin-right: 70px;
+  }
+  
+  .order-items-table .item-quantity {
+    text-align: center;
+    font-weight: bold;
+  }
+  

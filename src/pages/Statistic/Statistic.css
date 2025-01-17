@@ -1,0 +1,10 @@
+.statistic main {
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Đảm bảo chiều cao đầy đủ */
+    padding: 20px;
+    flex-grow: 1;
+    text-align: left;
+    
+  }
