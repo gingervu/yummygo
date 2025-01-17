@@ -40,8 +40,10 @@ async def delete_driver(current_driver: dict = Depends(require_role("driver")), 
 # Lấy ra thông tin của tài xế để hiện cho khách hàng và nhà hàng xem
 @router.get("/info/{driver_id}", response_model=DriverResponse)
 async def driver_info(driver_id: int, db: Session = Depends(get_db)):
-    return db.query(Driver).filter(Driver.driver_id == driver_id)
-
+    driver = db.query(Driver).filter(Driver.driver_id == driver_id).first()
+    if driver is None:
+        raise HTTPException(status_code=404, detail="Tài xế không tồn tại")
+    return driver
 # Lấy ra danh sách mã đơn hàng hiện tại của tài xế
 # Dùng mã đơn để hiển thị thông tin của đơn hàng khi tài xế
 # chọn xem đơn
