@@ -84,35 +84,55 @@ export const assets = {
 
 export const menu_list = [
     {
-        menu_name: "Salad",
+        menu_name: "Bún - Phở - Cháo",
         menu_image: menu_1
     },
     {
-        menu_name: "Rolls",
+        menu_name: "Đồ chay",
         menu_image: menu_2
     },
     {
-        menu_name: "Deserts",
+        menu_name: "Tráng miệng",
         menu_image: menu_3
     },
     {
-        menu_name: "Sandwich",
+        menu_name: "Bánh Mì - Xôi",
         menu_image: menu_4
     },
     {
-        menu_name: "Cake",
+        menu_name: "Ăn vặt",
         menu_image: menu_5
     },
     {
-        menu_name: "Pure Veg",
+        menu_name: "Gà rán - Burger",
         menu_image: menu_6
     },
     {
-        menu_name: "Pasta",
+        menu_name: "Pizza - Mì Ý",
         menu_image: menu_7
     },
     {
-        menu_name: "Noodles",
+        menu_name: "Cơm",
+        menu_image: menu_8
+    },
+    {
+        menu_name: "Hải sản",
+        menu_image: menu_8
+    },
+    {
+        menu_name: "Cà phê",
+        menu_image: menu_8
+    },
+    {
+        menu_name: "Trà sữa",
+        menu_image: menu_8
+    },
+    {
+        menu_name: "Bánh Việt Nam",
+        menu_image: menu_8
+    },
+    {
+        menu_name: "Lẩu - Nướng",
         menu_image: menu_8
     }]
 

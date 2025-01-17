@@ -54,9 +54,9 @@ class OrderStatusEnum(str, PyEnum):
 
 # Các danh mục nhà hàng
 class CategoryEnum(str, PyEnum):
-    bun_pho_chao = "Bún - Phở - Cháo"
-    banh_mi_xoi = "Bánh Mì - Xôi"
-    ga_ran_burger = 'Gà rán - Burger'
+    bun_pho_chao = "Bún - Phở - Cháo" 
+    banh_mi_xoi = "Bánh Mì - Xôi" 
+    ga_ran_burger = 'Gà rán - Burger' 
     com = "Cơm"
     hai_san = "Hải sản"
     do_chay = "Đồ chay"
