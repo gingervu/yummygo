@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../services/axiosConfig';
-import './CustomerInfo.css';
+import './CustomerInfor.css';
 
 const CustomerInfo = () => {
   const [customerInfo, setCustomerInfo] = useState(null);
