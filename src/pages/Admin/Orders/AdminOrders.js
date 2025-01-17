@@ -52,9 +52,6 @@ const AdminOrders = () => {
       });
   }, []);
 
-  if (loading) return <div>Đang tải danh sách đơn hàng...</div>;
-
-  if (error) return <div>{error}</div>;
 
   return (
 

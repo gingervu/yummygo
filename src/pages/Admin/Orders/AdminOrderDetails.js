@@ -65,9 +65,7 @@ const AdminOrderDetails = () => {
 
 
 
-if (loading) return <div>Đang tải chi tiết đơn hàng...</div>;
 
-if (error) return <div>{error}</div>;
 
 const total = 0;
   return (
