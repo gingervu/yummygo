@@ -10,18 +10,19 @@
 
   .profile main h2{
     margin-top: 110px;
-    margin-left: 24%;
+    margin-left: 340px;
     margin-bottom: 30px;
   } 
 
   .profile main .delete{
     margin-top: 100px;
   }
+
   .profile main .delete button{
     border: 1px solid #5e5e5e;
     background-color: #fff;
     text-align: center;
-    margin-left: 24%;
+    margin-left: 390px;
     padding: 8px 10px;
     border-radius: 5px;
     cursor: pointer;
@@ -34,7 +35,7 @@
   } 
 
   .profile .profile-section{
-    margin-left: 24%;
+    margin-left: 390px;
   }
 
   .profile .profile-section .input-group{
@@ -61,7 +62,7 @@
     gap: 10px;
     margin-bottom: 20px;
     
-    margin-left: 24%;
+    margin-left: 390px;
   }
   .profile .profile-name .container{
     display: flex;
@@ -87,9 +88,6 @@
     font-size: 16px;
   }
  
-  
-
-
 /* Profile.css */
 .profile .popup-overlay {
   position: fixed;

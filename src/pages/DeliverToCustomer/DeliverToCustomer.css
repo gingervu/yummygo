@@ -27,7 +27,7 @@
 }
 
 .deliver-to-customer .order-info-box {
-  width: 28%; /* Đặt chiều rộng của box */
+  width: 410px; /* Đặt chiều rộng của box */
   background: #ffffff;
   display: flex; /* Để căn chỉnh nội dung nếu cần */
   text-align: left;
@@ -35,7 +35,7 @@
   box-sizing: border-box; /* Đảm bảo padding không ảnh hưởng đến kích thước */
   flex-direction: column; /* Xếp nội dung theo chiều dọc */
   gap: 0px;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 .deliver-to-customer .order-info-box h3{
@@ -53,7 +53,7 @@
 }
 
 .deliver-to-customer .payment-box {
-  width: 28%; /* Đặt chiều rộng của box */
+  width: 410px; /* Đặt chiều rộng của box */
   border-radius: 10px;
   background: #F5F5F5;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -76,7 +76,7 @@
 }
 
 .deliver-to-customer .contact-box {
-  width: 28%; /* Đặt chiều rộng của box */
+  width: 410px; /* Đặt chiều rộng của box */
   background: #ffffff;
   display: flex; /* Để căn chỉnh nội dung nếu cần */
   text-align: left;

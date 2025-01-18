@@ -1,7 +1,7 @@
 /* Sidebar container */
 .sidebar {
   position: fixed;
-  width: 13%;
+  width: 210px;
   height: 100vh;
   background-color: #ffffff;
   display: flex;
@@ -39,7 +39,7 @@
 .sidebar-link {
   display: flex;
   align-items: center;
-  padding: 15px 20px;
+  padding: 20px 35px;
   color: #000000;
   text-decoration: none;
   transition: background-color 0.3s ease;
@@ -60,7 +60,7 @@
   width: 20px;
   /* Adjust size */
   height: 20px;
-  margin-right: 10px;
+  margin-right: 18px;
   /* Space between icon and text */
 
 }
@@ -70,7 +70,7 @@
 
   display: flex;
   justify-content: flex-start;
-  margin-left: 70%;
+  margin-left: 150px;
   z-index: 1000;
 }
 
@@ -95,68 +95,3 @@
 }
 
 /* Media queries để hỗ trợ màn hình nhỏ */
-@media (max-width: 1024px) {
-  .sidebar {
-    width: 20%; /* Tăng chiều rộng trên máy tính bảng */
-  }
-  
-  .sidebar .sidebar-footer {
-    margin-left: 50%; /* Điều chỉnh vị trí footer */
-  }
-
-  .sidebar-link {
-    padding: 10px 15px; /* Giảm khoảng cách padding */
-  }
-
-  .sidebar svg {
-    width: 18px; /* Giảm kích thước icon */
-    height: 18px;
-  }
-}
-
-@media (max-width: 768px) {
-  .sidebar {
-    width: 60%; /* Sidebar chiếm 60% màn hình trên tablet */
-    transform: translateX(-100%); /* Ẩn sidebar ban đầu */
-  }
-
-  .sidebar.active {
-    transform: translateX(0); /* Hiển thị sidebar khi cần */
-  }
-
-  .sidebar-links {
-    text-align: center; /* Canh giữa các link */
-  }
-
-  .sidebar .sidebar-footer {
-    margin-left: 0; /* Canh giữa footer */
-    justify-content: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .sidebar {
-    width: 100%; /* Sidebar chiếm toàn màn hình trên điện thoại */
-    height: auto; /* Chiều cao tự động điều chỉnh */
-    transform: translateX(-100%); /* Ẩn sidebar */
-  }
-
-  .sidebar.active {
-    transform: translateX(0); /* Hiển thị sidebar khi cần */
-  }
-
-  .sidebar-link {
-    padding: 12px; /* Giảm padding trên điện thoại */
-    font-size: 14px; /* Giảm kích thước chữ */
-  }
-
-  .sidebar svg {
-    width: 16px; /* Giảm kích thước icon thêm nữa */
-    height: 16px;
-  }
-
-  .sidebar .sidebar-footer {
-    margin: 0;
-    justify-content: center; /* Canh giữa footer */
-  }
-}

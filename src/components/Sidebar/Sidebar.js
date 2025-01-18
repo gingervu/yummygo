@@ -11,7 +11,7 @@ const Sidebar = () => {
     // Xử lý đăng xuất ở đây (ví dụ: xóa token, reset state)
     localStorage.removeItem("access_token");
     localStorage.removeItem("order_id");
-    navigate("/");  // Điều hướng tới trang chính
+    navigate("/driver");  // Điều hướng tới trang chính
   };
 
   const handleOrderButtonClick = async () => {

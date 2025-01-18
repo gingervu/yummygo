@@ -15,7 +15,7 @@
 
 .sign-up-popup-container {
     background-color: #fff;
-    width: 28%;
+    width: 400px;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -117,20 +117,7 @@
     transform: scale(1.05);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .sign-up-popup-container {
-        padding: 15px;
-    }
 
-    .sign-up-popup-title {
-        font-size: 1.25rem;
-    }
-
-    .sign-up-popup button[type="submit"] {
-        font-size: 0.9rem;
-    }
-}
 
 /* Button khi không hợp lệ */
 .sign-up-popup button[type="submit"].invalid {
