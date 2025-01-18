@@ -25,11 +25,11 @@ const DeliverToCustomer = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("access_token"); // Token từ localStorage
 
+  const orderId = localStorage.getItem("order_id"); // Get orderId from localStorage
 
 useEffect(() => {
   const fetchOrderData = async () => {
     try {
-      const orderId = localStorage.getItem("order_id"); // Get orderId from localStorage
       console.log("orderId:", orderId);
       if (orderId) {
         // Update the order status to "preparing"
@@ -99,7 +99,7 @@ useEffect(() => {
         // Chuyển đổi dữ liệu từ API thành định dạng mới
         const formattedItems = orderItemsResponse.data.map(item => ({
           name: item.name, // Tên món
-          price: `${parseFloat(item.price).toLocaleString()} đ`, // Định dạng giá tiền
+          price: `${Number(item.price).toLocaleString()} đ`, // Định dạng giá tiền
           quantity: `x${item.quantity}` // Định dạng số lượng
         }));
 
@@ -139,23 +139,20 @@ useEffect(() => {
         {/* Thông tin đơn hàng */}
         <div className="order-info-box">
           <div className="restaurant-info">
-            <h3><strong>{orderDetails.restaurant_name} | Mã đơn hàng: 1234</strong></h3>
+            <h3><strong>{orderDetails.restaurant_name} | Mã đơn hàng: {orderId}</strong></h3>
             <OrderItems items={orderItems} />
           </div>
           <hr />
           <div className="cost-if">
-            <p>Tổng tạm tính: </p>
-            <p>{orderDetails.food_fee}</p>
+            <p>Tổng tạm tính: {Number(orderDetails.food_fee).toLocaleString("vi-VN")} VNĐ</p>
           </div>
           <div className="cost-if">
-            <p>Chi phí vận chuyển: </p>
-            <p>{orderDetails.delivery_fee}</p>
+            <p>Chi phí vận chuyển: {Number(orderDetails.delivery_fee).toLocaleString("vi-VN")} VNĐ</p>
           </div>
           <div className="cost-if">
-            <p><strong>Tổng: </strong></p>
-            <p>{formatCurrency(
-              parseFloat(orderDetails.food_fee) + parseFloat(orderDetails.delivery_fee)
-            )}</p>
+            <p><strong>Tổng: </strong> {
+              (Number(orderDetails.food_fee) + Number(orderDetails.delivery_fee)).toLocaleString()
+            }</p>
           </div>
         </div>
 
@@ -174,9 +171,8 @@ useEffect(() => {
                 </defs>
               </svg>
             </span>
-            Bạn cần thu của khách hàng: <strong>{formatCurrency(
-              parseFloat(orderDetails.food_fee) + parseFloat(orderDetails.delivery_fee)
-            )}</strong>
+            Bạn cần thu của khách hàng: <strong>{(Number(orderDetails.food_fee) + Number(orderDetails.delivery_fee)).toLocaleString()
+            }</strong>
           </p>
         </div>
 

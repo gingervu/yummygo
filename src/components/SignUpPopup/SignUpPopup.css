@@ -176,3 +176,13 @@
     color: #e74c3c;
     text-align: center;
 }
+
+.restaurant-home-image {
+    position: absolute;
+    bottom: 10px; /* Khoảng cách từ cạnh dưới */
+    right: 10px; /* Khoảng cách từ cạnh phải */
+    width: 100px; /* Chiều rộng ảnh, tùy chỉnh theo ý muốn */
+    height: auto; /* Tự động điều chỉnh chiều cao để giữ tỉ lệ ảnh */
+    opacity: 0.8; /* Làm mờ nhẹ nếu cần */
+    z-index: 10; /* Đảm bảo ảnh nằm trên các thành phần khác */
+  }

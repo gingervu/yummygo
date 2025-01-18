@@ -2,147 +2,88 @@
   font-family: "Poppins", sans-serif;
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Đảm bảo chiều cao đầy đủ */
+  min-height: 100vh;
   padding: 20px;
   flex-grow: 1;
   text-align: center;
+  background: linear-gradient(180deg, #f4f9f4 0%, #e8f5e9 100%);
+  gap: 20px; /* Tăng khoảng cách giữa các thành phần */
 }
 
 .deliver-to-customer main h2 {
   display: flex;
-  text-align: center;
-  justify-content: center; 
-  background: linear-gradient(180deg, #000 0%, #7C6F56 100%); /* Gradient từ đen (#000) đến màu nâu (#7C6F56) */
-  background-clip: text; /* Chỉ áp dụng background vào vùng văn bản */
-  -webkit-background-clip: text; /* Tương thích với các trình duyệt dựa trên WebKit */
-  -webkit-text-fill-color: transparent; /* Đặt màu văn bản là trong suốt để chỉ nhìn thấy gradient */
-  font-size: 24px;
-  margin-top: 100px;
-}
-
-
-
-.deliver-to-customer .icon {
-  margin-right: 10px;
-}
-
-.deliver-to-customer .order-info-box {
-  width: 28%; /* Đặt chiều rộng của box */
-  background: #ffffff;
-  display: flex; /* Để căn chỉnh nội dung nếu cần */
-  text-align: left;
-  margin: auto; /* Canh giữa box trong trang */
-  box-sizing: border-box; /* Đảm bảo padding không ảnh hưởng đến kích thước */
-  flex-direction: column; /* Xếp nội dung theo chiều dọc */
-  gap: 0px;
-  margin-top: 10px;
-}
-
-.deliver-to-customer .order-info-box h3{
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.deliver-to-customer .order-info-box p{
-  font-size: 16px;
-}
-
-.deliver-to-customer .order-info-box .cost-if {
-  display: flex;
-  justify-content: space-between;
-}
-
-.deliver-to-customer .payment-box {
-  width: 28%; /* Đặt chiều rộng của box */
-  border-radius: 10px;
-  background: #F5F5F5;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  display: flex; /* Để căn chỉnh nội dung nếu cần */
-  text-align: center;
-  margin: 5px auto; /* Canh giữa box trong trang */
-  padding: 10px 30px 10px 30px;
-  box-sizing: border-box; /* Đảm bảo padding không ảnh hưởng đến kích thước */
-  flex-direction: column; /* Xếp nội dung theo chiều dọc */
-  gap: 5px;
-  margin-top: 20px;
-}
-
-.deliver-to-customer .payment-box p {
-  margin: 10px 0; /* Khoảng cách giữa các đoạn văn */
-  color: #000000; /* Màu chữ */
-  font-size: 16px;
-  font-weight: 400;
-  text-align: left;
-}
-
-.deliver-to-customer .contact-box {
-  width: 28%; /* Đặt chiều rộng của box */
-  background: #ffffff;
-  display: flex; /* Để căn chỉnh nội dung nếu cần */
-  text-align: left;
-  margin: 5px auto; /* Canh giữa box trong trang */
-  box-sizing: border-box; /* Đảm bảo padding không ảnh hưởng đến kích thước */
-  flex-direction: column; /* Xếp nội dung theo chiều dọc */
-  gap: 5px;
-  margin-top: 35px;
-}
-
-.deliver-to-customer .contact-box .contact-section {
-  display: flex;
-  align-items: center; /* Căn giữa theo chiều dọc */
-  margin-bottom: 10px;
-}
-
-.deliver-to-customer .contact-box .contact-section span {
-  margin-right: 10px;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.deliver-to-customer .contact-box .contact-section .contact-buttons{
-  display: flex; /* Đặt các nút liên hệ nằm ngang */
-  gap: 8px; /* Khoảng cách giữa các nút */
-}
-
-.deliver-to-customer .contact-buttons button {
-  background-color: #DBA718;
-  border: none;
-  border-radius: 5px;
-  padding: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
   justify-content: center;
+  background: linear-gradient(180deg, #000 0%, #7C6F56 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 80px;
+}
+
+.deliver-to-customer .order-info-box,
+.deliver-to-customer .payment-box,
+.deliver-to-customer .contact-box {
+  width: 90%;
+  max-width: 400px; /* Đảm bảo không vượt quá kích thước này */
+  margin: auto;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Tạo bóng nhẹ */
+  padding: 20px;
+  text-align: left;
+  transition: transform 0.3s, box-shadow 0.3s; /* Hiệu ứng hover */
+}
+
+.deliver-to-customer .order-info-box:hover,
+.deliver-to-customer .payment-box:hover,
+.deliver-to-customer .contact-box:hover {
+  transform: translateY(-5px); /* Nhô lên khi hover */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Bóng đổ sâu hơn */
+}
+
+.deliver-to-customer .order-info-box h3,
+.deliver-to-customer .payment-box p,
+.deliver-to-customer .contact-box .contact-section span {
+  font-weight: 600;
 }
 
 .deliver-to-customer .action-btn-container {
   display: flex;
-  justify-content: center; /* Căn giữa */
-  margin-top: 40px;
-  gap: 90px; /* Thêm khoảng cách giữa các nút */
-  flex-direction: row; /* Đảm bảo các button nằm ngang */
+  justify-content: center;
+  gap: 40px;
+  margin-top: 30px;
 }
 
 .deliver-to-customer .action-btn {
+  background-color: #E97522;
   color: white;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
-  padding: 8px 30px;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng hover */
+}
+
+.deliver-to-customer .action-btn:hover {
+  background-color: #f97b20;
+  transform: scale(1.05); /* Phóng to nhẹ */
+}
+
+.deliver-to-customer .contact-buttons button {
+  background-color: #DBA718;
+  color: white;
   border: none;
   border-radius: 5px;
+  padding: 10px;
   cursor: pointer;
-  margin-bottom: 40px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-
-.deliver-to-customer .sucess-btn {
-  background-color: #E97522;
-  
+.deliver-to-customer .contact-buttons button:hover {
+  background-color: #c99318; /* Tông màu tối hơn */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Bóng đổ mạnh hơn */
 }
-
-.deliver-to-customer .sucess-btn:hover {
-  background-color: #f97b20;
-}
-
-
-

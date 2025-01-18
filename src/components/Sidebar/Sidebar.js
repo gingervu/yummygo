@@ -2,14 +2,24 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./Sidebar.css";
+import axios from "axios";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-
+  const token = localStorage.getItem("access_token")
   const handleLogout = () => {
     // Xử lý đăng xuất ở đây (ví dụ: xóa token, reset state)
-    localStorage.removeItem("access_token");
+    axios.put("http://localhost:8000/drivers/update", {"status": "inactive"}, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    }).then((response) => console.log(response.data))
+    .catch((error) => {
+      console.error("Có lỗi xảy ra:", error);
+    });
+     localStorage.removeItem("access_token");
     localStorage.removeItem("order_id");
+   alert("Bạn đã đăng xuất")
     navigate("/");  // Điều hướng tới trang chính
   };
 

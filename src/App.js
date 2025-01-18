@@ -16,7 +16,7 @@ const App = () => {
     <Router>
       <Routes>
         {/* Trang chính Driver */}
-        <Route path="/driver" element={<Home />} />
+        <Route path="/" element={<Home />} />
 
         {/* Các route */}
         <Route path="/driver/home" element={<ProtectedRoute element={<DriverHome />}/>} />

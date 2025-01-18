@@ -5,6 +5,8 @@
   min-height: 100vh; /* Đảm bảo chiều cao đầy đủ */
   padding: 20px;
   flex-grow: 1;
+  background: linear-gradient(180deg, #f4f9f4 0%, #e8f5e9 100%); /* Nền nhẹ nhàng với tông xanh nhạt */
+
 }
 
 .pickup-sucess main h2 {
@@ -20,10 +22,11 @@
 }
 
 .pickup-sucess .delivery-box {
-  width: 500px; /* Đặt chiều rộng của box */
-  border-radius: 10px;
-  background: #F5F5F5;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  width: 40%; /* Đặt chiều rộng của box */
+  height: 20%;
+  border-radius: 20px;
+  background: #fcfdf8;
+  box-shadow: 0px 4px 4px 0px rgba(18, 26, 14, 0.25);
   display: flex; /* Để căn chỉnh nội dung nếu cần */
   text-align: center;
   margin: 5px auto; /* Canh giữa box trong trang */
@@ -43,6 +46,7 @@
 
 .pickup-sucess .icon {
   margin-right: 10px;
+  
 }
 
 .pickup-sucess .action-btn-container {
@@ -59,17 +63,17 @@
   font-weight: 600;
   padding: 8px 30px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
 }
 
 .pickup-sucess .sucess-btn {
-  background-color: #E97522;
+  background-color: #e9bb22;
   
 }
 
 .pickup-sucess .sucess-btn:hover {
-  background-color: #f97b20;
+  background-color: #8e6212;
 }
 
 

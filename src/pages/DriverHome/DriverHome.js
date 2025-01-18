@@ -113,6 +113,11 @@ const DriverHome = () => {
       <Sidebar />
       {/* Nội dung chính */}
       <main>
+      <img
+      src="/assets/driver.png"
+      alt="Driver"
+      className="driver-home-image"
+      />
         <div className="driver-status">
           <div className="text">
             <h1>Chào {driver.name}!</h1>

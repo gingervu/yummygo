@@ -75,6 +75,7 @@ const DriverLoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginS
             placeholder="Mật khẩu"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
             required
           />
 
