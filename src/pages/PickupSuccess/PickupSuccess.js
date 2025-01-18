@@ -7,24 +7,24 @@ import axios from "axios";
 
 const PickupSuccess = () => {
   const [orderDetails, setOrderDetails] = useState({
-      customer_name: "",
-      restaurant_name: "",
-      driver_name: "",
-      restaurant_address: "",
-      restaurant_category: "",
-      address: "",
-      distance: null,
-      food_fee: null,
-      delivery_fee: null,
-      order_status: "",
-      note: "",
-    });
-    const [orderItems, setOrderItems] = useState([]);
-    const [error, setError] = useState(null);
-    const navigate = useNavigate();
-    const token = localStorage.getItem("access_token"); // Token từ localStorage
-  
-  
+    customer_name: "",
+    restaurant_name: "",
+    driver_name: "",
+    restaurant_address: "",
+    restaurant_category: "",
+    address: "",
+    distance: null,
+    food_fee: null,
+    delivery_fee: null,
+    order_status: "",
+    note: "",
+  });
+  const [orderItems, setOrderItems] = useState([]);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("access_token"); // Token từ localStorage
+
+
   useEffect(() => {
     const fetchOrderData = async () => {
       try {
@@ -81,7 +81,7 @@ const PickupSuccess = () => {
   }, [token]); // Re-run when token changes
 
   const handleButtonClick = () => {
-    navigate("/driver/delivertocustomer"); // Điều hướng đến trang /
+    navigate("/driver-delivertocustomer"); // Điều hướng đến trang /
   };
 
   return (

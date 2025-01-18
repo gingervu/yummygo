@@ -24,65 +24,64 @@ const DeliverySuccess = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("access_token"); // Token từ localStorage
 
+  useEffect(() => {
+    const fetchOrderData = async () => {
+      try {
+        const orderId = localStorage.getItem("order_id"); // Get orderId from localStorage
+        console.log("orderId:", orderId);
+        if (orderId) {
+          // Update the order status to "preparing"
+          await axios.put(
+            `http://127.0.0.1:8000/orders/change-status/${orderId}?new_status=completed`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
 
-useEffect(() => {
-  const fetchOrderData = async () => {
-    try {
-      const orderId = localStorage.getItem("order_id"); // Get orderId from localStorage
-      console.log("orderId:", orderId);
-      if (orderId) {
-        // Update the order status to "preparing"
-        await axios.put(
-          `http://127.0.0.1:8000/orders/change-status/${orderId}?new_status=completed`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+          // Fetch the order information
+          const orderInfoResponse = await axios.get(
+            `http://127.0.0.1:8000/orders/info/${orderId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
 
-        // Fetch the order information
-        const orderInfoResponse = await axios.get(
-          `http://127.0.0.1:8000/orders/info/${orderId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+          const orderData = orderInfoResponse.data;
 
-        const orderData = orderInfoResponse.data;
-
-        setOrderDetails({
-          customer_name: orderData.customer_name,
-          restaurant_name: orderData.restaurant_name,
-          driver_name: orderData.driver_name,
-          restaurant_address: orderData.restaurant_address,
-          restaurant_category: orderData.restaurant_category,
-          address: orderData.address,
-          distance: orderData.distance,
-          food_fee: orderData.food_fee,
-          delivery_fee: orderData.delivery_fee,
-          order_status: orderData.order_status,
-          note: orderData.note,
-        });
-        console.log("Order details:", orderData);
-      } else {
-        setError("Không tìm thấy orderId");
+          setOrderDetails({
+            customer_name: orderData.customer_name,
+            restaurant_name: orderData.restaurant_name,
+            driver_name: orderData.driver_name,
+            restaurant_address: orderData.restaurant_address,
+            restaurant_category: orderData.restaurant_category,
+            address: orderData.address,
+            distance: orderData.distance,
+            food_fee: orderData.food_fee,
+            delivery_fee: orderData.delivery_fee,
+            order_status: orderData.order_status,
+            note: orderData.note,
+          });
+          console.log("Order details:", orderData);
+        } else {
+          setError("Không tìm thấy orderId");
+        }
+      } catch (err) {
+        console.error(err);
+        setError("Lỗi khi lấy dữ liệu");
       }
-    } catch (err) {
-      console.error(err);
-      setError("Lỗi khi lấy dữ liệu");
-    }
-  };
+    };
 
-  fetchOrderData();
-}, [token]); // Re-run when token changes
+    fetchOrderData();
+  }, [token]); // Re-run when token changes
 
   const handleButtonClick = () => {
     localStorage.removeItem("order_id");
-    navigate("/driver/home"); // Điều hướng đến trang /
+    navigate("/driver-home"); // Điều hướng đến trang /
   };
 
   return (
@@ -101,7 +100,6 @@ useEffect(() => {
           style={{ width: '25px', height: '25px', marginLeft: '8px' }} // Điều chỉnh kích thước và khoảng cách
         />
         </div>
-        
         <div className="action-btn-container">
           <button className="action-btn" onClick={handleButtonClick}>Hoàn thành
           </button>

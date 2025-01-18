@@ -7,10 +7,8 @@ import axios from "axios";
 import Toggle from "../../components/Toggle/Toggle";
 
 const Statistic = () => {
-    
-    
-    const token = localStorage.getItem("access_token");
 
+    const token = localStorage.getItem("access_token");
     return (
         <div className="statistic">
             {/* Header */}

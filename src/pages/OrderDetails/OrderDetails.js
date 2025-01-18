@@ -8,76 +8,77 @@ import axios from "axios";
 const OrderDetails = () => {
   const [isOrderAvailable, setIsOrderAvailable] = useState(false); // Trạng thái kiểm tra có đơn hàng hay không
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true); // Trạng thái chờ dữ liệu
   const navigate = useNavigate();
   const token = localStorage.getItem("access_token"); // Token từ localStorage
 
   const [orderDetails, setOrderDetails] = useState({
-    restaurant_address: "332 Nguyễn Trãi",
+    restaurant_address: null,
     address: null,
     distance: null,
     food_fee: null,
-    delivery_fee: "20000.00",
-  }); 
+    delivery_fee: null,
+  });
 
   useEffect(() => {
     const fetchOrderData = async () => {
       try {
         const orderId = localStorage.getItem("order_id")
-        if(orderId != null){
+        if (orderId != null) {
           setIsOrderAvailable(true)
         }
         if (orderId) {
-          
           // Gọi API orders/info/${orderId} để lấy thông tin chi tiết
           const orderInfoResponse = await axios
-          .get(`http://127.0.0.1:8000/orders/info/${orderId}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+            .get(`http://127.0.0.1:8000/orders/info/${orderId}`, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
           setOrderDetails(orderInfoResponse.data);
           console.log(orderDetails);
-          
         } else {
           setError("Không tìm thấy orderId");
-          
         }
       } catch (err) {
         console.error(err);
         setError("Lỗi khi lấy dữ liệu");
+      }finally{
+        setLoading(false);
       }
     };
 
     fetchOrderData();
-  }, [orderDetails]);
+  }, [token]);
 
-
-  const formatCurrency = (number) => {
-    return parseFloat(number)
-      .toFixed(2)
-      .replace(/\d(?=(\d{3})+\.)/g, "$&,")
-      + "đ";
-  };
 
   const handleReject = () => {
-    navigate("/driver/home"); // Điều hướng đến trang /home
+    navigate("/driver-home"); // Điều hướng đến trang /home
   };
 
   const handleAccept = () => {
-    
-    
-    
-    navigate("/driver/orderaccept"); // Điều hướng đến trang /
+    navigate("/driver-orderaccept"); // Điều hướng đến trang /
   };
+
+  if (loading) {
+    return (
+      <div className="order-details-fail">
+        <Header />
+        <Sidebar />
+        <main>
+          <p>Đang tải thông tin đơn hàng...</p>
+        </main>
+      </div>
+    );
+  }
 
   if (!isOrderAvailable) {
     return (
       <div className="order-details-fail">
-        
         <Header />
         <Sidebar />
         <main>
-        <p className="no-order-message">Hiện chưa có đơn hàng nào.</p>
+          <p className="no-order-message">Hiện chưa có đơn hàng nào.</p>
         </main>
       </div>
     );
@@ -88,9 +89,8 @@ const OrderDetails = () => {
       <Header />
       <Sidebar />
 
-      
       <main >
-      <h2>Tóm tắt thông tin đơn hàng</h2>
+        <h2>Tóm tắt thông tin đơn hàng</h2>
         <div className="order-summary-box">
           <div className="order-from">
             <p>
@@ -114,24 +114,24 @@ const OrderDetails = () => {
             </p>
             <div className="order-distance">
               <p>
-                <strong>{orderDetails.distance} km - {parseFloat(orderDetails.delivery_fee)*0.8}đ</strong>
+                <strong>{orderDetails.distance} km - {(parseFloat(orderDetails.delivery_fee) * 0.8).toLocaleString()} đ</strong>
               </p>
             </div>
           </div>
           <hr />
           <div className="cost-info">
             <p>Tổng tạm tính: </p>
-            <p>{orderDetails.food_fee}đ</p>
+            <p>{parseFloat(orderDetails.food_fee).toLocaleString()} đ</p>
           </div>
           <div className="cost-info">
             <p>Chi phí vận chuyển: </p>
-            <p>{orderDetails.delivery_fee}đ</p>
+            <p>{parseFloat(orderDetails.delivery_fee).toLocaleString()} đ</p>
           </div>
           <div className="cost-info">
             <p><strong>Tổng: </strong></p>
-            <p>{formatCurrency(
-              parseFloat(orderDetails.food_fee) + parseFloat(orderDetails.delivery_fee)
-            )}</p>
+            <p>{
+              (parseFloat(orderDetails.food_fee) + parseFloat(orderDetails.delivery_fee)).toLocaleString()
+            } đ</p>
           </div>
           <hr />
           <div className="payment-method">
