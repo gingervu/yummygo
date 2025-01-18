@@ -93,7 +93,7 @@ const DeliverySuccess = () => {
       <main>
         <h2>Bạn đã giao hàng thành công!</h2>
         <div className="container">
-          <span><strong>+{parseFloat(orderDetails.delivery_fee) * 0.8} đ</strong></span>
+          <span><strong>+{(parseFloat(orderDetails.delivery_fee) * 0.8).toLocaleString()} đ</strong></span>
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrSLox2ia0u9peaoS7Sy19T60CQ4tO8JT46Q&s"
             alt="Check icon"

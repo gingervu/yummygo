@@ -14,7 +14,7 @@ const Sidebar = () => {
     navigate("/");  // Điều hướng tới trang chính
   };
 
- const handleOrderButtonClick = async () => {
+  const handleOrderButtonClick = async () => {
     const orderId = localStorage.getItem("order_id");
 
     if (!orderId) {
@@ -30,7 +30,7 @@ const Sidebar = () => {
         },
       });
 
-      const  status  = response.data.order_status;
+      const status = response.data.order_status;
       console.log(status)
       // Điều hướng đến trang tương ứng theo status
       switch (status) {
@@ -55,7 +55,7 @@ const Sidebar = () => {
       navigate("/driver-orderdetails");
     }
   };
-  
+
 
   return (
     <div className="sidebar">
@@ -87,7 +87,7 @@ const Sidebar = () => {
           <NavLink to="/driver-history" className="sidebar-link"
             activeclassname="active">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M8.67188 14.3298C8.67188 15.6198 9.66188 16.6598 10.8919 16.6598H13.4019C14.4719 16.6598 15.3419 15.7498 15.3419 14.6298C15.3419 13.4098 14.8119 12.9798 14.0219 12.6998L9.99187 11.2998C9.20187 11.0198 8.67188 10.5898 8.67188 9.36984C8.67188 8.24984 9.54187 7.33984 10.6119 7.33984H13.1219C14.3519 7.33984 15.3419 8.37984 15.3419 9.66984M12 6V18M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="#292D32" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M7.20002 16.7999V14.3999M12 16.7999V11.9999M16.8 16.7999V7.1999M4.80002 21.5999C3.47454 21.5999 2.40002 20.5254 2.40002 19.1999V4.7999C2.40002 3.47442 3.47454 2.3999 4.80002 2.3999H19.2C20.5255 2.3999 21.6 3.47442 21.6 4.7999V19.1999C21.6 20.5254 20.5255 21.5999 19.2 21.5999H4.80002Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
             Lịch sử
           </NavLink>

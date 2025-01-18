@@ -9,7 +9,9 @@ import DeliverySuccess from './pages/DeliverySuccess/DeliverySuccess.js';
 import Profile from './pages/Profile/Profile.js';
 import Home from './pages/Home/Home.js';
 import Statistic from './pages/Statistic/Statistic.js';
+import AllOrders from './pages/AllOrders/AllOrders.js';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute.js';
+
 
 const App = () => {
   return (
@@ -27,6 +29,7 @@ const App = () => {
         <Route path="/driver-deliverysuccess" element={<ProtectedRoute element={<DeliverySuccess />}/>} />
         <Route path="/driver-profile" element={<ProtectedRoute element={<Profile />}/>} />
         <Route path="/driver-statistic" element={<ProtectedRoute element={<Statistic />}/>} />
+        <Route path="/driver-history" element={<ProtectedRoute element={<AllOrders />}/>} />
       </Routes>
     </Router>
   );

@@ -147,23 +147,23 @@ const AcceptOrder = () => {
         {/* Thông tin đơn hàng */}
         <div className="order-box">
           <div className="restaurant-info">
-            <h3><strong>{orderDetails.restaurant_name}| Mã đơn hàng: {orderId}</strong></h3>
+            <h3><strong>{orderDetails.restaurant_name} | Mã đơn hàng: {orderId}</strong></h3>
             <OrderItems items={orderItems} />
           </div>
           <hr />
           <div className="cost-if">
             <p>Tổng tạm tính: </p>
-            <p>{orderDetails.food_fee}đ</p>
+            <p>{parseFloat(orderDetails.food_fee).toLocaleString()} đ</p>
           </div>
           <div className="cost-if">
             <p>Chi phí vận chuyển: </p>
-            <p>{orderDetails.delivery_fee}đ</p>
+            <p>{parseFloat(orderDetails.delivery_fee).toLocaleString()} đ</p>
           </div>
           <div className="cost-if">
             <p><strong>Tổng: </strong></p>
-            <p>{formatCurrency(
-              parseFloat(orderDetails.food_fee) + parseFloat(orderDetails.delivery_fee)
-            )}</p>
+            <p>{
+              (parseFloat(orderDetails.food_fee) + parseFloat(orderDetails.delivery_fee)).toLocaleString()
+            } đ</p>
           </div>
         </div>
 
@@ -182,7 +182,7 @@ const AcceptOrder = () => {
                 </defs>
               </svg>
             </span>
-            Bạn cần trả cho nhà hàng: <strong>{orderDetails.food_fee}đ</strong>
+            Bạn cần trả cho nhà hàng: <strong>{parseFloat(orderDetails.food_fee).toLocaleString()} đ</strong>
           </p>
         </div>
 

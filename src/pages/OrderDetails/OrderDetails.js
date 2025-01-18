@@ -8,15 +8,16 @@ import axios from "axios";
 const OrderDetails = () => {
   const [isOrderAvailable, setIsOrderAvailable] = useState(false); // Trạng thái kiểm tra có đơn hàng hay không
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true); // Trạng thái chờ dữ liệu
   const navigate = useNavigate();
   const token = localStorage.getItem("access_token"); // Token từ localStorage
 
   const [orderDetails, setOrderDetails] = useState({
-    restaurant_address: "332 Nguyễn Trãi",
+    restaurant_address: null,
     address: null,
     distance: null,
     food_fee: null,
-    delivery_fee: "20000.00",
+    delivery_fee: null,
   });
 
   useEffect(() => {
@@ -42,19 +43,14 @@ const OrderDetails = () => {
       } catch (err) {
         console.error(err);
         setError("Lỗi khi lấy dữ liệu");
+      }finally{
+        setLoading(false);
       }
     };
 
     fetchOrderData();
-  }, [orderDetails]);
+  }, [token]);
 
-
-  const formatCurrency = (number) => {
-    return parseFloat(number)
-      .toFixed(2)
-      .replace(/\d(?=(\d{3})+\.)/g, "$&,")
-      + "đ";
-  };
 
   const handleReject = () => {
     navigate("/driver-home"); // Điều hướng đến trang /home
@@ -63,6 +59,18 @@ const OrderDetails = () => {
   const handleAccept = () => {
     navigate("/driver-orderaccept"); // Điều hướng đến trang /
   };
+
+  if (loading) {
+    return (
+      <div className="order-details-fail">
+        <Header />
+        <Sidebar />
+        <main>
+          <p>Đang tải thông tin đơn hàng...</p>
+        </main>
+      </div>
+    );
+  }
 
   if (!isOrderAvailable) {
     return (
@@ -106,24 +114,24 @@ const OrderDetails = () => {
             </p>
             <div className="order-distance">
               <p>
-                <strong>{orderDetails.distance} km - {parseFloat(orderDetails.delivery_fee) * 0.8}đ</strong>
+                <strong>{orderDetails.distance} km - {(parseFloat(orderDetails.delivery_fee) * 0.8).toLocaleString()} đ</strong>
               </p>
             </div>
           </div>
           <hr />
           <div className="cost-info">
             <p>Tổng tạm tính: </p>
-            <p>{orderDetails.food_fee}đ</p>
+            <p>{parseFloat(orderDetails.food_fee).toLocaleString()} đ</p>
           </div>
           <div className="cost-info">
             <p>Chi phí vận chuyển: </p>
-            <p>{orderDetails.delivery_fee}đ</p>
+            <p>{parseFloat(orderDetails.delivery_fee).toLocaleString()} đ</p>
           </div>
           <div className="cost-info">
             <p><strong>Tổng: </strong></p>
-            <p>{formatCurrency(
-              parseFloat(orderDetails.food_fee) + parseFloat(orderDetails.delivery_fee)
-            )}</p>
+            <p>{
+              (parseFloat(orderDetails.food_fee) + parseFloat(orderDetails.delivery_fee)).toLocaleString()
+            } đ</p>
           </div>
           <hr />
           <div className="payment-method">

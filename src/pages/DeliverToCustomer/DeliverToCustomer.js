@@ -119,12 +119,7 @@ const DeliverToCustomer = () => {
     navigate("/driver-deliverysuccess"); // Điều hướng đến trang /
   };
 
-  const formatCurrency = (number) => {
-    return parseFloat(number)
-      .toFixed(2)
-      .replace(/\d(?=(\d{3})+\.)/g, "$&,")
-      + "đ";
-  };
+  
 
 
   return (
@@ -145,17 +140,17 @@ const DeliverToCustomer = () => {
           <hr />
           <div className="cost-if">
             <p>Tổng tạm tính: </p>
-            <p>{orderDetails.food_fee}</p>
+            <p>{parseFloat(orderDetails.food_fee).toLocaleString()} đ</p>
           </div>
           <div className="cost-if">
             <p>Chi phí vận chuyển: </p>
-            <p>{orderDetails.delivery_fee}</p>
+            <p>{parseFloat(orderDetails.delivery_fee).toLocaleString()} đ</p>
           </div>
           <div className="cost-if">
             <p><strong>Tổng: </strong></p>
-            <p>{formatCurrency(
+            <p>{(
               parseFloat(orderDetails.food_fee) + parseFloat(orderDetails.delivery_fee)
-            )}</p>
+            ).toLocaleString()} đ</p>
           </div>
         </div>
 
@@ -174,9 +169,9 @@ const DeliverToCustomer = () => {
                 </defs>
               </svg>
             </span>
-            Bạn cần thu của khách hàng: <strong>{formatCurrency(
+            Bạn cần thu của khách hàng: <strong>{(
               parseFloat(orderDetails.food_fee) + parseFloat(orderDetails.delivery_fee)
-            )}</strong>
+            ).toLocaleString()} đ</strong>
           </p>
         </div>
 
