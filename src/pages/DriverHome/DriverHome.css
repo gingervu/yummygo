@@ -7,27 +7,25 @@
   padding: 20px;
   flex-grow: 1;
   text-align: left;
-  
 }
 
-.driver-home .driver-status{
+.driver-home .driver-status {
   width: 55%;
   margin-left: 20%;
   display: flex;
   flex-direction: row;
   gap: 70px;
 }
+
 .driver-home main h1 {
   font-size: 30px;
   color: #7C6F56;
   margin-top: 120px;
- 
 }
 
 .driver-home main h2 {
   font-size: 24px;
   margin-top: 10px;
-  
 }
 
 .driver-home main p {
@@ -36,10 +34,7 @@
   text-align: center;
 }
 
-
-
-
-
+/* Popup */
 .driver-home .popup {
   position: fixed;
   top: 0;
@@ -68,7 +63,6 @@
 .driver-home .popup-content button {
   margin: 20px;
   padding: 10px 20px;
-  
   background-color: white;
   border-color: rgb(131, 131, 131);
   border-style: solid;
@@ -78,10 +72,71 @@
 
 .driver-home .popup-content .order-btn:hover {
   background-color: #eeeeee;
-  
 }
 
 .driver-home .popup-content .close-btn:hover {
   background-color: #eeeeee;
-  
+}
+
+/* Media queries để giảm kích thước chữ */
+@media (max-width: 1024px) {
+  .driver-home main h1 {
+    font-size: 24px; /* Giảm kích thước chữ tiêu đề */
+  }
+
+  .driver-home main h2 {
+    font-size: 20px; /* Giảm kích thước chữ tiêu đề phụ */
+  }
+
+  .driver-home main p {
+    font-size: 18px; /* Giảm kích thước chữ đoạn văn */
+  }
+
+  .driver-home .popup-content {
+    width: 40%; /* Tăng chiều rộng popup để dễ đọc */
+  }
+}
+
+@media (max-width: 768px) {
+  .driver-home main h1 {
+    font-size: 20px; /* Giảm kích thước chữ tiêu đề hơn nữa */
+  }
+
+  .driver-home main h2 {
+    font-size: 18px;
+  }
+
+  .driver-home main p {
+    font-size: 16px; /* Giảm kích thước chữ đoạn văn */
+  }
+
+  .driver-home .popup-content {
+    width: 60%; /* Mở rộng popup cho màn hình nhỏ */
+  }
+}
+
+@media (max-width: 480px) {
+  .driver-home main h1 {
+    font-size: 14px; /* Kích thước nhỏ cho điện thoại */
+    margin-left: 0;
+    margin-top: 50px;
+  }
+
+  .driver-home main h2 {
+    font-size: 12px;
+    margin-left: 10%;
+  }
+
+  .driver-home main p {
+    font-size: 10px;
+  }
+
+  .driver-home .popup-content {
+    width: 80%; /* Tăng chiều rộng popup để hiển thị rõ hơn */
+  }
+
+  .driver-home .popup-content button {
+    font-size: 12px; /* Giảm kích thước chữ trên nút */
+    padding: 8px 16px; /* Giảm padding trên nút */
+  }
 }

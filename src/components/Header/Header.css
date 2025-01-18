@@ -42,3 +42,38 @@
   text-transform: capitalize;
   color: #F8F8F8;
 }
+
+@media (max-width: 768px) {
+  .header {
+    height: 60px; /* Giảm chiều cao của header */
+    padding: 0 10px; /* Giảm padding */
+  }
+
+  .logo {
+    margin-left: 10px; /* Giảm lề trái */
+    font-size: 25px; /* Giảm kích thước font chữ logo */
+  }
+
+  .yummy-text,
+  .driver-text {
+    font-size: 22px; /* Giảm kích thước font chữ của text */
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    height: auto; /* Cho phép header tự động điều chỉnh chiều cao */
+    padding: 10px 5px;
+    
+  }
+
+  .logo {
+    margin: 0; /* Xóa margin */
+    font-size: 22px; /* Giảm kích thước font chữ thêm nữa */
+  }
+
+  .yummy-text,
+  .driver-text {
+    font-size: 18px; /* Giảm kích thước font chữ nhỏ hơn cho màn hình rất nhỏ */
+  }
+}

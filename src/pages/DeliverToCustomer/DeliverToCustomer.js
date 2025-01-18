@@ -24,99 +24,99 @@ const DeliverToCustomer = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("access_token"); // Token từ localStorage
+  const orderId = localStorage.getItem("order_id");
 
+  useEffect(() => {
+    const fetchOrderData = async () => {
+      try {
+        const orderId = localStorage.getItem("order_id"); // Get orderId from localStorage
+        console.log("orderId:", orderId);
+        if (orderId) {
+          // Update the order status to "preparing"
+          await axios.put(
+            `http://127.0.0.1:8000/orders/change-status/${orderId}?new_status=delivered`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
 
-useEffect(() => {
-  const fetchOrderData = async () => {
-    try {
-      const orderId = localStorage.getItem("order_id"); // Get orderId from localStorage
-      console.log("orderId:", orderId);
-      if (orderId) {
-        // Update the order status to "preparing"
-        await axios.put(
-          `http://127.0.0.1:8000/orders/change-status/${orderId}?new_status=delivered`,
-          {},
-          {
+          // Fetch the order information
+          const orderInfoResponse = await axios.get(
+            `http://127.0.0.1:8000/orders/info/${orderId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          const orderData = orderInfoResponse.data;
+
+          setOrderDetails({
+            customer_name: orderData.customer_name,
+            restaurant_name: orderData.restaurant_name,
+            driver_name: orderData.driver_name,
+            restaurant_address: orderData.restaurant_address,
+            restaurant_category: orderData.restaurant_category,
+            address: orderData.address,
+            distance: orderData.distance,
+            food_fee: orderData.food_fee,
+            delivery_fee: orderData.delivery_fee,
+            order_status: orderData.order_status,
+            note: orderData.note,
+          });
+          console.log("Order details:", orderData);
+        } else {
+          setError("Không tìm thấy orderId");
+        }
+      } catch (err) {
+        console.error(err);
+        setError("Lỗi khi lấy dữ liệu");
+      }
+    };
+
+    fetchOrderData();
+  }, [token]); // Re-run when token changes
+
+  useEffect(() => {
+    const fetchOrderItems = async () => {
+      try {
+
+        const orderId = localStorage.getItem("order_id"); // Get orderId from localStorage
+
+        if (orderId) {
+          const orderItemsResponse = await axios.get(`http://127.0.0.1:8000/orders/${orderId}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          }
-        );
+          });
 
-        // Fetch the order information
-        const orderInfoResponse = await axios.get(
-          `http://127.0.0.1:8000/orders/info/${orderId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+          console.log("Dữ liệu món ăn:", orderItemsResponse.data);
 
-        const orderData = orderInfoResponse.data;
+          // Chuyển đổi dữ liệu từ API thành định dạng mới
+          const formattedItems = orderItemsResponse.data.map(item => ({
+            name: item.name, // Tên món
+            price: `${parseFloat(item.price).toLocaleString()} đ`, // Định dạng giá tiền
+            quantity: `x${item.quantity}` // Định dạng số lượng
+          }));
 
-        setOrderDetails({
-          customer_name: orderData.customer_name,
-          restaurant_name: orderData.restaurant_name,
-          driver_name: orderData.driver_name,
-          restaurant_address: orderData.restaurant_address,
-          restaurant_category: orderData.restaurant_category,
-          address: orderData.address,
-          distance: orderData.distance,
-          food_fee: orderData.food_fee,
-          delivery_fee: orderData.delivery_fee,
-          order_status: orderData.order_status,
-          note: orderData.note,
-        });
-        console.log("Order details:", orderData);
-      } else {
-        setError("Không tìm thấy orderId");
+          // Cập nhật trạng thái orderItems
+          setOrderItems(formattedItems);
+        }
+      } catch (err) {
+        console.error("Có lỗi xảy ra khi lấy dữ liệu đơn hàng:", err);
       }
-    } catch (err) {
-      console.error(err);
-      setError("Lỗi khi lấy dữ liệu");
-    }
-  };
+    };
 
-  fetchOrderData();
-}, [token]); // Re-run when token changes
-
-useEffect(() => {
-  const fetchOrderItems = async () => {
-    try {
-      
-      const orderId = localStorage.getItem("order_id"); // Get orderId from localStorage
-
-      if (orderId) {
-        const orderItemsResponse = await axios.get(`http://127.0.0.1:8000/orders/${orderId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        console.log("Dữ liệu món ăn:", orderItemsResponse.data);
-        
-        // Chuyển đổi dữ liệu từ API thành định dạng mới
-        const formattedItems = orderItemsResponse.data.map(item => ({
-          name: item.name, // Tên món
-          price: `${parseFloat(item.price).toLocaleString()} đ`, // Định dạng giá tiền
-          quantity: `x${item.quantity}` // Định dạng số lượng
-        }));
-
-        // Cập nhật trạng thái orderItems
-        setOrderItems(formattedItems);
-      }
-    } catch (err) {
-      console.error("Có lỗi xảy ra khi lấy dữ liệu đơn hàng:", err);
-    }
-  };
-
-  fetchOrderItems();
-}, [orderDetails.order_id, token]); // Chạy lại khi order_id hoặc token thay đổi
+    fetchOrderItems();
+  }, [orderDetails.order_id, token]); // Chạy lại khi order_id hoặc token thay đổi
 
 
   const handleButtonClick = () => {
-    navigate("/driver/deliverysuccess"); // Điều hướng đến trang /
+    navigate("/driver-deliverysuccess"); // Điều hướng đến trang /
   };
 
   const formatCurrency = (number) => {
@@ -139,7 +139,7 @@ useEffect(() => {
         {/* Thông tin đơn hàng */}
         <div className="order-info-box">
           <div className="restaurant-info">
-            <h3><strong>{orderDetails.restaurant_name} | Mã đơn hàng: 1234</strong></h3>
+            <h3><strong>{orderDetails.restaurant_name} | Mã đơn hàng: {orderId}</strong></h3>
             <OrderItems items={orderItems} />
           </div>
           <hr />

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../components/Header/Header";
 import { useNavigate } from "react-router-dom";
-import "./DeliverySuccess.css";
+import "./AllOrders.css";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import axios from "axios";
 
-const DeliverySuccess = () => {
+const AllOrders = () => {
   const [orderDetails, setOrderDetails] = useState({
     customer_name: "",
     restaurant_name: "",
@@ -31,9 +31,8 @@ const DeliverySuccess = () => {
         console.log("orderId:", orderId);
         if (orderId) {
           // Update the order status to "preparing"
-          await axios.put(
-            `http://127.0.0.1:8000/orders/change-status/${orderId}?new_status=completed`,
-            {},
+          await axios.get(
+            `http://127.0.0.1:8000/drivers/all-orders`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -91,22 +90,10 @@ const DeliverySuccess = () => {
       <Sidebar />
       {/* Nội dung chính */}
       <main>
-        <h2>Bạn đã giao hàng thành công!</h2>
-        <div className="container">
-          <span><strong>+{parseFloat(orderDetails.delivery_fee) * 0.8} đ</strong></span>
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrSLox2ia0u9peaoS7Sy19T60CQ4tO8JT46Q&s"
-            alt="Check icon"
-            style={{ width: '25px', height: '25px', marginLeft: '8px' }} // Điều chỉnh kích thước và khoảng cách
-          />
-        </div>
-        <div className="action-btn-container">
-          <button className="action-btn" onClick={handleButtonClick}>Hoàn thành
-          </button>
-        </div>
+        
       </main>
     </div>
   );
 };
 
-export default DeliverySuccess;
+export default AllOrders;

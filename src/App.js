@@ -19,14 +19,14 @@ const App = () => {
         <Route path="/driver" element={<Home />} />
 
         {/* Các route */}
-        <Route path="/driver/home" element={<ProtectedRoute element={<DriverHome />}/>} />
-        <Route path="/driver/orderdetails" element={<ProtectedRoute element={<OrderDetails />}/>} />
-        <Route path="/driver/orderaccept" element={<ProtectedRoute element={<AcceptOrder />}/>} />
-        <Route path="/driver/pickupsuccess" element={<ProtectedRoute element={<PickupSuccess />}/>} />
-        <Route path="/driver/delivertocustomer" element={<ProtectedRoute element={<DeliverToCustomer />}/>} />
-        <Route path="/driver/deliverysuccess" element={<ProtectedRoute element={<DeliverySuccess />}/>} />
-        <Route path="/driver/profile" element={<ProtectedRoute element={<Profile />}/>} />
-        <Route path="/driver/statistic" element={<ProtectedRoute element={<Statistic />}/>} />
+        <Route path="/driver-home" element={<ProtectedRoute element={<DriverHome />}/>} />
+        <Route path="/driver-orderdetails" element={<ProtectedRoute element={<OrderDetails />}/>} />
+        <Route path="/driver-orderaccept" element={<ProtectedRoute element={<AcceptOrder />}/>} />
+        <Route path="/driver-pickupsuccess" element={<ProtectedRoute element={<PickupSuccess />}/>} />
+        <Route path="/driver-delivertocustomer" element={<ProtectedRoute element={<DeliverToCustomer />}/>} />
+        <Route path="/driver-deliverysuccess" element={<ProtectedRoute element={<DeliverySuccess />}/>} />
+        <Route path="/driver-profile" element={<ProtectedRoute element={<Profile />}/>} />
+        <Route path="/driver-statistic" element={<ProtectedRoute element={<Statistic />}/>} />
       </Routes>
     </Router>
   );

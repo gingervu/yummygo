@@ -9,11 +9,11 @@ const DriverLoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginS
   const [userName, setUserName] = useState(""); // Tên đăng nhập
   const [password, setPassword] = useState(""); // Trường mật khẩu
   const [error, setError] = useState(""); // Thông báo lỗi
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   // Hàm xử lý đăng nhập
   const handleLogin = async (e) => {
     e.preventDefault(); // Ngăn chặn reload trang
-    
+
     const loginData = {
       user_name: userName,
       password: password,
@@ -21,8 +21,8 @@ const DriverLoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginS
     };
     try {
       // Gửi yêu cầu đăng nhập đến API
-      const response = await axios.post("http://127.0.0.1:8000/token", loginData);    
-      if (response.status === 200 ) {
+      const response = await axios.post("http://127.0.0.1:8000/token", loginData);
+      if (response.status === 200) {
         alert("Đăng nhập thành công!");
         setShowLogin(false); // Đóng popup
         // Lấy token từ phản hồi API
@@ -31,11 +31,11 @@ const DriverLoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginS
         localStorage.setItem("access_token", token);
         console.log("Token:", token)
         // Chuyển hướng
-        navigate("/driver/home");
+        navigate("/driver-home");
       }
     } catch (error) {
       console.error(error);
-    
+
       // Kiểm tra lỗi trả về từ phía server
       if (error.response) {
         alert(`Lỗi: ${error.response.data.message || "Đăng ký thất bại, vui lòng kiểm tra lại dữ liệu!"}`);
@@ -43,10 +43,10 @@ const DriverLoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginS
         alert("Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối mạng của bạn.");
       } else {
         alert(`Đã xảy ra lỗi: ${error.message}`);
-      }  
-    } 
+      }
+    }
 
-};
+  };
 
   return (
     <div className="login-popup">
@@ -78,7 +78,7 @@ const DriverLoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginS
             required
           />
 
-          
+
         </div>
 
         {/* Hiển thị lỗi nếu có */}

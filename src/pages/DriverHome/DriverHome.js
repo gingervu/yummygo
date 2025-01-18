@@ -16,7 +16,6 @@ const DriverHome = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("access_token");
 
-
   useEffect(() => {
     // Gửi yêu cầu GET để lấy thông tin
     axios
@@ -30,7 +29,7 @@ const DriverHome = () => {
         console.log("Dữ liệu trả về từ API:", response.data);
         // Lưu vào state
         setDriver(response.data);
-        setDriverStatus(response.data.status==="active")
+        setDriverStatus(response.data.status === "active")
         console.log(driverStatus)
       })
 
@@ -78,20 +77,19 @@ const DriverHome = () => {
   // Hàm xử lý khi nhấn nút "Xem chi tiết đơn hàng"
   const handleOrderDetails = () => {
     setPopupVisible(false);
-    navigate("/driver/orderdetails", { state: { order } }); // Điều hướng tới trang chi tiết đơn hàng
+    navigate("/driver-orderdetails", { state: { order } }); // Điều hướng tới trang chi tiết đơn hàng
   };
 
   // Hàm để xử lý khi toggle thay đổi trạng thái
   const handleStatusChange = async () => {
-    
     setDriverStatus(!driverStatus)
     // Gửi yêu cầu cập nhật trạng thái vào API
     console.log(driverStatus)
     console.log(token)
     axios
       .put(
-        "http://127.0.0.1:8000/drivers/change-status", 
-        {  },      
+        "http://127.0.0.1:8000/drivers/change-status",
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`, // Thêm token vào header
@@ -104,7 +102,6 @@ const DriverHome = () => {
         console.error("Có lỗi xảy ra khi cập nhật trạng thái:", error);
       });
   };
-
 
   return (
     <div className="driver-home">
@@ -129,18 +126,18 @@ const DriverHome = () => {
         </div>
       </main>
       {/* Popup hiển thị đơn hàng mới */}
-{/* Popup hiển thị đơn hàng mới */}
-{popupVisible && order && (
-          <div className="popup">
-            <div className="popup-content">
-              <h2>Bạn có đơn hàng mới!</h2>
-              <div className="btn">
+      {/* Popup hiển thị đơn hàng mới */}
+      {popupVisible && order && (
+        <div className="popup">
+          <div className="popup-content">
+            <h2>Bạn có đơn hàng mới!</h2>
+            <div className="btn">
               <button className="order-btn" onClick={handleOrderDetails}>Xem đơn</button>
               <button className="close-btn" onClick={() => setPopupVisible(false)}>Đóng</button>
-              </div>
             </div>
           </div>
-        )}
+        </div>
+      )}
     </div>
   );
 };
