@@ -87,7 +87,7 @@ const Sidebar = () => {
           <NavLink to="/driver-history" className="sidebar-link"
             activeclassname="active">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M7.20002 16.7999V14.3999M12 16.7999V11.9999M16.8 16.7999V7.1999M4.80002 21.5999C3.47454 21.5999 2.40002 20.5254 2.40002 19.1999V4.7999C2.40002 3.47442 3.47454 2.3999 4.80002 2.3999H19.2C20.5255 2.3999 21.6 3.47442 21.6 4.7999V19.1999C21.6 20.5254 20.5255 21.5999 19.2 21.5999H4.80002Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M7.20002 16.7999V14.3999M12 16.7999V11.9999M16.8 16.7999V7.1999M4.80002 21.5999C3.47454 21.5999 2.40002 20.5254 2.40002 19.1999V4.7999C2.40002 3.47442 3.47454 2.3999 4.80002 2.3999H19.2C20.5255 2.3999 21.6 3.47442 21.6 4.7999V19.1999C21.6 20.5254 20.5255 21.5999 19.2 21.5999H4.80002Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             Lịch sử
           </NavLink>
