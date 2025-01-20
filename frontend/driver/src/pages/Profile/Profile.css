@@ -1,0 +1,123 @@
+.profile main {
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Đảm bảo chiều cao đầy đủ */
+    padding: 20px;
+    flex-grow: 1;
+    background: linear-gradient(180deg, #f4f9f4 0%, #e8f5e9 100%); /* Nền nhẹ nhàng với tông xanh nhạt */
+
+  }
+
+  .profile main h2{
+    margin-top: 110px;
+    margin-left: 340px;
+    margin-bottom: 30px;
+  } 
+
+  .profile main .delete{
+    margin-top: 100px;
+  }
+
+  .profile main .delete button{
+    border: 1px solid #5e5e5e;
+    background-color: #fff;
+    text-align: center;
+    margin-left: 390px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  } 
+
+  .profile main .delete button:hover{
+    border: none;
+    background-color: #ff5757;
+    color: #fff;
+  } 
+
+  .profile .profile-section{
+    margin-left: 390px;
+  }
+
+  .profile .profile-section .input-group{
+    display: flex; /* Sử dụng Flexbox */
+  align-items: center; /* Căn giữa dọc */
+  }
+  .profile .profile-section input{
+    margin-right: 20px;
+    border-radius: 5px;
+    border-style: solid;
+    padding: 5px;
+  }
+  .profile .profile-section button{
+    background-color: white;
+    border: #5e5e5e;
+    border-radius: 8px;
+    cursor: pointer;
+   
+  }
+ 
+  .profile .profile-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    
+    margin-left: 390px;
+  }
+  .profile .profile-name .container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #5e5e5e;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  .profile .profile-name .container span{
+    margin-right: 10px;
+  }
+
+
+ 
+  .profile .profile-name .container .save-btn,
+  .profile .profile-name .container .edit-btn{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+ 
+/* Profile.css */
+.profile .popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile .popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.profile .popup-content button {
+  margin: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+}
+
+.profile .popup-content button:hover {
+  background-color: #e3e3e3;
+}
