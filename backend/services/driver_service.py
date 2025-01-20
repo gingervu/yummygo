@@ -72,35 +72,15 @@ def delete_driver_service(driver_id: int, db: Session):
 
 def get_current_driver_order(driver_id: int, db: Session):
     db_order = db.query(Order).filter(Order.driver_id == driver_id,
-<<<<<<< HEAD
-                                      Order.order_status == OrderStatusEnum.cart).first()
-=======
                                       Order.order_status != OrderStatusEnum.completed).first()
->>>>>>> frontend/driver
     if not db_order:
         return []
     return db_order.order_id
 
 def get_driver_orders(driver_id: int, db: Session):
-<<<<<<< HEAD
-    db_order = db.query(Order).filter(Order.driver_id == driver_id).all()
-=======
     db_order = db.query(Order).filter(Order.driver_id == driver_id,
                                       Order.order_status == OrderStatusEnum.completed).all()
->>>>>>> frontend/driver
     if not db_order:
         return []
     return db_order
-
-<<<<<<< HEAD
-=======
-
-
-
-
-
->>>>>>> frontend/driver
-# def list_drivers_service(db: Session) -> List[Driver]:
-#     """Lấy danh sách tất cả tài xế chưa bị xóa"""
-#     return db.query(Driver).filter(Driver.is_deleted == False).all()
 

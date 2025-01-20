@@ -22,11 +22,7 @@ async def get_driver(current_driver: dict = Depends(require_role("driver")), db:
 
 # Chỉnh sửa thông tin tài xế
 @router.put("/update", response_model=DriverResponse)
-<<<<<<< HEAD
-async def update_driver(driver: DriverCreate, current_driver: dict = Depends(require_role('driver')), db: Session = Depends(get_db)):
-=======
 async def update_driver(driver: DriverChange, current_driver: dict = Depends(require_role('driver')), db: Session = Depends(get_db)):
->>>>>>> frontend/driver
     return update_driver_service(driver, current_driver['user_id'], db)
 
 # Chuyển trạng thái tài xế
