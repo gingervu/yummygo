@@ -1,0 +1,119 @@
+.admin-orders main{
+    
+    display: flex;
+  flex-direction: column;
+ /* Căn giữa theo chiều dọc */
+  min-height: 100vh; /* Đảm bảo chiều cao đầy đủ */
+  padding: 20px;
+    font-family: "Poppins", sans-serif;
+    flex-grow: 1; /* Chiếm hết phần còn lại của màn hình */
+    background: linear-gradient(180deg, #f4f9f4 0%, #e8f5e9 100%); /* Nền nhẹ nhàng với tông xanh nhạt */
+ 
+}
+
+
+.admin-orders h2{
+    margin-top: 100px;
+margin-left: 24%;
+margin-bottom: 28px;
+}
+
+/* Nút lịch sử */
+.admin-orders .history-btn {
+    margin-left: 24%;
+    font-size: 16px;
+    width: 190px;
+    height: 40px;
+    background-color: white;
+    border: 2px solid #1f1f1f;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .admin-orders .history-btn:hover {
+    background-color: #e9ecef; /* Màu nền khi hover */
+    transform: scale(1.05); /* Tăng nhẹ kích thước */
+  }
+  
+  .admin-orders .history-btn.active {
+    background-color: #f5f5f5;
+    font-weight: bold;
+  }
+  
+  /* Popup chính */
+  .admin-orders .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    z-index: 1000;
+    padding: 20px 80px 20px 0px;
+    text-align: center;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  /* Tiêu đề trong popup */
+  .admin-orders .popup h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 0px;
+    text-align: center; /* Đảm bảo căn giữa */
+  }
+  
+  /* Nội dung trong popup */
+  .admin-orders .popup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Căn giữa theo chiều ngang */
+    gap: 15px; /* Khoảng cách giữa các mục */
+  }
+  
+  
+  /* Hiệu ứng fade-in */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -60%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+  }
+  
+  /* Overlay che nền */
+  .admin-orders .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+  }
+  
+  /* Responsive cho màn hình nhỏ */
+  @media (max-width: 768px) {
+    .admin-orders .popup {
+      width: 95%;
+      max-width: 400px;
+    }
+  
+    .admin-orders .history-btn {
+      font-size: 14px;
+      width: 160px;
+      height: 36px;
+    }
+  
+    .admin-orders .popup h3 {
+      font-size: 1.25rem;
+    }
+  }
+  

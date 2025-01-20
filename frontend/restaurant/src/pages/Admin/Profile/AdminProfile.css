@@ -1,0 +1,140 @@
+.admin-profile main {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Căn giữa theo chiều ngang */
+    justify-content: center; /* Căn giữa theo chiều dọc */
+    min-height: 100vh; /* Đảm bảo chiều cao đầy đủ */
+    padding: 20px;
+    font-family: "Poppins", sans-serif;
+    box-sizing: border-box;
+    background: linear-gradient(180deg, #f4f9f4 0%, #e8f5e9 100%); /* Nền nhẹ nhàng với tông xanh nhạt */
+
+}
+
+.admin-profile main .delete{
+    margin-top: 30px;
+  }
+  .admin-profile main .delete button{
+    border: 1px solid #5e5e5e;
+    background-color: #fff;
+    text-align: center;
+    padding: 8px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  } 
+
+  .admin-profile main .delete button:hover{
+    border: none;
+    background-color: #ff5757;
+    color: #fff;
+  } 
+
+.admin-profile h2 {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333; /* Màu chữ tiêu đề */
+    text-align: center;
+    font-weight: 600;
+}
+
+.admin-profile .container {
+    width: 90%;
+    max-width: 600px; /* Giới hạn chiều rộng */
+    background: #fff; /* Nền trắng */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+}
+
+.admin-profile .info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ccc; /* Màu viền nhẹ */
+    border-radius: 10px;
+    padding: 10px 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    background-color: #fefefe; /* Nền item */
+    transition: 0.3s; /* Hiệu ứng hover */
+}
+
+.admin-profile .info-item:hover {
+    background-color: #f4f4f4; /* Hiệu ứng hover */
+    border-color: #888;
+}
+
+.admin-profile .info-item span {
+    font-size: 16px;
+    font-weight: 500;
+    color: #555;
+}
+
+.admin-profile .input-edit {
+    border: 1px solid #ccc; /* Viền input */
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 16px;
+    width: 70%; /* Chiều rộng mặc định */
+    transition: 0.3s;
+}
+
+.admin-profile .input-edit:focus {
+    outline: none;
+    border-color: #007bff; /* Viền xanh khi focus */
+    background-color: #f9f9ff;
+}
+
+.admin-profile .edit-btn,
+.admin-profile .save-btn {
+    background-color: #4caf50; /* Màu xanh chính */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 8px 16px;
+    transition: 0.3s;
+}
+
+.admin-profile .edit-btn:hover,
+.admin-profile .save-btn:hover {
+    background-color: #4caf50; /* Hiệu ứng hover nút */
+}
+
+
+/* Profile.css */
+.admin-profile .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .admin-profile .popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 18px;
+  }
+  
+  .admin-profile .popup-content button {
+    margin: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+  }
+  
+  .admin-profile .popup-content button:hover {
+    background-color: #e3e3e3;
+  }
+  
+

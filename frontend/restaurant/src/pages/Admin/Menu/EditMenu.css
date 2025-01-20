@@ -1,0 +1,138 @@
+.edit-menu main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Chiều cao toàn màn hình */
+    padding: 20px;
+    font-family: "Poppins", sans-serif;
+    flex-grow: 1; /* Tự giãn đầy màn hình */
+    background: linear-gradient(180deg, #f4f9f4 0%, #e8f5e9 100%); /* Nền nhẹ nhàng với tông xanh nhạt */
+
+}
+  
+  .edit-menu .back {
+    margin-top: 100px;
+    display: flex;
+    align-items: flex-start;
+    margin-left: 18%;
+  }
+  
+  .edit-menu h2 {
+    margin-top: 0;
+    margin-left: 24%;
+    margin-bottom: 28px;
+    font-size: 24px;
+    color: #2e7d32; /* Tông xanh lá đậm */
+    text-align: left;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng nhẹ */
+  }
+  
+  .edit-menu .change-btn {
+    margin-left: 24%;
+    font-size: 18px;
+    width: 220px;
+    height: 45px;
+    background: linear-gradient(90deg, #66bb6a 0%, #43a047 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  .edit-menu .change-btn:hover {
+    background: linear-gradient(90deg, #4caf50 0%, #388e3c 100%);
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Thêm hiệu ứng bóng */
+  }
+  
+  .edit-menu .items-container {
+    margin-left: 24%;
+    width: 32%;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .edit-menu .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .edit-menu .popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 30%;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .edit-menu .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .edit-menu .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #2e7d32; /* Tông xanh lá đậm */
+  }
+  
+  .edit-menu .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .edit-menu .form-group input:focus {
+    border-color: #4caf50; /* Tông xanh lá đậm khi focus */
+    outline: none;
+  }
+  
+  .edit-menu .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  .edit-menu .form-actions button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  .edit-menu .form-actions button:first-child {
+    background: linear-gradient(90deg, #f0f4c3 0%, #dce775 100%);
+    color: #33691e;
+  }
+  
+  .edit-menu .form-actions button:first-child:hover {
+    background: linear-gradient(90deg, #d4e157 0%, #c0ca33 100%);
+    transform: scale(1.05);
+  }
+  
+  .edit-menu .form-actions button:last-child {
+    background: #ef5350;
+    color: white;
+  }
+  
+  .edit-menu .form-actions button:last-child:hover {
+    background: #e53935;
+    transform: scale(1.05);
+  }
+  
