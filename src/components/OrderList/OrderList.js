@@ -15,6 +15,7 @@ const OrderList = ({ orders, basePath }) => {
         <tr>
           <th>Mã đơn hàng</th>
           <th>Tổng tiền</th>
+          <th>Trạng thái</th>
           <th>Chi tiết</th>
         </tr>
       </thead>
@@ -23,9 +24,8 @@ const OrderList = ({ orders, basePath }) => {
           <tr key={order.order_id}>
             <td>{order.order_id}</td>
             <td>{order.food_fee}</td>
-            <td>
-              <button className="detail-btn" onClick={() => handleButtonClick(order.order_id)}>Chi tiết đơn hàng</button>
-            </td>
+            <td>{order.order_status}</td>
+            <td><button className="detail-btn" onClick={() => handleButtonClick(order.order_id)}>Chi tiết đơn hàng</button></td>
           </tr>
         ))}
       </tbody>

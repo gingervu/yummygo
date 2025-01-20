@@ -2,69 +2,82 @@
 
 /* Cấu hình cho bảng */
 .order-list {
-    width: 100%;
-  max-width: 500px; /* Giới hạn độ rộng của bảng */
-  margin-left: 23%;
-  margin-top: 30px; /* Căn giữa bảng theo chiều ngang */
+  width: 90%; /* Đáp ứng trên màn hình nhỏ */
+  max-width: 800px; /* Giới hạn chiều rộng tối đa */
+  margin: 30px auto; /* Căn giữa bảng theo chiều ngang */
   border-collapse: collapse;
   font-family: "Poppins", sans-serif;
   background-color: #ffffff;
-  border: none;
+  border-radius: 8px; /* Bo tròn góc bảng */
+  overflow: hidden; /* Ẩn phần viền góc nếu bảng bị tràn */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ nhẹ */
   text-align: center;
+}
 
-  }
-  
-  /* Định dạng cho tiêu đề bảng */
-  .order-list th {
-    background-color: #ffffff;
-    color: rgb(0, 0, 0);
-    padding: 12px 15px;
-    text-align: left;
-    font-size: 18px;
-    border: none;
-  }
-  
-  /* Định dạng cho các ô trong bảng */
-  .order-list td {
-    padding: 12px 15px;
-    text-align: left;
-    font-size: 16px;
-  }
-  
+/* Định dạng cho tiêu đề bảng */
+.order-list th {
+  background-color: #f8f8f8;
+  color: #333333;
+  padding: 15px;
+  font-size: 18px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #e0e0e0; /* Đường phân cách dưới tiêu đề */
+}
+
+/* Định dạng cho các ô trong bảng */
+.order-list td {
+  padding: 15px;
+  text-align: left;
+  font-size: 16px;
+  color: #555555;
+  border-bottom: 1px solid #e0e0e0; /* Đường phân cách giữa các hàng */
+}
+
 /* Định dạng cho các cột */
-.order-list th:nth-child(1), .order-list td:nth-child(1) {
-    width: 30%; /* Kích thước cột "Mã đơn hàng" */
-  }
-  
-  .order-list th:nth-child(2), .order-list td:nth-child(2) {
-    width: 30%; /* Kích thước cột "Tổng tiền" */
-  }
-  
-  .order-list th:nth-child(3), .order-list td:nth-child(3) {
-    width: 60%; /* Kích thước cột "Chi tiết" */
-  }
+.order-list th:nth-child(1),
+.order-list td:nth-child(1) {
+  width: 25%; /* Cột "Mã đơn hàng" */
+}
 
-  /* Định dạng cho hàng khi hover */
-  .order-list tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  /* Nút Chi tiết đơn hàng */
-  .detail-btn {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    cursor: pointer;
-    font-size: 14px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .detail-btn:hover {
-    background-color: #45a049;
-  }
-  
-  /* Tạo border cho bảng */
-  
- 
+.order-list th:nth-child(2),
+.order-list td:nth-child(2) {
+  width: 25%; /* Cột "Tổng tiền" */
+}
+
+.order-list th:nth-child(3),
+.order-list td:nth-child(3) {
+  width: 50%; /* Cột "Chi tiết" */
+}
+
+/* Định dạng cho hàng khi hover */
+.order-list tr:hover {
+  background-color: #f4f9f4; /* Thay đổi màu nền khi hover */
+  transition: background-color 0.3s ease; /* Hiệu ứng mượt mà */
+}
+
+/* Nút Chi tiết đơn hàng */
+.detail-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng hover */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Bóng đổ nhẹ */
+  width: auto; /* Để chiều rộng nút tự động căn chỉnh với nội dung */
+  min-width: 160px; /* Đặt chiều rộng tối thiểu của nút */
+}
+
+.detail-btn:hover {
+  background-color: #45a049;
+  transform: scale(1.05); /* Phóng to nhẹ khi hover */
+}
+
+/* Tạo border cho bảng */
+.order-list tr:last-child td {
+  border-bottom: none; /* Xóa đường phân cách dưới cùng */
+}

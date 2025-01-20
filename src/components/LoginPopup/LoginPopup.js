@@ -76,6 +76,7 @@ const LoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginSuccess
             placeholder="Tên đăng nhập"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
+            autoComplete="username"
             required
           />
           <input
@@ -83,6 +84,7 @@ const LoginPopup = ({ setShowLogin, setShowSignUp, existingUsers, onLoginSuccess
             placeholder="Mật khẩu"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
             required
           />
 

@@ -42,7 +42,7 @@ const EditItem = ({ id, name, description, price, img_url, onEdit, onDelete }) =
       <div className="edit-details">
         <h3>{name}</h3>
         <p>{description}</p>
-        <span>{price} VNĐ</span>
+        <span>{price.toLocaleString("vi-VN")} VNĐ</span>
         <span>{img_url}</span>
       </div>
       <div className="edit-button">

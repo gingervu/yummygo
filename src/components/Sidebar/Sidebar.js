@@ -6,9 +6,19 @@ import "./Sidebar.css";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-
+  const token = localStorage.getItem("access_token")
   const handleLogout = async () => {
     try{
+          // Xử lý đăng xuất ở đây (ví dụ: xóa token, reset state)
+    axios.put("/restaurants/update", {"status": "inactive"}, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    }).then((response) => console.log(response.data))
+    .catch((error) => {
+      console.error("Có lỗi xảy ra:", error);
+    });
+
       localStorage.clear();
       navigate("/")
       alert("Bạn đã đăng xuất!");

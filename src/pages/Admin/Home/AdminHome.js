@@ -42,7 +42,8 @@ const AdminHome = () => {
     console.log(restaurantStatus)
     axios
       .put(
-        "/restaurants/change-status",       
+        "/restaurants/change-status",  
+        {},     
         {headers: {
         Authorization: `Bearer ${token}`, // Thêm token vào header
       }},)
@@ -62,6 +63,11 @@ const AdminHome = () => {
       <Sidebar />
       {/* Nội dung chính */}
       <main>
+      <img
+      src="/assets/img/restaurant_home.png"
+      alt="Restaurant Home"
+      className="restaurant-home-image"
+      />
         <div className="restaurant-status">
         {loading ? (
             <span>Loading...</span>

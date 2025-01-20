@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./SignUpPopup.css";
 import axios from 'axios';
 
 const SignUpPopup = ({ setShowSignUp }) => {
   const [step, setStep] = useState(1); // Quản lý bước (1: tài khoản, 2: nhà hàng)
   const [formData, setFormData] = useState({
-    name: "",
     username: "",
     password: "",
     confirmPassword: "",
@@ -20,6 +19,11 @@ const SignUpPopup = ({ setShowSignUp }) => {
     address: "",
   });
 
+  useEffect(() => {
+    console.log("Current step:", step);
+  }, [step]);
+  
+
   // Kiểm tra hợp lệ
   const validateForm = () => {
     const newErrors = {};
@@ -27,7 +31,6 @@ const SignUpPopup = ({ setShowSignUp }) => {
     const phoneRegex = /^[0-9]{10,11}$/;
 
     
-    if (!formData.name) newErrors.name = "Tên không được để trống.";
     if (!formData.username) newErrors.username = "Tên tài khoản không được để trống.";
     if (!formData.password) newErrors.password = "Mật khẩu không được để trống.";
     if (formData.password !== formData.confirmPassword) {
@@ -60,19 +63,21 @@ const SignUpPopup = ({ setShowSignUp }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
+    console.log("Validation Errors:", validationErrors); // Debug
     setErrors(validationErrors);
-
+  
     if (Object.keys(validationErrors).length === 0) {
       setAccountData({
         user_name: formData.username,
         phone: formData.phoneNumber,
         email: formData.email,
         password: formData.password,
-        
       });
+      console.log("Data is valid. Moving to next step."); // Debug
       setStep(2); // Chuyển sang bước điền thông tin nhà hàng
     }
   };
+  
 
   const handleRestaurantSubmit = async (e) => {
     e.preventDefault();
@@ -162,6 +167,7 @@ const SignUpPopup = ({ setShowSignUp }) => {
                 value={formData.username}
                 onChange={handleChange}
                 className={errors.username ? "error" : ""}
+                autoComplete="username"
               />
               {errors.username && <p className="error">{errors.username}</p>}
 
@@ -171,7 +177,7 @@ const SignUpPopup = ({ setShowSignUp }) => {
                 placeholder="Mật khẩu"
                 value={formData.password}
                 onChange={handleChange}
-                className={errors.password ? "error" : ""}
+                className={errors.password ? "error" : ""} autoComplete="new-password"
               />
               {errors.password && <p className="error">{errors.password}</p>}
 
@@ -181,7 +187,7 @@ const SignUpPopup = ({ setShowSignUp }) => {
                 placeholder="Nhập lại mật khẩu"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className={errors.confirmPassword ? "error" : ""}
+                className={errors.confirmPassword ? "error" : ""} autoComplete="new-password"
               />
               {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
 
@@ -205,7 +211,7 @@ const SignUpPopup = ({ setShowSignUp }) => {
               />
               {errors.email && <p className="error">{errors.email}</p>}
             </div>
-            <button type="submit" className="submit-button">
+            <button type="submit" className="submit-button" onClick={handleSubmit}>
               Tiếp tục
             </button>
           </form>
@@ -253,7 +259,7 @@ const SignUpPopup = ({ setShowSignUp }) => {
                   onChange={handleRestaurantChange}
                 />
               </div>
-              <button type="submit" className="submit-button">
+              <button type="submit" className="submit-button" onClick={handleRestaurantSubmit}>
                 Hoàn thành
               </button>
             </form>

@@ -49,3 +49,14 @@
     }
   }
   
+
+  .restaurant-icon {
+    position: absolute;
+    top: 15%;
+    left: 45%;
+    width: 10%; /* Chiều rộng ảnh, tùy chỉnh theo ý muốn */
+    height: auto; /* Tự động điều chỉnh chiều cao để giữ tỉ lệ ảnh */
+    opacity: 0.9; /* Làm mờ nhẹ nếu cần */
+    z-index: 10; /* Đảm bảo ảnh nằm trên các thành phần khác */
+  }
+  

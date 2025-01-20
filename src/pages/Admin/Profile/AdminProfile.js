@@ -4,8 +4,10 @@ import Sidebar from "../../../components/Sidebar/Sidebar";
 import "./AdminProfile.css";
 import axios from "axios";
 import AddressEditor from "./AddressEditor";
+import { useNavigate } from 'react-router-dom';
 
 const AdminProfile = () => {
+  const navigate = useNavigate();
   const [restaurantInfo, setRestaurantInfo] = useState(null); // Thông tin nhà hàng
   const [userInfo, setUserInfo] = useState(null); // Thông tin tài khoản nhà hàng
   const [error, setError] = useState(null);
@@ -13,6 +15,7 @@ const AdminProfile = () => {
 
   const [editIndex, setEditIndex] = useState(null);
   const [newValue, setNewValue] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -94,9 +97,27 @@ const AdminProfile = () => {
     { label: "Tên quán", value: restaurantInfo?.name, key: "name" },
     { label: "Phân loại", value: restaurantInfo?.category, key: "category" },
     { label: "Địa chỉ", value: shortenText(restaurantInfo?.address, 50), key: "address" },
-    { label: "SDT", value: userInfo?.phone, key: "phone" },
+    { label: "SĐT", value: userInfo?.phone, key: "phone" },
     { label: "Email", value: userInfo?.email, key: "email" },
   ];
+
+  const handleDeleteAccount = async () => {
+    const token = localStorage.getItem("access_token");
+
+    try {
+      const response = await axios.delete("http://localhost:8000/restaurants/delete", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.status === 200 ) {
+      console.log("Tài khoản đã bị xóa.");
+      localStorage.clear();
+      navigate("/"); // Điều hướng về trang chính sau khi xóa
+    }} catch (error) {
+      console.error("Có lỗi xảy ra khi xóa tài khoản:", error);
+    }
+  };
 
   return (
     <div className="admin-profile">
@@ -152,6 +173,19 @@ const AdminProfile = () => {
           />
         </div>
         </div>
+        <div className="delete">
+          <button onClick={() => setShowPopup(true)}>Xóa tài khoản</button>
+      </div>
+      {/* Popup xác nhận xóa tài khoản */}
+      {showPopup && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <h3>Bạn có chắc chắn muốn xóa tài khoản không?</h3>
+            <button onClick={() => setShowPopup(false)}>Không</button>
+            <button onClick={handleDeleteAccount}>Có</button>
+          </div>
+        </div>
+      )}
       </main>
     </div>
   );

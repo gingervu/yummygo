@@ -66,7 +66,11 @@ const AdminRevenue = () => {
     <div className="admin-revenue">
       <Header />
       <Sidebar />
-      
+      <img
+      src="/assets/img/restaurant.png"
+      alt="Restaurant Icon"
+      className="restaurant-icon"
+      />
       <main className="daily-revenue">
         <h2>Doanh thu hôm nay</h2>
         <p>{revenue ? `${revenue.toLocaleString("vi-VN")} VND` : "Không có dữ liệu"}</p>

@@ -8,9 +8,9 @@ import "./AdminStaff.css";
 const AdminStaff = () => {
 
   const [employees, setEmployees] = useState([
-    { id: 1, name: "Bé Bà" },
-    { id: 2, name: "Quản Lý" },
-    { id: 3, name: "Ánh" },
+    { id: 1, name: "Thu Trang" },
+    { id: 2, name: "Mai Khanh" },
+    { id: 3, name: "Ngọc Ánh" },
   ]);
 
   const [editIndex, setEditIndex] = useState(null);
