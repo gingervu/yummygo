@@ -17,9 +17,8 @@ const Sidebar = () => {
     .catch((error) => {
       console.error("Có lỗi xảy ra:", error);
     });
-     localStorage.removeItem("access_token");
+    localStorage.removeItem("access_token");
     localStorage.removeItem("order_id");
-   alert("Bạn đã đăng xuất")
     navigate("/");  // Điều hướng tới trang chính
   };
 

@@ -12,8 +12,8 @@
 }
 
 .driver-home .driver-status {
-  width: 55%;
-  margin-left: 20%;
+  width: 700px;
+  margin-left: 300px;
   display: flex;
   flex-direction: row;
   gap: 70px;
@@ -54,7 +54,7 @@
   background-color: white;
   padding: 15px;
   border-radius: 8px;
-  width: 30%;
+  width: 400px;
   text-align: center;
 }
 
@@ -91,65 +91,3 @@
   z-index: 10; /* Đảm bảo ảnh nằm trên các thành phần khác */
 }
 
-/* Media queries để giảm kích thước chữ */
-@media (max-width: 1024px) {
-  .driver-home main h1 {
-    font-size: 24px; /* Giảm kích thước chữ tiêu đề */
-  }
-
-  .driver-home main h2 {
-    font-size: 20px; /* Giảm kích thước chữ tiêu đề phụ */
-  }
-
-  .driver-home main p {
-    font-size: 18px; /* Giảm kích thước chữ đoạn văn */
-  }
-
-  .driver-home .popup-content {
-    width: 40%; /* Tăng chiều rộng popup để dễ đọc */
-  }
-}
-
-@media (max-width: 768px) {
-  .driver-home main h1 {
-    font-size: 20px; /* Giảm kích thước chữ tiêu đề hơn nữa */
-  }
-
-  .driver-home main h2 {
-    font-size: 18px;
-  }
-
-  .driver-home main p {
-    font-size: 16px; /* Giảm kích thước chữ đoạn văn */
-  }
-
-  .driver-home .popup-content {
-    width: 60%; /* Mở rộng popup cho màn hình nhỏ */
-  }
-}
-
-@media (max-width: 480px) {
-  .driver-home main h1 {
-    font-size: 14px; /* Kích thước nhỏ cho điện thoại */
-    margin-left: 0;
-    margin-top: 50px;
-  }
-
-  .driver-home main h2 {
-    font-size: 12px;
-    margin-left: 10%;
-  }
-
-  .driver-home main p {
-    font-size: 10px;
-  }
-
-  .driver-home .popup-content {
-    width: 80%; /* Tăng chiều rộng popup để hiển thị rõ hơn */
-  }
-
-  .driver-home .popup-content button {
-    font-size: 12px; /* Giảm kích thước chữ trên nút */
-    padding: 8px 16px; /* Giảm padding trên nút */
-  }
-}
