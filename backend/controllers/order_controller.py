@@ -26,11 +26,7 @@ async def subtract_on_cart(item_id: int, order_id: int, current_customer: dict =
 # ---> trả về danh sách thông tin các order, có thể dùng order_id để 
 # xem thông tin chi tiết của order, dùng api /restaurant/get/{restaurant_id}
 # để lấy thông tin nhà hàng
-<<<<<<< HEAD
-@router.get("/cart", response_model=List[OrderItemResponse])
-=======
 @router.get("/cart")
->>>>>>> frontend/driver
 async def get_cart(current_customer: dict = Depends(require_role('customer')), db: Session = Depends(get_db)):
     return order_service.get_orders_in_cart(current_customer['user_id'], db)
 
@@ -42,8 +38,6 @@ async def get_cart(current_customer: dict = Depends(require_role('customer')), d
 async def get_order(order_id: int, db: Session = Depends(get_db)):
     return order_service.get_order(order_id, db)
 
-<<<<<<< HEAD
-=======
 # lấy thông tin tường minh của đơn hàng
 @router.get("/info/{order_id}", response_model=OrderResponse)
 async def get_order(order_id: int, current_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
@@ -77,7 +71,6 @@ async def get_order(order_id: int, current_user: dict = Depends(get_current_user
                           address=address, distance=distance, food_fee=food_fee, delivery_fee=delivery_fee, 
                           order_status=order_status,note=note)
     return order
->>>>>>> frontend/driver
 # Lấy ra danh sách các order_item có trong giỏ hàng ở nhà hàng hiện tại
 # Nếu không có thì giỏ hàng đang trống
 @router.get("/current-cart/{restaurant_id}")
