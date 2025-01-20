@@ -1,0 +1,56 @@
+.restaurant-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex; /* Sử dụng flexbox để căn chỉnh */
+    align-items: center;
+    justify-content: space-between; /* Đẩy các phần tử con sang 2 bên */
+}
+
+.restaurant-card .restaurant-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.restaurant-card h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.restaurant-card p {
+    margin: 0;
+    color: #555;
+    font-size: 18px;
+    margin-left: auto; /* Đẩy đoạn văn về bên phải */
+    text-align: right; /* Căn nội dung trong đoạn văn sang phải */
+}
+
+.restaurant-card h3 {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.restaurant-card h3::before {
+    content: "🍴"; /* Biểu tượng món ăn */
+    margin-right: 8px;
+    font-size: 18px;
+    color: #FF6347; /* Màu đỏ cam */
+}
+
+.restaurant-card h3 {
+    font-size: 18px;
+    font-weight: bold;
+    background: linear-gradient(90deg, #FF6347, #FF4500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; /* Tạo hiệu ứng gradient */
+}

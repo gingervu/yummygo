@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap'); /* Thay đổi phông chữ ở đây */
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=person");
+
+.navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(45deg, #a77905 0%, #cd9a19 60%, #f6d232 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 10px;
+}
+
+.navbar .navbar-left p {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.navbar .navbar-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+}
+
+.navbar .navbar-center p {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    text-align: center;
+    gap: 20px;
+    position: relative;
+}
+
+/* Phần thanh tìm kiếm */
+.navbar .search-bar {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+}
+
+.navbar .search-bar input {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.navbar .search-bar input:focus {
+    border-color: #f39c12;
+    box-shadow: 0 4px 6px rgba(243, 156, 18, 0.2);
+}
+
+/* Kết quả tìm kiếm */
+.navbar .search-results {
+    position: absolute;
+    top: 45px;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    padding: 10px 0;
+}
+
+.navbar .search-results li {
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.navbar .search-results li:hover {
+    background-color: #f9f9f9;
+}
+
+.navbar .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.navbar .navbar-icon {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.navbar .user-menu {
+    position: relative;
+}
+
+.navbar .user-dropdown {
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .user-dropdown button {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 5px;
+    width: 100%;
+}
+
+.navbar .user-dropdown button:hover {
+    background-color: #f1f1f1;
+}
+
+.navbar .navbar-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    margin: 0 10px;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+}
+
+.navbar .navbar-icon:hover {
+    transform: scale(1.1);
+}

@@ -1,0 +1,13 @@
+/* Định dạng cho nút */
+.back-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  /* Định dạng cho biểu tượng SVG */
+  .back-button-icon {
+    display: block;
+  }
+  

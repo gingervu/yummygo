@@ -1,0 +1,83 @@
+/* Sidebar container */
+.staff-sidebar {
+    position: fixed;
+      width: 13%;
+      height: 100vh;
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      font-family: "Poppins", sans-serif;
+      padding-top: 80px; /* Đảm bảo không bị chồng lên header */
+    z-index: 999;
+      
+    }
+    
+    /* Logo */
+    
+    
+    .staff-sidebar-logo img {
+      max-width: 100%;
+      height: auto;
+    }
+    
+    /* Link list */
+    .staff-sidebar-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      flex-grow: 1;
+      align-items: center; 
+    }
+    
+    .staff-sidebar-item {
+      margin:  0;
+    }
+    
+    .staff-sidebar-link {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      color: #000000;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      align-items: center; 
+    }
+    
+    .staff-sidebar-link:hover {
+      background-color: #e7e7e7;
+    }
+    
+    .staff-sidebar-link.active {
+      background-color: #e7e7e7;
+      
+    }
+    
+    /* Icon */
+    .staff-sidebar svg {
+      width: 20px; /* Adjust size */
+      height: 20px;
+      margin-right: 10px; /* Space between icon and text */
+  
+    }
+
+    .staff-sidebar .sidebar-footer {
+      margin-bottom: 100px;
+      
+      display: flex;
+      justify-content: flex-start;
+      margin-left: 70%;
+      z-index: 1000; 
+    }
+    
+    .staff-sidebar .logout-btn {
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      background-color: #ffffff
+    }
+    
+    
+    

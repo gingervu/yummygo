@@ -1,0 +1,92 @@
+.explore-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow: visible;
+  }
+  
+  .explore-menu-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    text-align: center;
+    margin: 20px;
+    overflow-x: scroll;
+  }
+  
+  .explore-menu-list-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .explore-menu-list-item img {
+    width: 80px; /* Adjust the size as needed */
+    height: 80px;
+    border-radius: 50%; /* Makes the image circular */
+    object-fit: cover; /* Ensures the image fits well */
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .explore-menu-list-item img.active {
+    transform: scale(1.1); /* Slight zoom effect for active category */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adds a shadow effect */
+  }
+  
+  .explore-menu-list-item p {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .explore-menu-list-item:hover img {
+    transform: scale(1.05); /* Slight zoom on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adds hover shadow */
+  }
+  .explore-menu-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    text-align: center;
+    margin: 20px;
+    overflow-x: scroll;
+    /* scrollbar-width: none; Hides scrollbar in Firefox */
+  }
+  
+  .explore-menu-list::-webkit-scrollbar {
+    display: none; /* Hides scrollbar in Chrome, Edge, and Safari */
+  }
+  .explore-menu-list-item img {
+    width: 80px; /* Adjust the size as needed */
+    height: 80px;
+    border-radius: 50%; /* Makes the image circular */
+    object-fit: cover; /* Ensures the image fits well */
+    transition: transform 0.3s, box-shadow 0.3s, outline 0.3s;
+  }
+  
+  .explore-menu-list-item img.active {
+    transform: scale(1.1); /* Slight zoom effect for active category */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adds a shadow effect */
+  }
+  
+  .explore-menu-list-item:hover img {
+    transform: scale(1.05); /* Slight zoom on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adds hover shadow */
+  }
+  
+  /* Add orange border when the item is focused */
+  .explore-menu-list-item img:focus {
+    outline: 3px solid orange; /* Orange border for focus state */
+    outline-offset: 2px; /* Optional: adds spacing between image and outline */
+  }
+  
+  .explore-menu .explore-menu-list-item .active{
+    border: 2px solid rgb(255, 149, 0);
+    padding: 2px;
+}

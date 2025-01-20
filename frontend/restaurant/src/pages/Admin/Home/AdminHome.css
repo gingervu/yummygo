@@ -1,0 +1,46 @@
+.admin-home main {
+  display: flex;
+  flex-direction: column;
+ /* Căn giữa theo chiều dọc */
+  min-height: 100vh; /* Đảm bảo chiều cao đầy đủ */
+  padding: 20px;
+    font-family: "Poppins", sans-serif;
+    flex-grow: 1; /* Chiếm hết phần còn lại của màn hình */
+    background: linear-gradient(180deg, #f4f9f4 0%, #e8f5e9 100%); /* Nền nhẹ nhàng với tông xanh nhạt */
+
+}
+.admin-home .restaurant-status {
+    display: flex; /* Sử dụng flex để căn chỉnh các phần tử ngang hàng */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  gap: 22px; /* Khoảng cách giữa tên nhà hàng và toggle */
+  margin-top: 110px; /* Khoảng cách từ trên xuống */
+  margin-left: 24%; /* Để tránh bị chồng lên sidebar */
+  
+ 
+}
+
+.restaurant-name {
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+  .restaurant-status h2 {
+    font-size: 24px; /* Kích thước chữ */
+    color: #4caf50; /* Màu chữ, bạn có thể thay bằng màu khác */
+    text-align: center; /* Căn giữa chữ */
+    font-weight: bold; /* Đậm chữ */
+    margin-top: 20px; /* Khoảng cách phía trên */
+  }
+  
+
+  
+  .restaurant-home-image {
+    position: absolute;
+    bottom: -50px;
+    right: 0px; /* Khoảng cách từ cạnh phải */
+    width: 88%; /* Chiều rộng ảnh, tùy chỉnh theo ý muốn */
+    height: auto; /* Tự động điều chỉnh chiều cao để giữ tỉ lệ ảnh */
+    opacity: 0.8; /* Làm mờ nhẹ nếu cần */
+    z-index: 10; /* Đảm bảo ảnh nằm trên các thành phần khác */
+  }
+  

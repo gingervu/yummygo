@@ -172,6 +172,10 @@ class RestaurantUpdate(BaseModel):
     address: Optional[str] = None
     x: Optional[Decimal] = None
     y: Optional[Decimal] = None
+<<<<<<< HEAD
+=======
+    status: Optional[str] = None
+>>>>>>> frontend/driver
     
     class Config:
         from_attributes = True
@@ -187,6 +191,10 @@ class RestaurantResponse(BaseModel):
     name: str
     category: str
     address: str
+<<<<<<< HEAD
+=======
+    status: str
+>>>>>>> frontend/driver
     
     class Config:
         from_attributes = True  
@@ -254,6 +262,10 @@ class MenuItemResponse(BaseModel):
     img_url: Optional[str]
     description: Optional[str]
     price: Decimal
+<<<<<<< HEAD
+=======
+    status: Optional[str]
+>>>>>>> frontend/driver
     
     class Config:
         from_attribute = True    
@@ -274,6 +286,16 @@ class DriverBase(BaseModel):
 class DriverCreate(DriverBase):
     pass  # Tạo mới tài xế
 
+<<<<<<< HEAD
+=======
+class DriverChange(BaseModel):
+    name: Optional[str] = None
+    status: Optional[str] = None
+    
+    class Config:
+        from_attribute = True
+        
+>>>>>>> frontend/driver
 class DriverUpdate(BaseModel):
     name: Optional[str] = None
     class Config:
@@ -284,8 +306,13 @@ class DriverSchema(DriverBase):
     is_deleted: bool = False  # Trạng thái xóa tài xế
 
 class DriverResponse(BaseModel):
+<<<<<<< HEAD
     name: str
     status: str
+=======
+    name: Optional[str] = None
+    status: Optional[str] = None
+>>>>>>> frontend/driver
 # ------------------------------
 # Mô hình Admin (Quản trị viên)
 # ------------------------------
@@ -337,23 +364,50 @@ class OrderUpdate(BaseModel):
         from_attribute = True
         
       
+<<<<<<< HEAD
   
   
+=======
+class OrderResponse(BaseModel):
+    customer_name: Optional[str]  = None# khách hàng
+    restaurant_name: Optional[str]  = None # nhà hàng
+    driver_name: Optional[str]  = None # tài xế, có thể rỗng
+    restaurant_address: Optional[str] = None
+    restaurant_category: Optional[str] = None
+    address: Optional[str] = None # Địa chỉ giao hàng, có thể rỗng
+    distance: Optional[Decimal]  = None
+    food_fee: Optional[Decimal]  = None
+    delivery_fee: Optional[Decimal]  = None
+    order_status: Optional[str]  = None
+    note: Optional[str]  = None
+    class Config:
+        from_attribute = True
+>>>>>>> frontend/driver
 # ------------------------------
 # Mô hình Cho Address
 # ------------------------------
 
 class ObjectUpdateAddress(BaseModel):
+<<<<<<< HEAD
     object_id: int
+=======
+    object_id: Optional[int] = None
+>>>>>>> frontend/driver
     address: Optional[str]  
     
     class Config:
         from_attribute = True
 
 class AddressSuggestion(BaseModel):
+<<<<<<< HEAD
     address: str
     x: float
     y: float
+=======
+    address: Optional[str]
+    x: Optional[float]
+    y: Optional[float]
+>>>>>>> frontend/driver
     class Config:
         from_attribute = True  
 # ------------------------------
@@ -377,11 +431,21 @@ class OrderItemSchema(OrderItemBase):
 class OrderItemResponse(BaseModel):
     item_id: int
     order_id: int
+<<<<<<< HEAD
     price: float
+=======
+    name: str
+    price: Decimal
+>>>>>>> frontend/driver
     quantity: int
 
     class Config:
         from_attribute = True   
+<<<<<<< HEAD
+=======
+        
+
+>>>>>>> frontend/driver
 # ------------------------------
 # Mô hình Manager (Quản lý nhà hàng)
 # ------------------------------
@@ -394,7 +458,13 @@ class ManagerBase(BaseModel):
     class Config:
         from_attributes = True  # Chuyển đổi từ SQLAlchemy models sang Pydantic models
 
+<<<<<<< HEAD
 class ManagerCreate(ManagerBase):
+=======
+class ManagerCreate(BaseModel):
+    name: str
+    username: str
+>>>>>>> frontend/driver
     password: str  # Mật khẩu khi tạo quản lý mới
 
 class ManagerSchema(ManagerBase):

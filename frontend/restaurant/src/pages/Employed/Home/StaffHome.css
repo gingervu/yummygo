@@ -1,0 +1,24 @@
+.staff-home main {
+    display: flex;
+    flex-direction: column;
+   /* Căn giữa theo chiều dọc */
+    min-height: 100vh; /* Đảm bảo chiều cao đầy đủ */
+    padding: 20px;
+      font-family: "Poppins", sans-serif;
+      flex-grow: 1; /* Chiếm hết phần còn lại của màn hình */
+    
+  }
+  .staff-home .restaurant-status {
+      display: flex; /* Sử dụng flex để căn chỉnh các phần tử ngang hàng */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    gap: 22px; /* Khoảng cách giữa tên nhà hàng và toggle */
+    margin-top: 110px; /* Khoảng cách từ trên xuống */
+    margin-left: 24%; /* Để tránh bị chồng lên sidebar */
+    
+   
+  }
+  
+  .restaurant-name {
+      font-size: 30px;
+      font-weight: bold;
+    }

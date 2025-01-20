@@ -30,13 +30,24 @@ async def change_status(current_restaurant: dict = Depends(require_role('restaur
     restaurant = update_restaurant_status(current_restaurant['user_id'], db)
     return {"message" : "status changed", "status": restaurant.status}
 
+<<<<<<< HEAD
 # Lấy ra danh sách mã đơn hàng hiện tại của nhà hàng
+=======
+# Lấy ra danh sách đơn hàng hiện tại của nhà hàng
+>>>>>>> frontend/driver
 # Dùng mã đơn để hiển thị các món trong đơn hàng khi nhà hàng
 # chọn xem đơn ---> get '/orders/{order_id}'
 @router.get("/orders")
 async def restaurant_orders(current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
     return get_current_restaurant_order(current_restaurant['user_id'], db)
 
+<<<<<<< HEAD
+=======
+@router.get("/order-history")
+async def restaurant_orders(current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
+    return get_restaurant_order_history(current_restaurant['user_id'], db)
+
+>>>>>>> frontend/driver
 # Lấy danh sách các nhà hàng đang active --> customer duyệt
 @router.get("/active")
 async def list_restaurants_(db: Session = Depends(get_db)):
@@ -46,3 +57,11 @@ async def list_restaurants_(db: Session = Depends(get_db)):
 @router.get("/{restaurant_id}")
 async def get_restaurant_by_id(restaurant_id: int, db: Session = Depends(get_db)):
     return get_restaurant(restaurant_id, db)
+<<<<<<< HEAD
+=======
+
+# lấy ra doanh thu trong ngày của nhà hàng
+@router.get("/daily-revenue/")
+async def get_daily_revenue(current_restaurant: dict = Depends(require_role('restaurant')), db: Session = Depends(get_db)):
+    return revenue_today(current_restaurant['user_id'], db)
+>>>>>>> frontend/driver

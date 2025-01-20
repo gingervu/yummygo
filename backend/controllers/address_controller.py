@@ -12,8 +12,13 @@ router = APIRouter(prefix="/address", tags=["Address"])
 
 # api dùng để search 
 @router.get("/search", response_model=List[AddressSuggestion])
+<<<<<<< HEAD
 async def search(object: ObjectUpdateAddress):
     return address_suggestion(object)
+=======
+async def search(address: str):
+    return address_suggestion(address)
+>>>>>>> frontend/driver
 
 @router.put("/restaurant-set", response_model=RestaurantResponse)
 async def set_restaurant_address(address_choice: AddressSuggestion, 

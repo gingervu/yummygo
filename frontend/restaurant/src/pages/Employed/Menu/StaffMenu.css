@@ -1,0 +1,34 @@
+.staff-menu main{
+    
+    display: flex;
+  flex-direction: column;
+ /* Căn giữa theo chiều dọc */
+  min-height: 100vh; /* Đảm bảo chiều cao đầy đủ */
+  padding: 20px;
+    font-family: "Poppins", sans-serif;
+    flex-grow: 1; /* Chiếm hết phần còn lại của màn hình */
+  
+}
+
+
+.staff-menu h2{
+    margin-top: 100px;
+margin-left: 24%;
+margin-bottom: 28px;
+}
+
+.staff-menu .change-btn{
+    margin-left: 24%;
+    font-size: 20px;
+    width: 210px;
+    height: 40px;
+    background-color: white;
+    border: 2px solid rgb(31, 31, 31);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    }
+
+    .staff-menu .items-container{
+        margin-left: 24%;
+        width: 30%;
+    }

@@ -12,7 +12,11 @@ from services.manager_service import (
 router = APIRouter(prefix="/managers", tags=["Managers"])
 
 # Route POST để tạo mới Manager
+<<<<<<< HEAD
 @router.post("/", response_model=schemas.ManagerSchema)
+=======
+@router.post("/create", response_model=schemas.ManagerSchema)
+>>>>>>> frontend/driver
 async def create_manager(manager: schemas.ManagerCreate, db: Session = Depends(get_db)):
     return create_manager_service(manager, db)
 
