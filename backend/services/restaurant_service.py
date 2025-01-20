@@ -6,12 +6,9 @@ from models import models
 from services.menu_item_service import delete_menu_item
 from services.user_service import delete_user
 
-<<<<<<< HEAD
-=======
 from sqlalchemy import func
 from datetime import datetime, timedelta
 
->>>>>>> frontend/driver
 # Lấy thông tin nhà hàng theo ID ---> khách xem
 def get_restaurant(restaurant_id: int, db: Session):
     restaurant = db.query(Restaurant).filter(Restaurant.restaurant_id == restaurant_id,
@@ -88,12 +85,6 @@ def delete_restaurant(restaurant_id: int, db: Session):
 # Lấy ra danh sách đơn hàng hiện tại của nhà hàng
 def get_current_restaurant_order(restaurant_id: int, db: Session):
     db_order = db.query(Order).filter(Order.restaurant_id == restaurant_id,
-<<<<<<< HEAD
-                                      Order.order_status == OrderStatusEnum.preparing).all()
-    if not db_order:
-        return None
-    return [order.order_id for order in db_order]
-=======
                                       Order.order_status != OrderStatusEnum.completed,
                                       Order.order_status != OrderStatusEnum.cancelled,
                                       Order.driver_id != None).all()
@@ -120,4 +111,3 @@ def revenue_today(restaurant_id: int, db: Session):
     ).scalar()  # Trả về một giá trị duy nhất thay vì list
 
     return results if results else 0
->>>>>>> frontend/driver

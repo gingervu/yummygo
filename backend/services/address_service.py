@@ -7,11 +7,7 @@ from fastapi import HTTPException, status
 
 class NominatimService:
     BASE_URL = "https://nominatim.openstreetmap.org/search"
-<<<<<<< HEAD
-    USER_AGENT = "YummyGo/1.0 (vuhuyebtram872@gmail.com)"  # Thay bằng thông tin của bạn
-=======
     USER_AGENT = "YummyGo/1.0 (vuhuyentram872@gmail.com)"  # Thay bằng thông tin của bạn
->>>>>>> frontend/driver
 
     @staticmethod
     def search(query: str, format: str = "json", limit: int = 5):
@@ -23,11 +19,8 @@ class NominatimService:
             "format": format,
             "addressdetails": 1,
             "limit": limit,
-<<<<<<< HEAD
-=======
             "bounded": 1,  # Chỉ tìm kiếm trong bounding box
             "viewbox": "105.55,21.35,106.03,20.75"
->>>>>>> frontend/driver
         }
         try:
             response = requests.get(NominatimService.BASE_URL, params=params, headers=headers, timeout=5)
@@ -50,21 +43,12 @@ class NominatimService:
             return []
 
 
-<<<<<<< HEAD
-def address_suggestion(object: ObjectUpdateAddress):
-    results = NominatimService.search(object.address)
-=======
 def address_suggestion(address: str):
     results = NominatimService.search(address)
->>>>>>> frontend/driver
     suggestions = []
     if results:
         for result in results:
             suggestions.append(AddressSuggestion(
-<<<<<<< HEAD
-                object_id = object.object_id,
-=======
->>>>>>> frontend/driver
                 address=result['address'],
                 x=result['latitude'],
                 y=result['longitude']

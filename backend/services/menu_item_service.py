@@ -61,17 +61,10 @@ def change_status_menu_item(item_id: int, restaurant_id: int, db: Session):
     if not db_menu_item:
         raise HTTPException(status_code=404, detail="Món ăn không tồn tại")
     
-<<<<<<< HEAD
-    if db_menu_item.status == ItemStatusEnum.available:
-        db_menu_item.status = ItemStatusEnum.unavailable
-    elif db_menu_item.status == ItemStatusEnum.unavailable:
-        db_menu_item.status = ItemStatusEnum.available
-=======
     if db_menu_item.status == "available":
         db_menu_item.status = "unavailable"
     elif db_menu_item.status == "unavailable":
         db_menu_item.status = "available"
->>>>>>> frontend/driver
     
     db.commit()
     db.refresh(db_menu_item)
