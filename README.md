@@ -4,7 +4,7 @@ A Food Delivery App
 
 ### Hướng dẫn cài đặt Backend cho YummyGo
 
-YummyGo là một ứng dụng giao đồ ăn cho phép khách hàng đặt món từ các nhà hàng gần đó và được giao tận nơi. Phần backend này được xây dựng bằng **FastAPI** và **SQLAlchemy**.
+Backend được xây dựng bằng **FastAPI** và **SQLAlchemy**.
 
 ---
 
@@ -40,7 +40,7 @@ backend/
 - **PostgreSQL** (hoặc cơ sở dữ liệu hỗ trợ SQLAlchemy)
 - **FastAPI**
 - **SQLAlchemy**
-- **Uvicorn** (để chạy server)
+- **Uvicorn** 
 
 ---
 
@@ -91,7 +91,7 @@ SQLALCHEMY_DATABASE_URL = "postgresql://username:password@localhost/dbname"
 Nếu chưa có database, bạn cần tạo nó trước khi tiếp tục sử dụng PostgreSQL:
 
 ```bash
-psql ...
+psql -U postgres -h localhost -f database.sql
 ```
 
 ### 6. Chạy ứng dụng
@@ -122,7 +122,7 @@ Truy cập ứng dụng tại [http://127.0.0.1:8000](http://127.0.0.1:8000).
 - **POST** `/orders/subtract-item` - Giảm số lượng món trong giỏ hàng.  
 - **GET** `/orders/cart` - Lấy thông tin giỏ hàng hiện tại.  
 - **GET** `/orders/{order_id}` - Lấy thông tin chi tiết đơn hàng theo ID.  
-- **GET** `/orders/current-cart/{restaurant_id}` - Lấy giỏ hàng hiện tại cho nhà hàng.  
+- **GET** `/orders/current-cart/{restaurant_id}` - Lấy giỏ hàng ở nhà hàng hiện tại.  
 - **PUT** `/orders/update/{order_id}` - Cập nhật thông tin đơn hàng.  
 - **PUT** `/orders/cancel/{order_id}` - Hủy đơn hàng.  
 - **PUT** `/orders/change-status/{order_id}` - Cập nhật trạng thái đơn hàng.  
@@ -131,20 +131,18 @@ Truy cập ứng dụng tại [http://127.0.0.1:8000](http://127.0.0.1:8000).
 ---
 
 ### **Customers**
-- **GET** `/customers/me` - Lấy thông tin khách hàng hiện tại.  
-- **PUT** `/customers/update` - Cập nhật thông tin khách hàng hiện tại.  
-- **DELETE** `/customers/delete` - Xóa khách hàng hiện tại.  
+- **GET** `/customers/me` - Lấy thông tin khách hàng.  
+- **PUT** `/customers/update` - Cập nhật thông tin khách hàng.  
+- **DELETE** `/customers/delete` - Xóa khách hàng.  
 - **PUT** `/customers/send-order/{order_id}` - Tạo đơn hàng mới.  
-- **GET** `/customers/search` - Tìm kiếm khách hàng.  
-- **GET** `/customers/filter` - Lọc danh sách khách hàng.  
-- **GET** `/customers/restaurants` - Lấy danh sách nhà hàng gần khách hàng.
-
+- **GET** `/customers/search` - Tìm kiếm nhà hàng.  
+- **GET** `/customers/filter` - Tìm kiếm nhà hàng bằng bộ lọc.  
 ---
 
 ### **Drivers**
-- **GET** `/drivers/me` - Lấy thông tin tài xế hiện tại.  
+- **GET** `/drivers/me` - Lấy thông tin tài xế.  
 - **PUT** `/drivers/update` - Cập nhật thông tin tài xế.  
-- **PUT** `/drivers/change-status` - Cập nhật trạng thái tài xế.  
+- **PUT** `/drivers/change-status` - Chuyển trạng thái tài xế.  
 - **DELETE** `/drivers/delete` - Xóa tài xế.  
 - **GET** `/drivers/info/{driver_id}` - Lấy thông tin tài xế theo ID.  
 - **GET** `/drivers/order` - Lấy đơn hàng hiện tại của tài xế.  
@@ -161,10 +159,10 @@ Truy cập ứng dụng tại [http://127.0.0.1:8000](http://127.0.0.1:8000).
 ---
 
 ### **Restaurants**
-- **GET** `/restaurants/me` - Lấy thông tin nhà hàng hiện tại.  
+- **GET** `/restaurants/me` - Lấy thông tin nhà hàng.  
 - **PUT** `/restaurants/update` - Cập nhật thông tin nhà hàng.  
 - **DELETE** `/restaurants/delete` - Xóa nhà hàng.  
-- **PUT** `/restaurants/change-status` - Thay đổi trạng thái nhà hàng.  
+- **PUT** `/restaurants/change-status` - Chuyển trạng thái nhà hàng.  
 - **GET** `/restaurants/orders` - Lấy danh sách đơn hàng của nhà hàng.  
 - **GET** `/restaurants/active` - Lấy danh sách các nhà hàng đang hoạt động.  
 - **GET** `/restaurants/{restaurant_id}` - Lấy thông tin nhà hàng theo ID.
@@ -214,15 +212,10 @@ Hệ thống sử dụng các schema được định nghĩa để chuẩn hóa 
 - **Customer Schemas:** `CustomerCreate`, `CustomerResponse`  
 - **Driver Schemas:** `DriverCreate`, `DriverResponse`  
 - **Restaurant Schemas:** `RestaurantCreate`, `RestaurantUpdate`, `RestaurantResponse`  
-- **Menu Schemas:** `MenuItemCreate`, `MenuItemUpdate`, `MenuItemResponse`  
+- **MenuItem Schemas:** `MenuItemCreate`, `MenuItemUpdate`, `MenuItemResponse`  
 - **Address Schemas:** `ObjectUpdateAddress`, `AddressSuggestion`  
 
 ---
-
-### **Ghi chú**
-Hệ thống API tuân theo chuẩn **OpenAPI 3.1**, bạn có thể xem tài liệu đầy đủ thông qua:  
-- **[OpenAPI JSON](http://127.0.0.1:8000/openapi.json)**  
-- **Giao diện Swagger UI:** [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
 
 ## Tài liệu liên quan
@@ -241,15 +234,7 @@ Hệ thống API tuân theo chuẩn **OpenAPI 3.1**, bạn có thể xem tài li
 
 ---
 
-### **2. Clone repo**
-Đến thuư mục frontendfrontend:
-```bash
-cd frontend
-```
-
----
-
-### **3. Cài đặt các phụ thuộc**
+### **2. Cài đặt các phụ thuộc**
 Sử dụng npm để cài đặt các thư viện và phụ thuộc:
 ```bash
 npm install
@@ -257,7 +242,7 @@ npm install
 
 ---
 
-### **4. Cấu hình dự án**
+### **3. Cấu hình dự án**
 Dự án yêu cầu file `.env` để cấu hình. Tạo file `.env` trong thư mục gốc và thêm các thông số cần thiết, ví dụ:
 
 ```env
@@ -267,94 +252,21 @@ REACT_APP_ENV=development
 
 ---
 
-### **5. Chạy ứng dụng**
+### **4. Chạy ứng dụng**
 Để chạy ứng dụng trong chế độ phát triển, sử dụng lệnh:
 ```bash
-npm start
+npm start   
 ```
-
-Ứng dụng sẽ được chạy tại địa chỉ:
-```
-http://localhost:3000
-```
-
 ---
 
-### **6. Build ứng dụng**
-Để tạo bản build tối ưu cho môi trường production:
-```bash
-npm run build
-```
 
-Bản build sẽ được lưu trong thư mục `build/`. Bạn có thể triển khai bản build này trên các server như:
-- **Nginx**
-- **Apache**
-- **Vercel**
-- **Netlify**
-
----
-
-### **7. Cách xử lý một số lỗi phổ biến**
-
-#### **Lỗi "react-scripts" không được tìm thấy**
-Chạy lệnh sau để cài đặt lại:
-```bash
-npm install react-scripts --save
-```
-
-#### **Lỗi phiên bản Node.js không đúng**
-Cập nhật Node.js lên phiên bản mới nhất từ [Node.js official site](https://nodejs.org/).
-
-#### **Lỗi module không tìm thấy**
-Xóa thư mục `node_modules` và file `package-lock.json`, sau đó cài đặt lại:
-```bash
-rm -rf node_modules package-lock.json
-npm install
-```
-
----
-
-### **8. Tài liệu liên quan**
+### **5. Tài liệu liên quan**
 - [React Documentation](https://reactjs.org/docs/getting-started.html)
 - [Create React App Documentation](https://create-react-app.dev/docs/getting-started/)
 
 ---
 
-### **Liên hệ hỗ trợ**
-Nếu gặp vấn đề hoặc cần hỗ trợ, bạn có thể liên hệ với đội ngũ phát triển qua email: **support@yummygo.com**.
-=======
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
