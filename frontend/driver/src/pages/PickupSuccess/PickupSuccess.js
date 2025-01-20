@@ -19,8 +19,6 @@ const PickupSuccess = () => {
     order_status: "",
     note: "",
   });
-  const [orderItems, setOrderItems] = useState([]);
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("access_token"); // Token từ localStorage
 
@@ -69,11 +67,9 @@ const PickupSuccess = () => {
           });
           console.log("Order details:", orderData);
         } else {
-          setError("Không tìm thấy orderId");
         }
       } catch (err) {
         console.error(err);
-        setError("Lỗi khi lấy dữ liệu");
       }
     };
 

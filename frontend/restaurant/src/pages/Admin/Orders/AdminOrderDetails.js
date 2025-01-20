@@ -17,8 +17,6 @@ const AdminOrderDetails = () => {
   };
   const [order, setOrder] = useState([]); // Lưu thông tin chi tiết đơn hàng
   const [orderInfo, setOrderInfo] = useState([]); // Lưu thông tin chi tiết đơn hàng
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const token = localStorage.getItem("access_token");
   // const orderItems = [
   //   { name: "Tên món 1", price: "40.000 đ", quantity: "x1" },
@@ -27,7 +25,6 @@ const AdminOrderDetails = () => {
   // ];
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token");
     axios
     .get(`http://localhost:8000/orders/${order_id}`, {
       headers: {

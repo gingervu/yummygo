@@ -12,7 +12,6 @@ const Profile = () => {
   const [name, setName] = useState(""); // Tên tài khoản
   const [email, setEmail] = useState(""); // Email tài khoản
   const [password, setPassword] = useState(""); // Mật khẩu tài khoản
-  const [isEditing, setIsEditing] = useState(false); // Trạng thái chỉnh sửa
   const [newName, setNewName] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -46,9 +45,7 @@ const Profile = () => {
     fetchProfile();
   }, []);
 
-  const handleEdit = () => {
-    setIsEditing(true); // Bật chế độ chỉnh sửa
-  };
+
 
   const handleSaveName = async () => {
     const token = localStorage.getItem("access_token");

@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    networks:
+      - mynetwork
+
+  postgres:
+    image: postgres:17
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 555668
+      POSTGRES_DB: yummygo
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - mynetwork
+
+  frontend1:
+    build:
+      context: ./frontend/customer/
+      dockerfile: Dockerfile
+    container_name: frontend1
+    ports:
+      - "5173:5173"
+    environment:
+      - REACT_APP_BACKEND_URL=http://backend:8000
+    depends_on:
+      - backend
+    networks:
+      - mynetwork
+
+  frontend2:
+    build:
+      context: ./frontend/driver/
+      dockerfile: Dockerfile
+    container_name: frontend2
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_BACKEND_URL=http://backend:8000
+    depends_on:
+      - backend
+    networks:
+      - mynetwork
+
+  frontend3:
+    build:
+      context: ./frontend/restaurant/
+      dockerfile: Dockerfile
+    container_name: frontend3
+    ports:
+      - "3001:3001"
+    environment:
+      - REACT_APP_BACKEND_URL=http://backend:8000
+    depends_on:
+      - backend
+    networks:
+      - mynetwork
+
+volumes:
+  db_data:
+
+networks:
+  mynetwork:
+    driver: bridge
